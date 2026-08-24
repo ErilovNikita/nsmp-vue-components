@@ -17,3 +17,8 @@
 .ant-alert-success {
   border-left: 4px solid #4985df !important;
 }
+
+.ant-alert>.anticon-info-circle {
+  font-size: 10px;
+  margin-right: 7px;
+}
