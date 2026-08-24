@@ -128,6 +128,88 @@ const items: Array<[string, string]> = [
 `end` добавляют произвольное содержимое до и после автоматически сформированных
 строк.
 
+### Table
+
+`Table` — визуальная обёртка над таблицей Ant Design Vue. Компонент не
+загружает данные, не обращается к API и не хранит кэш: готовые строки и колонки
+передаются через props.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Table } from '@minitwiks/nsmp-vue-components'
+
+const columns = [
+  { title: 'Имя', dataIndex: 'name', key: 'name' },
+  { title: 'Возраст', dataIndex: 'age', key: 'age' },
+]
+
+const employees = [
+  { key: 1, name: 'Nikita', age: 30 },
+  { key: 2, name: 'Anna', age: 27 },
+]
+
+const selectedEmployees = ref<typeof employees>([])
+</script>
+
+<template>
+  <Table
+    v-model:selected-objects="selectedEmployees"
+    title="Сотрудники"
+    :columns="columns"
+    :data-source="employees"
+  >
+    <template #start>
+      <Button type="primary">Добавить</Button>
+    </template>
+  </Table>
+</template>
+```
+
+По умолчанию используется локальная пагинация по 20 строк с выбором размера
+страницы. Её можно настроить через `pagination` или отключить с помощью
+`:pagination="false"`. Компонент также принимает `loading`, `rowSelection`,
+`rowKey`, `scroll`, `size`, `bordered` и другие визуальные параметры таблицы.
+
+Checkbox выбора отображается в каждой строке по умолчанию. Массив
+`selectedEmployees` содержит полные выбранные объекты со всеми их атрибутами.
+Выбор строк можно отключить через `:selectable="false"`.
+
+Ширину колонок можно менять перетягиванием разделителя в заголовке. Обновлённые
+значения `width` доступны через `v-model:columns`:
+
+```vue
+<Table
+  v-model:columns="columns"
+  :data-source="employees"
+/>
+```
+
+Минимальная ширина по умолчанию составляет `70px` и настраивается через
+`minColumnWidth`. Изменение ширины можно отключить для всей таблицы с помощью
+`:resizable-columns="false"` или для конкретной колонки через
+`resizable: false` в её конфигурации.
+
+Таблица использует фиксированную раскладку колонок. Текст, который не помещается
+в заданную ширину, обрезается многоточием и не выходит за границы ячейки.
+Разделитель изменяет ширину двух соседних колонок: одна расширяется, другая
+сужается на такое же значение. Поэтому общая ширина таблицы не выходит за
+границы контейнера, а последняя колонка не может стать уже минимальной ширины.
+Внешняя правая граница последней колонки не перетаскивается.
+
+Клик по заголовку колонки отправляет событие `columnClick` с ключом колонки:
+
+```vue
+<Table
+  :columns="columns"
+  :data-source="employees"
+  @column-click="columnKey => console.log(columnKey)"
+/>
+```
+
+В качестве значения используется `column.key`, затем `dataIndex`, а если оба
+поля не заданы — числовой индекс колонки.
+
 ### Modal
 
 `Modal` сохраняет зоны `alert`, `form` и `footer` из старого шаблона. Методы

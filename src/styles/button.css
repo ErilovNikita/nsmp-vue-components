@@ -32,12 +32,8 @@
   overflow: unset !important;
 }
 
-.btn-toolkit {
-  margin-top: -10px;
-}
-
-.btn-toolkit > button,
-.btn-toolkit > span {
+.btn-toolkit>button,
+.btn-toolkit>span {
   margin-right: 10px !important;
 }
 
