@@ -129,7 +129,8 @@ export const naumen: ThemeConfig = {
 
     // Controls
     controlOutline: '#0063b0',
-    controlItemBgHover: '#7f96b9',
+    // controlItemBgHover: '#7f96b9',
+    controlItemBgHover: '#f4f4f4',
     controlItemBgActive: '#f4f4f4',
     controlItemBgActiveHover: '#f4f4f4',
     controlItemBgActiveDisabled: '#fafafa',

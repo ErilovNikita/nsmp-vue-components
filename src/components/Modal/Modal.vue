@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Modal as AntModal } from 'ant-design-vue'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { ModalProps } from './types'
 
 defineOptions({ name: 'LibraryModal' })
@@ -24,6 +24,14 @@ const emit = defineEmits<{
 }>()
 
 const isOpen = ref(props.open ?? false)
+
+const modalProps = computed(() => {
+  const bindings: Partial<ModalProps> = { ...props }
+  delete bindings.open
+  delete bindings['onUpdate:open']
+
+  return bindings
+})
 
 watch(
   () => props.open,
@@ -55,7 +63,7 @@ defineExpose(modalApi)
 
 <template>
   <AntModal
-    v-bind="props"
+    v-bind="modalProps"
     :open="isOpen"
     @update:open="setVisible"
   >

@@ -6,6 +6,7 @@ export * from './composables'
 export * from './data'
 export * from './tokens'
 export * from './types'
+export * from './utils'
 import './styles/index.css'
 
 export const NsmpVueComponents = {

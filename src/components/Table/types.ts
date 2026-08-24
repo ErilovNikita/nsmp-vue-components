@@ -11,6 +11,7 @@ import type {
 
 export type TableRecord = Record<string, unknown>
 export type TableColumn<RecordType = TableRecord> = ColumnType<RecordType> & {
+  hidden?: boolean
   resizable?: boolean
 }
 
@@ -33,4 +34,6 @@ export interface TableProps<RecordType = TableRecord> {
   size?: AntTableProps<RecordType>['size']
   tableLayout?: AntTableProps<RecordType>['tableLayout']
   title?: string | null
+  /** LocalStorage key used to persist column order, visibility, and width. */
+  viewStorageKey?: string
 }

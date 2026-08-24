@@ -130,7 +130,7 @@ const providerProps = computed(() => {
     colorBgTextHover: nsmpTheme?.defaultHoverBackground,
     colorBgTextActive: nsmpTheme?.itemSelectedBackground,
     controlOutline: nsmpTheme?.inputFocusBorderColor,
-    controlItemBgHover: nsmpTheme?.selectItemHoverBackground,
+    // controlItemBgHover: nsmpTheme?.selectItemHoverBackground,
     controlItemBgActive: nsmpTheme?.itemSelectedBackground,
     controlItemBgActiveHover: nsmpTheme?.tableRowSelectedBackground,
     controlItemBgActiveDisabled: nsmpTheme?.inputDisabledBackground,

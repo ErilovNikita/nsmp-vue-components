@@ -8,6 +8,13 @@ import type { Key } from 'ant-design-vue/es/_util/type'
 import type { TablePaginationConfig } from 'ant-design-vue/es/table'
 import type { TableRowSelection } from 'ant-design-vue/es/table/interface'
 import { computed, h, ref, shallowRef, useAttrs, watch } from 'vue'
+import { readLocalStorage, removeLocalStorage, writeLocalStorage } from '../../utils'
+import TableSettings from './TableSettings.vue'
+import {
+  applyTableViewState,
+  createTableViewState,
+  type TableViewState,
+} from './models'
 import type { TableColumn, TableProps, TableRecord } from './types'
 
 defineOptions({
@@ -42,13 +49,27 @@ const emit = defineEmits<{
 }>()
 
 const attrs = useAttrs()
-const currentColumns = shallowRef<TableColumn[]>(props.columns.map(column => ({ ...column })))
+const readSavedView = (): TableViewState | null => props.viewStorageKey
+  ? readLocalStorage<TableViewState>(props.viewStorageKey)
+  : null
+
+const currentColumns = shallowRef<TableColumn[]>(
+  applyTableViewState(props.columns, readSavedView()),
+)
 const currentSelectedObjects = ref<TableRecord[]>([...props.selectedObjects])
+const settingsOpen = ref(false)
 let resizedColumnIndex: number | null = null
 
-watch(() => props.columns, columns => {
-  currentColumns.value = columns.map(column => ({ ...column }))
-})
+const visibleColumns = computed(() =>
+  currentColumns.value.filter(column => !column.hidden),
+)
+
+watch(
+  () => [props.columns, props.viewStorageKey] as const,
+  ([columns]) => {
+    currentColumns.value = applyTableViewState(columns, readSavedView())
+  },
+)
 
 watch(() => props.selectedObjects, selectedObjects => {
   currentSelectedObjects.value = [...selectedObjects]
@@ -133,7 +154,7 @@ const startColumnResize = (
   const header = event.currentTarget as globalThis.HTMLElement
   const nextHeader = header.nextElementSibling as globalThis.HTMLElement | null
 
-  if (!nextHeader || columnIndex >= currentColumns.value.length - 1) {
+  if (!nextHeader || columnIndex >= visibleColumns.value.length - 1) {
     return
   }
 
@@ -169,10 +190,13 @@ const startColumnResize = (
       resizedColumnIndex = columnIndex
     }
 
-    currentColumns.value = currentColumns.value.map((column, index) =>
-      index === columnIndex
+    const resizedColumn = visibleColumns.value[columnIndex]
+    const nextColumn = visibleColumns.value[columnIndex + 1]
+
+    currentColumns.value = currentColumns.value.map(column =>
+      column === resizedColumn
         ? { ...column, width }
-        : index === columnIndex + 1
+        : column === nextColumn
           ? { ...column, width: nextWidth }
           : column,
     )
@@ -182,10 +206,11 @@ const startColumnResize = (
     view.removeEventListener('pointermove', handleMove)
     view.removeEventListener('pointerup', handleEnd)
 
-    const column = currentColumns.value[columnIndex]
+    const column = visibleColumns.value[columnIndex]
     const width = Number(column.width)
     const columns = currentColumns.value.map(item => ({ ...item }))
 
+    persistColumnView(columns)
     emit('update:columns', columns)
     emit('columnResize', column, width, columnIndex)
 
@@ -200,11 +225,11 @@ const startColumnResize = (
   view.addEventListener('pointerup', handleEnd)
 }
 
-const displayColumns = computed<TableColumn[]>(() => currentColumns.value.map((column, index) => {
+const displayColumns = computed<TableColumn[]>(() => visibleColumns.value.map((column, index) => {
   const originalHeaderCell = column.customHeaderCell
   const isResizable = props.resizableColumns
     && column.resizable !== false
-    && index < currentColumns.value.length - 1
+    && index < visibleColumns.value.length - 1
 
   return {
     ...column,
@@ -247,6 +272,10 @@ const displayColumns = computed<TableColumn[]>(() => currentColumns.value.map((c
 const getGearHeader = (
   event: globalThis.MouseEvent,
 ): globalThis.HTMLElement | null => {
+  if (!props.viewStorageKey) {
+    return null
+  }
+
   const target = event.target
   if (!(target instanceof globalThis.Element)) {
     return null
@@ -272,8 +301,31 @@ const handleTableClick = (event: globalThis.MouseEvent) => {
   if (getGearHeader(event)) {
     event.preventDefault()
     event.stopPropagation()
-    globalThis.console.log('Клик по настройкам таблицы')
+    settingsOpen.value = true
   }
+}
+
+const persistColumnView = (columns: TableColumn[]) => {
+  if (props.viewStorageKey) {
+    writeLocalStorage(props.viewStorageKey, createTableViewState(columns))
+  }
+}
+
+const saveColumnSettings = (columns: TableColumn[]) => {
+  currentColumns.value = columns.map(column => ({ ...column }))
+  persistColumnView(currentColumns.value)
+  settingsOpen.value = false
+  emit('update:columns', columns.map(column => ({ ...column })))
+}
+
+const resetColumnSettings = () => {
+  if (props.viewStorageKey) {
+    removeLocalStorage(props.viewStorageKey)
+  }
+
+  currentColumns.value = props.columns.map(column => ({ ...column }))
+  settingsOpen.value = false
+  emit('update:columns', currentColumns.value.map(column => ({ ...column })))
 }
 
 const handleTablePointerMove = (event: globalThis.MouseEvent) => {
@@ -306,6 +358,7 @@ const tableBindings = computed(() => {
   delete tableProps.selectedObjects
   delete tableProps.showTitle
   delete tableProps.title
+  delete tableProps.viewStorageKey
 
   return {
     ...tableProps,
@@ -319,7 +372,10 @@ const tableBindings = computed(() => {
 
 <template>
   <div
-    class="library-table"
+    :class="[
+      'library-table',
+      viewStorageKey && 'library-table-view-settings-enabled',
+    ]"
     @click.capture="handleTableClick"
     @pointerleave="handleTablePointerLeave"
     @pointermove="handleTablePointerMove"
@@ -384,5 +440,14 @@ const tableBindings = computed(() => {
         <slot name="summary" />
       </template>
     </AntTable>
+
+    <TableSettings
+      v-if="viewStorageKey"
+      :columns="currentColumns"
+      :open="settingsOpen"
+      @close="settingsOpen = false"
+      @reset="resetColumnSettings"
+      @save="saveColumnSettings"
+    />
   </div>
 </template>

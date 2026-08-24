@@ -81,12 +81,12 @@
   text-align: center !important;
 }
 
-.library-table .ant-table-thead > tr > th.ant-table-selection-column {
+.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column {
   position: relative;
   padding-top: 28px !important;
 }
 
-.library-table .ant-table-thead > tr > th.ant-table-selection-column::after {
+.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column::after {
   position: absolute;
   top: 6px;
   left: 50%;
@@ -103,8 +103,99 @@
   transition: opacity 0.15s ease;
 }
 
-.library-table .ant-table-thead > tr > th.library-table-gear-hover::after {
+.library-table-view-settings-enabled .ant-table-thead > tr > th.library-table-gear-hover::after {
   opacity: 0.9;
+}
+
+.table-settings {
+  padding: 16px 20px 24px;
+}
+
+.table-settings-hint {
+  margin: 0 0 4px;
+  color: #5f5f5f;
+  font-size: 13px;
+}
+
+.table-settings-add {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.table-settings-add .ant-select {
+  flex: 1;
+}
+
+.table-settings-add .ant-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.table-settings-order {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table-settings-order tr {
+  border-bottom: 1px solid #d9d9d9;
+  background: white;
+}
+
+.table-settings-order tr[draggable='true'] {
+  cursor: grab;
+}
+
+.table-settings-order tr[draggable='true']:active {
+  cursor: grabbing;
+}
+
+.table-settings-order td {
+  padding: 4px 6px;
+  overflow: hidden;
+  color: #323232;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-settings-order .table-settings-drag {
+  width: 28px;
+  color: #8a8a8a;
+  text-align: center;
+}
+
+.table-settings-order .table-settings-controls {
+  width: 112px;
+  text-align: right;
+}
+
+.table-settings-controls button {
+  width: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #5f5f5f;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.table-settings-controls button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.table-settings-controls button:not(:disabled):hover {
+  color: #154ea5;
 }
 
 ul.ant-pagination.ant-table-pagination {

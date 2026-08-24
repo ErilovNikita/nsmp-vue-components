@@ -1,7 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { Table as AntTable } from 'ant-design-vue'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Table } from '@/components'
+import { writeLocalStorage } from '@/utils'
 
 const columns = [
   { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -45,6 +46,8 @@ const tableStub = {
 }
 
 describe('Table', () => {
+  beforeEach(() => globalThis.localStorage.clear())
+
   it('renders a title, actions, and the provided table data', () => {
     const wrapper = mount(Table, {
       props: {
@@ -223,10 +226,9 @@ describe('Table', () => {
     expect(wrapper.emitted('columnClick')).toEqual([['name']])
   })
 
-  it('logs a click on the settings gear without changing selection', async () => {
-    const consoleLog = vi.spyOn(globalThis.console, 'log').mockImplementation(() => {})
+  it('opens column settings when the gear is clicked', async () => {
     const wrapper = mount(Table, {
-      props: { columns, dataSource },
+      props: { columns, dataSource, viewStorageKey: 'employees-view' },
       slots: {
         start: `
           <table>
@@ -261,7 +263,7 @@ describe('Table', () => {
       clientY: 10,
     })
 
-    expect(consoleLog).toHaveBeenCalledWith('Клик по настройкам таблицы')
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('open')).toBe(true)
 
     await wrapper.find('.gear-target').trigger('pointermove', {
       clientX: 20,
@@ -272,7 +274,52 @@ describe('Table', () => {
     await wrapper.find('.library-table').trigger('pointerleave')
     expect(header.classes()).not.toContain('library-table-gear-hover')
 
-    consoleLog.mockRestore()
+  })
+
+  it('does not render view settings without a storage key', () => {
+    const wrapper = mount(Table, {
+      props: { columns, dataSource },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    expect(wrapper.classes()).not.toContain('library-table-view-settings-enabled')
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).exists()).toBe(false)
+  })
+
+  it('restores, saves, and resets a view using the configured storage key', async () => {
+    writeLocalStorage('employees-view', {
+      version: 1,
+      columns: [
+        { key: 'age', hidden: false, width: 180 },
+        { key: 'name', hidden: true, width: 100 },
+      ],
+    })
+    const wrapper = mount(Table, {
+      props: {
+        columns: resizeColumns,
+        dataSource,
+        viewStorageKey: 'employees-view',
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+    const settings = wrapper.findComponent({ name: 'LibraryTableSettings' })
+
+    expect(settings.props('columns').map((column: { key: string }) => column.key)).toEqual([
+      'age',
+      'name',
+    ])
+    expect(settings.props('columns')[0]).toMatchObject({ width: 180 })
+    expect(settings.props('columns')[1]).toMatchObject({ hidden: true })
+
+    settings.vm.$emit('save', resizeColumns.map(column => ({ ...column })))
+    await wrapper.vm.$nextTick()
+    expect(JSON.parse(globalThis.localStorage.getItem('employees-view') ?? '{}'))
+      .toMatchObject({ version: 1 })
+
+    settings.vm.$emit('reset')
+    await wrapper.vm.$nextTick()
+    expect(globalThis.localStorage.getItem('employees-view')).toBeNull()
+    expect(wrapper.emitted('update:columns')?.at(-1)?.[0]).toEqual(resizeColumns)
   })
 
   it('passes visual table options and events without loading data itself', async () => {
