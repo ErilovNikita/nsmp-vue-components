@@ -22,12 +22,41 @@
   background-color: #bbb !important;
 }
 
-.ant-btn-default > svg,
-.ant-btn-default > img,
-.ant-btn-default > .btn-icon {
+.ant-btn-default>svg,
+.ant-btn-default>img,
+.ant-btn-default>.btn-icon {
   margin-bottom: -4px !important;
   margin-right: 6px !important;
   height: 16px !important;
   width: 16px !important;
   overflow: unset !important;
+}
+
+.btn-toolkit {
+  margin-top: -10px;
+}
+
+.btn-toolkit > button,
+.btn-toolkit > span {
+  margin-right: 10px !important;
+}
+
+.btn-toolkit>.ant-btn-text {
+  padding: 0 !important;
+  margin: 0;
+  height: auto !important;
+  font-weight: 600;
+}
+
+.btn-toolkit>.ant-btn-text>.btn-icon {
+  margin-bottom: -3px;
+  margin-right: 3px;
+}
+
+.btn-toolkit>.ant-btn-text:hover {
+  background-color: transparent !important;
+}
+
+.btn-toolkit>.ant-btn-text:hover>span {
+  text-decoration: underline !important;
 }

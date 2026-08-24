@@ -92,6 +92,42 @@ const notify = () => {
 props `message`, `type`, `closable`, `showIcon` и остальные свойства Alert из
 Ant Design Vue.
 
+### AttrGroup
+
+`AttrGroup` выводит значения объекта в раскрывающейся группе. Методы старого
+контроллера `open()` и `close()` встроены в компонент и доступны через template
+ref. Состояния `show` и `activeKey` также доступны через экземпляр компонента.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { AttrGroup } from '@minitwiks/nsmp-vue-components'
+
+const group = ref<InstanceType<typeof AttrGroup>>()
+const employee = { name: 'Nikita', age: 30 }
+const items: Array<[string, string]> = [
+  ['Имя', 'name'],
+  ['Возраст', 'age'],
+]
+</script>
+
+<template>
+  <button @click="group?.open()">Развернуть</button>
+  <button @click="group?.close()">Свернуть</button>
+
+  <AttrGroup
+    ref="group"
+    title="Основные данные"
+    :items="items"
+    :values="employee"
+  />
+</template>
+```
+
+Для первоначально раскрытой группы можно передать prop `open`. Слоты `start` и
+`end` добавляют произвольное содержимое до и после автоматически сформированных
+строк.
+
 ### Modal
 
 `Modal` сохраняет зоны `alert`, `form` и `footer` из старого шаблона. Методы

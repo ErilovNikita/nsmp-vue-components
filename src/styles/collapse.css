@@ -16,3 +16,7 @@
 .ant-collapse-item > div > .ant-collapse-content-box {
   padding: 0 !important;
 }
+
+.attr-group-item {
+  margin-bottom: -10px !important;
+}
