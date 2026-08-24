@@ -59,6 +59,39 @@ import { Button } from '@minitwiks/nsmp-vue-components'
 </template>
 ```
 
+### Alert
+
+`Alert` переносит поведение старого `AlertController` внутрь компонента. Методы
+`show()`, `hidden()`, `setMessage()`, `clear()` и `setType()` доступны через
+template ref и поддерживают цепочки вызовов.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Alert } from '@minitwiks/nsmp-vue-components'
+
+const alert = ref<InstanceType<typeof Alert>>()
+
+const notify = () => {
+  alert.value?.setType('success').setMessage('Данные сохранены')
+}
+</script>
+
+<template>
+  <button @click="notify">Показать уведомление</button>
+
+  <Alert ref="alert">
+    <template #action>
+      <button @click="alert?.hidden()">Закрыть</button>
+    </template>
+  </Alert>
+</template>
+```
+
+Компонент также поддерживает декларативное управление через `v-model:open`,
+props `message`, `type`, `closable`, `showIcon` и остальные свойства Alert из
+Ant Design Vue.
+
 ### Modal
 
 `Modal` сохраняет зоны `alert`, `form` и `footer` из старого шаблона. Методы
