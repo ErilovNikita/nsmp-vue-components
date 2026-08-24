@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
 import { NsmpConfigProvider } from '@/components'
 
 describe('NsmpConfigProvider', () => {
@@ -18,5 +19,19 @@ describe('NsmpConfigProvider', () => {
     })
 
     expect(wrapper.props('theme')).toEqual({ token: { colorPrimary: '#00aa00' } })
+  })
+
+  it('maps buttonBackground to the Ant Design Button theme', () => {
+    const wrapper = mount(NsmpConfigProvider, {
+      props: {
+        nsmpTheme: {
+          buttonBackground: '#123456',
+        },
+      },
+    })
+
+    const antTheme = wrapper.findComponent(AntConfigProvider).props('theme')
+
+    expect(antTheme?.components?.Button).toMatchObject({ colorPrimary: '#123456' })
   })
 })
