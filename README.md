@@ -1,19 +1,19 @@
-# @minitwiks/nsmp-vue-components
+# nsmp-vue-components
 
-Styled Vue components for NSMP embedded applications. The library builds on [`ant-design-vue`](https://github.com/vueComponent/ant-design-vue), keeping its mature primitives while adding NSMP tokens, defaults, and data helpers.
+Стилизованные Vue-компоненты для встроенных приложений NSMP. Библиотека базируется на [`ant-design-vue`](https://github.com/vueComponent/ant-design-vue), сохраняя её проверенные временем базовые элементы и дополняя их токенами в стилистике NSMP, настройками по умолчанию и вспомогательными инструментами для работы с данными.
 
-## Install
+## Установка
 
 ```bash
 npm install @minitwiks/nsmp-vue-components ant-design-vue
 ```
 
-## Use the plugin
-
+## Использование
 ```ts
 import { createApp } from 'vue'
 import Antd from 'ant-design-vue'
 import { NsmpVueComponents } from '@minitwiks/nsmp-vue-components'
+
 import 'ant-design-vue/dist/reset.css'
 import '@minitwiks/nsmp-vue-components/style.css'
 
@@ -23,9 +23,8 @@ createApp(App)
   .mount('#app')
 ```
 
-## Use the NSMP theme provider
-
-`NsmpConfigProvider` is a styled wrapper around Ant Design Vue's `ConfigProvider`. It uses the `naumen` theme by default, so the application no longer needs to import and wire the theme manually:
+## Использование готового NSMP ThemeProvider
+`NsmpConfigProvider` — это стилизованная обертка над компонентом `ConfigProvider` из библиотеки Ant Design Vue. По умолчанию он использует тему `naumen`, поэтому приложению больше не нужно импортировать и подключать тему вручную:
 
 ```vue
 <script setup lang="ts">
@@ -39,7 +38,7 @@ import { NsmpConfigProvider } from '@minitwiks/nsmp-vue-components'
 </template>
 ```
 
-The provider accepts the regular Ant Design Vue config props and supports a local theme override:
+Провайдер так же принимает стандартные свойства конфигурации Ant Design Vue и поддерживает локальную переопределяемую тему:
 
 ```vue
 <NsmpConfigProvider :theme="customTheme">
@@ -47,9 +46,9 @@ The provider accepts the regular Ant Design Vue config props and supports a loca
 </NsmpConfigProvider>
 ```
 
-The default theme is also available as `naumen` from `@minitwiks/nsmp-vue-components`.
+Тема по умолчанию также доступна под именем `naumen` в пакете `@minitwiks/nsmp-vue-components`.
 
-For tree-shaking, import components directly:
+Для использования механизма tree-shaking импортируйте компоненты напрямую:
 
 ```vue
 <script setup lang="ts">
@@ -57,29 +56,6 @@ import { NsmpButton } from '@minitwiks/nsmp-vue-components'
 </script>
 
 <template>
-  <NsmpButton variant="secondary">Cancel</NsmpButton>
+  <NsmpButton variant="primary">Cancel</NsmpButton>
 </template>
 ```
-
-## Data helpers
-
-```ts
-import { formatOptions } from '@minitwiks/nsmp-vue-components'
-
-const options = formatOptions(users, {
-  label: (user) => user.displayName,
-  value: (user) => user.id,
-  disabled: (user) => user.status === 'archived',
-})
-```
-
-## Development
-
-```bash
-npm install
-npm run test
-npm run build
-npm run lint
-```
-
-See [docs/architecture.md](docs/architecture.md) for ownership boundaries and rules for extending the library.
