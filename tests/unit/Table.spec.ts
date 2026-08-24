@@ -65,6 +65,8 @@ describe('Table', () => {
     })
     expect(wrapper.findComponent(AntTable).props('pagination')).toMatchObject({
       pageSize: 20,
+      position: ['bottomLeft'],
+      size: 'small',
       showSizeChanger: true,
     })
     expect(wrapper.findComponent(AntTable).props('tableLayout')).toBe('fixed')

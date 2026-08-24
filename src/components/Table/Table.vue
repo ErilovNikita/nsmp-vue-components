@@ -5,8 +5,9 @@ import {
 } from 'ant-design-vue'
 import type { TableProps as AntTableProps } from 'ant-design-vue'
 import type { Key } from 'ant-design-vue/es/_util/type'
+import type { TablePaginationConfig } from 'ant-design-vue/es/table'
 import type { TableRowSelection } from 'ant-design-vue/es/table/interface'
-import { computed, ref, shallowRef, useAttrs, watch } from 'vue'
+import { computed, h, ref, shallowRef, useAttrs, watch } from 'vue'
 import type { TableColumn, TableProps, TableRecord } from './types'
 
 defineOptions({
@@ -86,6 +87,44 @@ const effectiveRowSelection = computed<TableRowSelection<TableRecord> | undefine
     }
   },
 )
+
+const defaultPaginationItemRender: NonNullable<
+  TablePaginationConfig['itemRender']
+> = ({ type, originalElement }) => {
+  if (type === 'next') {
+    return h('span', { class: 'library-table-pagination-link' }, 'Следующая >')
+  }
+
+  if (type === 'prev') {
+    return h('span', { class: 'library-table-pagination-link' }, '< Предыдущая')
+  }
+
+  return originalElement
+}
+
+const effectivePagination = computed<TablePaginationConfig | false>(() => {
+  if (props.pagination === false) {
+    return false
+  }
+
+  return {
+    position: ['bottomLeft'],
+    size: 'small',
+    pageSize: 20,
+    showSizeChanger: true,
+    showTotal: total => h(
+      'span',
+      { class: 'library-table-pagination-total' },
+      [
+        'Объектов в списке: ',
+        h('strong', String(total)),
+      ],
+    ),
+    buildOptionText: ({ value }) => String(value),
+    itemRender: defaultPaginationItemRender,
+    ...props.pagination,
+  }
+})
 
 const startColumnResize = (
   event: globalThis.PointerEvent,
@@ -209,6 +248,7 @@ const tableBindings = computed(() => {
   const tableProps: Partial<TableProps> = { ...props }
   delete tableProps.columns
   delete tableProps.minColumnWidth
+  delete tableProps.pagination
   delete tableProps.resizableColumns
   delete tableProps.rowSelection
   delete tableProps.selectable
@@ -220,6 +260,7 @@ const tableBindings = computed(() => {
     ...tableProps,
     ...attrs,
     columns: displayColumns.value,
+    pagination: effectivePagination.value,
     rowSelection: effectiveRowSelection.value,
   } as AntTableProps
 })
