@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { Button as AntButton } from 'ant-design-vue'
 import { computed, useAttrs } from 'vue'
-import type { NsmpButtonProps } from './types'
+import type { ButtonProps } from './types'
 
 defineOptions({
-  name: 'NsmpButton',
+  name: 'LibraryButton',
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<NsmpButtonProps>(), {
+const props = withDefaults(defineProps<ButtonProps>(), {
   type: 'default',
 })
 
 const attrs = useAttrs()
 
 const buttonBindings = computed(() => {
-  const antButtonProps: Partial<NsmpButtonProps> = { ...props }
+  const antButtonProps: Partial<ButtonProps> = { ...props }
   delete antButtonProps.icon
   delete antButtonProps.type
 

@@ -1,15 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { Modal as AntModal } from 'ant-design-vue'
 import { afterEach, describe, expect, it } from 'vitest'
-import { NsmpModal } from '@/components'
+import { Modal } from '@/components'
 
 afterEach(() => {
   globalThis.document.body.innerHTML = ''
 })
 
-describe('NsmpModal', () => {
+describe('Modal', () => {
   it('passes the open state and Ant Design props to the modal', () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       props: {
         open: true,
         title: 'Edit employee',
@@ -36,7 +36,7 @@ describe('NsmpModal', () => {
   })
 
   it('renders the legacy content slots and a custom footer', () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       slots: {
         alert: '<div class="alert">Warning</div>',
         form: '<form>Fields</form>',
@@ -58,7 +58,7 @@ describe('NsmpModal', () => {
   })
 
   it('renders the Ant Design mask, close button, and default footer', async () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       attachTo: globalThis.document.body,
       props: {
         title: 'Confirmation',
@@ -77,7 +77,7 @@ describe('NsmpModal', () => {
   })
 
   it('allows the default mask and close button to be disabled explicitly', () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       props: {
         closable: false,
         mask: false,
@@ -100,7 +100,7 @@ describe('NsmpModal', () => {
   })
 
   it('supports the default content slot', () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       slots: { default: '<p class="content">Content</p>' },
       global: {
         stubs: {
@@ -116,7 +116,7 @@ describe('NsmpModal', () => {
   })
 
   it('forwards open state changes for v-model:open', async () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       global: {
         stubs: {
           AModal: {
@@ -134,7 +134,7 @@ describe('NsmpModal', () => {
   })
 
   it('opens and closes through the exposed component methods', async () => {
-    const wrapper = mount(NsmpModal, {
+    const wrapper = mount(Modal, {
       props: { title: 'Create employee' },
       global: {
         stubs: {

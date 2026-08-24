@@ -2,11 +2,11 @@
 import { computed } from 'vue'
 import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
 import { naumen } from '@/tokens'
-import type { NsmpConfigProviderProps } from './types'
+import type { ConfigProviderProps } from './types'
 
-defineOptions({ name: 'NsmpConfigProvider' })
+defineOptions({ name: 'LibraryConfigProvider' })
 
-const props = defineProps<NsmpConfigProviderProps>()
+const props = defineProps<ConfigProviderProps>()
 
 type TokenRecord = Record<string, unknown>
 

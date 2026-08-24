@@ -23,26 +23,26 @@ createApp(App)
 ```
 
 ## Использование готового NSMP ThemeProvider
-`NsmpConfigProvider` — это стилизованная обертка над компонентом `ConfigProvider` из библиотеки Ant Design Vue. По умолчанию он использует тему `naumen`, поэтому приложению больше не нужно импортировать и подключать тему вручную:
+`ConfigProvider` — это стилизованная обертка над одноимённым компонентом из библиотеки Ant Design Vue. По умолчанию он использует тему `naumen`, поэтому приложению больше не нужно импортировать и подключать тему вручную:
 
 ```vue
 <script setup lang="ts">
-import { NsmpConfigProvider } from '@minitwiks/nsmp-vue-components'
+import { ConfigProvider } from '@minitwiks/nsmp-vue-components'
 </script>
 
 <template>
-  <NsmpConfigProvider>
+  <ConfigProvider>
     <AppContent />
-  </NsmpConfigProvider>
+  </ConfigProvider>
 </template>
 ```
 
 Провайдер так же принимает стандартные свойства конфигурации Ant Design Vue и поддерживает локальную переопределяемую тему:
 
 ```vue
-<NsmpConfigProvider :theme="customTheme">
+<ConfigProvider :theme="customTheme">
   <AppContent />
-</NsmpConfigProvider>
+</ConfigProvider>
 ```
 
 Тема по умолчанию также доступна под именем `naumen` в пакете `@minitwiks/nsmp-vue-components`.
@@ -51,17 +51,17 @@ import { NsmpConfigProvider } from '@minitwiks/nsmp-vue-components'
 
 ```vue
 <script setup lang="ts">
-import { NsmpButton } from '@minitwiks/nsmp-vue-components'
+import { Button } from '@minitwiks/nsmp-vue-components'
 </script>
 
 <template>
-  <NsmpButton type="primary">Cancel</NsmpButton>
+  <Button type="primary">Cancel</Button>
 </template>
 ```
 
 ### Modal
 
-`NsmpModal` сохраняет зоны `alert`, `form` и `footer` из старого шаблона. Методы
+`Modal` сохраняет зоны `alert`, `form` и `footer` из старого шаблона. Методы
 `show()` и `hidden()` теперь находятся непосредственно в компоненте и доступны
 через template ref. Также поддерживается стандартный биндинг `v-model:open` и
 все свойства `Modal` из Ant Design Vue.
@@ -69,20 +69,20 @@ import { NsmpButton } from '@minitwiks/nsmp-vue-components'
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NsmpModal } from '@minitwiks/nsmp-vue-components'
+import { Modal } from '@minitwiks/nsmp-vue-components'
 
-const modal = ref<InstanceType<typeof NsmpModal>>()
+const modal = ref<InstanceType<typeof Modal>>()
 </script>
 
 <template>
   <button @click="modal?.show()">Открыть</button>
 
-  <NsmpModal ref="modal" title="Редактировать сотрудника">
+  <Modal ref="modal" title="Редактировать сотрудника">
     <template #alert>Предупреждение</template>
     <template #form>Содержимое формы</template>
     <template #footer>
       <button @click="modal?.hidden()">Закрыть</button>
     </template>
-  </NsmpModal>
+  </Modal>
 </template>
 ```

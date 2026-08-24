@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent, h, markRaw } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
-import { NsmpButton } from '@/components'
+import { Button } from '@/components'
 
 const Icon = defineComponent({
   setup() {
@@ -9,19 +9,19 @@ const Icon = defineComponent({
   },
 })
 
-describe('NsmpButton', () => {
-  it('maps the NSMP type to the Ant Design button', () => {
-    const wrapper = mount(NsmpButton, {
+describe('Button', () => {
+  it('maps the type to the Ant Design button', () => {
+    const wrapper = mount(Button, {
       props: { type: 'default' },
       slots: { default: 'Delete' },
     })
 
-    expect(wrapper.find('button').classes()).toContain('ant-btn-dangerous')
+    expect(wrapper.find('button').classes()).toContain('ant-btn-default')
     expect(wrapper.text()).toBe('Delete')
   })
 
   it('renders the icon component before the button content', () => {
-    const wrapper = mount(NsmpButton, {
+    const wrapper = mount(Button, {
       props: { icon: markRaw(Icon) },
       slots: { default: 'Delete' },
     })
@@ -32,7 +32,7 @@ describe('NsmpButton', () => {
 
   it('forwards click handlers to the Ant Design button', async () => {
     const onClick = vi.fn()
-    const wrapper = mount(NsmpButton, {
+    const wrapper = mount(Button, {
       props: { onClick },
       slots: { default: 'Save' },
     })

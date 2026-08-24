@@ -1,2 +1,2 @@
-export { default as NsmpConfigProvider } from './ConfigProvider.vue'
-export type { NsmpConfigProviderProps } from './types'
+export { default as ConfigProvider } from './ConfigProvider.vue'
+export type { ConfigProviderProps } from './types'

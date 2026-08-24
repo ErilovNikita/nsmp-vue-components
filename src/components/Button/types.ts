@@ -1,9 +1,9 @@
 import type { ButtonProps as AntButtonProps } from 'ant-design-vue'
 import type { Component } from 'vue'
 
-export type NsmpButtonVariant = 'primary' | 'default' | 'text'
+export type ButtonVariant = 'primary' | 'default' | 'text'
 
-export interface NsmpButtonProps extends Omit<AntButtonProps, 'type' | 'danger'> {
-  type?: NsmpButtonVariant
+export interface ButtonProps extends Omit<AntButtonProps, 'type' | 'danger'> {
+  type?: ButtonVariant
   icon?: Component
 }

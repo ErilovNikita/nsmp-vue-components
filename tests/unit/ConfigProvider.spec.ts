@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
-import { NsmpConfigProvider } from '@/components'
+import { ConfigProvider } from '@/components'
 
-describe('NsmpConfigProvider', () => {
+describe('ConfigProvider', () => {
   it('provides the Naumen theme by default', () => {
-    const wrapper = mount(NsmpConfigProvider, {
+    const wrapper = mount(ConfigProvider, {
       slots: { default: '<button class="probe">Content</button>' },
     })
 
@@ -14,7 +14,7 @@ describe('NsmpConfigProvider', () => {
   })
 
   it('accepts a custom Ant Design theme', () => {
-    const wrapper = mount(NsmpConfigProvider, {
+    const wrapper = mount(ConfigProvider, {
       props: { theme: { token: { colorPrimary: '#00aa00' } } },
     })
 
@@ -22,7 +22,7 @@ describe('NsmpConfigProvider', () => {
   })
 
   it('maps buttonBackground to the Ant Design Button theme', () => {
-    const wrapper = mount(NsmpConfigProvider, {
+    const wrapper = mount(ConfigProvider, {
       props: {
         nsmpTheme: {
           buttonBackground: '#123456',

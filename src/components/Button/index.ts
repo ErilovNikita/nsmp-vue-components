@@ -1,2 +1,2 @@
-export { default as NsmpButton } from './Button.vue'
-export type { NsmpButtonProps, NsmpButtonVariant } from './types'
+export { default as Button } from './Button.vue'
+export type { ButtonProps, ButtonVariant } from './types'

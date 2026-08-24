@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Modal as AntModal } from 'ant-design-vue'
 import { ref, watch } from 'vue'
-import type { NsmpModalProps } from './types'
+import type { ModalProps } from './types'
 
-defineOptions({ name: 'NsmpModal' })
+defineOptions({ name: 'LibraryModal' })
 
-const props = withDefaults(defineProps<NsmpModalProps>(), {
+const props = withDefaults(defineProps<ModalProps>(), {
   centered: undefined,
   closable: true,
   confirmLoading: undefined,

@@ -1,2 +1,2 @@
-export { default as NsmpModal } from './Modal.vue'
-export type { NsmpModalProps } from './types'
+export { default as Modal } from './Modal.vue'
+export type { ModalProps } from './types'
