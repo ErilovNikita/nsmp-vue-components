@@ -1,20 +1,41 @@
 <script setup lang="ts">
 import { Button as AntButton } from 'ant-design-vue'
+import { computed, useAttrs } from 'vue'
 import type { NsmpButtonProps } from './types'
 
-defineOptions({ name: 'NsmpButton' })
+defineOptions({
+  name: 'NsmpButton',
+  inheritAttrs: false,
+})
 
-withDefaults(defineProps<NsmpButtonProps>(), {
-  variant: 'default',
+const props = withDefaults(defineProps<NsmpButtonProps>(), {
+  type: 'default',
+})
+
+const attrs = useAttrs()
+
+const buttonBindings = computed(() => {
+  const antButtonProps: Partial<NsmpButtonProps> = { ...props }
+  delete antButtonProps.icon
+  delete antButtonProps.type
+
+  return {
+    ...antButtonProps,
+    ...attrs,
+    type: props.type,
+  }
 })
 </script>
 
 <template>
   <AntButton
-    v-bind="$attrs"
-    :type="variant ?? 'default'"
+    v-bind="buttonBindings"
   >
-    <component class="btn-icon" v-if="icon" :is="icon" />
+    <component
+      :is="icon"
+      v-if="icon"
+      class="btn-icon"
+    />
     <slot />
   </AntButton>
 </template>

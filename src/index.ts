@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import { NsmpButton, NsmpConfigProvider } from './components'
+import { NsmpButton, NsmpConfigProvider, NsmpModal } from './components'
 
 export * from './components'
 export * from './composables'
@@ -12,5 +12,6 @@ export const NsmpVueComponents = {
   install(app: App) {
     app.component('NsmpButton', NsmpButton)
     app.component('NsmpConfigProvider', NsmpConfigProvider)
+    app.component('NsmpModal', NsmpModal)
   },
 }

@@ -1,27 +1,38 @@
-.ant-modal > div > .ant-modal-content {
+.ant-modal-mask {
+  background: rgb(0 0 0 / 45%) !important;
+}
+
+.ant-modal .ant-modal-content {
   padding: 0 !important;
 }
 
-.ant-modal > div > .ant-modal-content > .ant-modal-header {
+.ant-modal .ant-modal-header {
   padding: 20px;
   background: #154ea5;
 }
 
-.ant-modal > div > .ant-modal-content > .ant-modal-header > .ant-modal-title {
+.ant-modal .ant-modal-title {
   color: white !important;
   font-size: 15px !important;
   font-weight: 600 !important;
 }
 
-.ant-modal > div > .ant-modal-content > button > span > span.anticon > svg {
-  fill: white !important;
+.ant-modal .ant-modal-close {
+  display: flex !important;
+  color: white;
 }
 
-.ant-modal > div > .ant-modal-content > .ant-modal-body {
+.ant-modal .ant-modal-close:hover {
+  color: white;
+  background: rgb(255 255 255 / 12%);
+}
+
+.ant-modal .ant-modal-body {
   padding: 0 20px 8px;
 }
 
-.ant-modal > div > .ant-modal-content > .ant-modal-footer {
+.ant-modal .ant-modal-footer {
+  display: block !important;
   padding: 16px 24px;
   background: #f2f2f2;
   text-align: start !important;

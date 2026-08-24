@@ -14,7 +14,6 @@ import { createApp } from 'vue'
 import Antd from 'ant-design-vue'
 import { NsmpVueComponents } from '@minitwiks/nsmp-vue-components'
 
-import 'ant-design-vue/dist/reset.css'
 import '@minitwiks/nsmp-vue-components/style.css'
 
 createApp(App)
@@ -56,6 +55,34 @@ import { NsmpButton } from '@minitwiks/nsmp-vue-components'
 </script>
 
 <template>
-  <NsmpButton variant="primary">Cancel</NsmpButton>
+  <NsmpButton type="primary">Cancel</NsmpButton>
+</template>
+```
+
+### Modal
+
+`NsmpModal` сохраняет зоны `alert`, `form` и `footer` из старого шаблона. Методы
+`show()` и `hidden()` теперь находятся непосредственно в компоненте и доступны
+через template ref. Также поддерживается стандартный биндинг `v-model:open` и
+все свойства `Modal` из Ant Design Vue.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NsmpModal } from '@minitwiks/nsmp-vue-components'
+
+const modal = ref<InstanceType<typeof NsmpModal>>()
+</script>
+
+<template>
+  <button @click="modal?.show()">Открыть</button>
+
+  <NsmpModal ref="modal" title="Редактировать сотрудника">
+    <template #alert>Предупреждение</template>
+    <template #form>Содержимое формы</template>
+    <template #footer>
+      <button @click="modal?.hidden()">Закрыть</button>
+    </template>
+  </NsmpModal>
 </template>
 ```
