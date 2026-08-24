@@ -244,6 +244,57 @@ const displayColumns = computed<TableColumn[]>(() => currentColumns.value.map((c
   } as TableColumn
 }))
 
+const getGearHeader = (
+  event: globalThis.MouseEvent,
+): globalThis.HTMLElement | null => {
+  const target = event.target
+  if (!(target instanceof globalThis.Element)) {
+    return null
+  }
+
+  const selectionHeader = target.closest(
+    'th.ant-table-selection-column',
+  ) as globalThis.HTMLElement | null
+
+  if (!selectionHeader) {
+    return null
+  }
+
+  const bounds = selectionHeader.getBoundingClientRect()
+  const isGearClick = event.clientY >= bounds.top
+    && event.clientY <= bounds.top + 26
+    && Math.abs(event.clientX - (bounds.left + bounds.width / 2)) <= 12
+
+  return isGearClick ? selectionHeader : null
+}
+
+const handleTableClick = (event: globalThis.MouseEvent) => {
+  if (getGearHeader(event)) {
+    event.preventDefault()
+    event.stopPropagation()
+    globalThis.console.log('Клик по настройкам таблицы')
+  }
+}
+
+const handleTablePointerMove = (event: globalThis.MouseEvent) => {
+  const container = event.currentTarget as globalThis.HTMLElement
+  const gearHeader = getGearHeader(event)
+
+  container
+    .querySelectorAll('th.library-table-gear-hover')
+    .forEach(header => header.classList.remove('library-table-gear-hover'))
+
+  gearHeader?.classList.add('library-table-gear-hover')
+}
+
+const handleTablePointerLeave = (event: globalThis.MouseEvent) => {
+  const container = event.currentTarget as globalThis.HTMLElement
+
+  container
+    .querySelectorAll('th.library-table-gear-hover')
+    .forEach(header => header.classList.remove('library-table-gear-hover'))
+}
+
 const tableBindings = computed(() => {
   const tableProps: Partial<TableProps> = { ...props }
   delete tableProps.columns
@@ -267,7 +318,12 @@ const tableBindings = computed(() => {
 </script>
 
 <template>
-  <div class="library-table">
+  <div
+    class="library-table"
+    @click.capture="handleTableClick"
+    @pointerleave="handleTablePointerLeave"
+    @pointermove="handleTablePointerMove"
+  >
     <AntTypographyTitle
       v-if="title && showTitle"
       :level="4"

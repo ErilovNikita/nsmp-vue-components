@@ -81,6 +81,32 @@
   text-align: center !important;
 }
 
+.library-table .ant-table-thead > tr > th.ant-table-selection-column {
+  position: relative;
+  padding-top: 28px !important;
+}
+
+.library-table .ant-table-thead > tr > th.ant-table-selection-column::after {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background-image: url('../assets/cog-30.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: '';
+  cursor: pointer;
+  opacity: 0.65;
+  transform: translateX(-50%);
+  transition: opacity 0.15s ease;
+}
+
+.library-table .ant-table-thead > tr > th.library-table-gear-hover::after {
+  opacity: 0.9;
+}
+
 ul.ant-pagination.ant-table-pagination {
   align-items: center;
   flex-wrap: wrap;
@@ -89,7 +115,6 @@ ul.ant-pagination.ant-table-pagination {
   width: 100%;
   margin: 8px 0 0 !important;
   padding: 8px 16px 16px;
-  border-top: 1px solid #d9d9d9;
   color: #5f5f5f;
   font-size: 12px;
 }
@@ -100,7 +125,7 @@ ul.ant-pagination.ant-table-pagination > li.ant-pagination-item {
   height: 24px !important;
   padding: 0 !important;
   border: 1px solid transparent;
-  border-radius: 1px;
+  border-radius: 4px;
   font-size: 12px;
   font-style: normal !important;
   font-weight: 600 !important;
@@ -109,11 +134,11 @@ ul.ant-pagination.ant-table-pagination > li.ant-pagination-item {
 
 ul.ant-pagination.ant-table-pagination > li.ant-pagination-item.ant-pagination-item-active {
   min-width: 26px !important;
-  border-color: #323232 !important;
+  border-color: #b9b9b9 !important;
 }
 
 ul.ant-pagination.ant-table-pagination > li.ant-pagination-item.ant-pagination-item-active > a {
-  border-color: #323232 !important;
+  border-color: #b9b9b9 !important;
   color: #323232 !important;
 }
 
@@ -131,7 +156,8 @@ ul.ant-pagination.ant-table-pagination > li.ant-pagination-next {
   margin-inline: 4px;
 }
 
-ul.ant-pagination.ant-table-pagination > li.ant-pagination-prev.ant-pagination-disabled {
+ul.ant-pagination.ant-table-pagination > li.ant-pagination-prev.ant-pagination-disabled,
+ul.ant-pagination.ant-table-pagination > li.ant-pagination-next.ant-pagination-disabled {
   display: none;
 }
 

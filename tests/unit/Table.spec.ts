@@ -223,6 +223,58 @@ describe('Table', () => {
     expect(wrapper.emitted('columnClick')).toEqual([['name']])
   })
 
+  it('logs a click on the settings gear without changing selection', async () => {
+    const consoleLog = vi.spyOn(globalThis.console, 'log').mockImplementation(() => {})
+    const wrapper = mount(Table, {
+      props: { columns, dataSource },
+      slots: {
+        start: `
+          <table>
+            <thead>
+              <tr>
+                <th class="ant-table-selection-column">
+                  <span class="gear-target" />
+                </th>
+              </tr>
+            </thead>
+          </table>
+        `,
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+    const header = wrapper.find('th.ant-table-selection-column')
+
+    vi.spyOn(header.element, 'getBoundingClientRect').mockReturnValue({
+      bottom: 50,
+      height: 50,
+      left: 0,
+      right: 40,
+      top: 0,
+      width: 40,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    })
+
+    await wrapper.find('.gear-target').trigger('click', {
+      clientX: 20,
+      clientY: 10,
+    })
+
+    expect(consoleLog).toHaveBeenCalledWith('Клик по настройкам таблицы')
+
+    await wrapper.find('.gear-target').trigger('pointermove', {
+      clientX: 20,
+      clientY: 10,
+    })
+    expect(header.classes()).toContain('library-table-gear-hover')
+
+    await wrapper.find('.library-table').trigger('pointerleave')
+    expect(header.classes()).not.toContain('library-table-gear-hover')
+
+    consoleLog.mockRestore()
+  })
+
   it('passes visual table options and events without loading data itself', async () => {
     const onChange = vi.fn()
     const rowSelection = { selectedRowKeys: [1] }
