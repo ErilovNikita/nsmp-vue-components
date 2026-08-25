@@ -1,0 +1,94 @@
+:root {
+  --vp-c-brand-1: #556e95;
+  --vp-c-brand-2: #6d84a7;
+  --vp-c-brand-3: #7f96b9;
+  --vp-c-brand-soft: #e1e7ef;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #2a3f5a 10%, #7f96b9 90%);
+  --vp-button-brand-bg: #556e95;
+  --vp-button-brand-hover-bg: #3b4b63;
+}
+
+.local-search {
+  width: 200px;
+}
+
+.dark {
+  --vp-c-brand-1: #a9bad2;
+  --vp-c-brand-2: #8ea4c4;
+  --vp-c-brand-3: #7f96b9;
+  --vp-c-brand-soft: rgba(127, 150, 185, .16);
+}
+
+.vp-doc .demo {
+  margin: 20px 0;
+  padding: 24px;
+  border: 1px solid #d9dce1;
+  border-radius: 10px;
+  background: #fff;
+  color: #323232;
+}
+
+.vp-doc .demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.vp-doc .demo-controls {
+  display: grid;
+  grid-template-columns: minmax(140px, auto) minmax(180px, 240px);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.vp-doc .demo-controls label {
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+  .vp-doc .demo-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+
+.vp-doc th {
+  white-space: nowrap;
+}
+
+/* Keep VitePress' dark table styles away from live Ant Design examples. */
+.vp-doc .demo .ant-table-wrapper {
+  color: #323232;
+  color-scheme: light;
+}
+
+.vp-doc .demo .ant-table-wrapper .ant-table {
+  background: #fff;
+  color: #323232;
+}
+
+.vp-doc .demo .ant-table-wrapper table {
+  margin: 0;
+  overflow: visible;
+}
+
+.vp-doc .demo .ant-table-wrapper tr,
+.vp-doc .demo .ant-table-wrapper tr:nth-child(2n) {
+  border-top: 0;
+  background: transparent;
+  transition: none;
+}
+
+.vp-doc .demo .ant-table-wrapper th,
+.vp-doc .demo .ant-table-wrapper td {
+  border-right: 0;
+  border-left: 0;
+  color: #323232;
+}
