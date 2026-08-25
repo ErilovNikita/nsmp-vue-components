@@ -77,7 +77,18 @@
   background: #f4f4f4 !important;
 }
 
-.ant-table-selection-column {
+.library-table .ant-table-selection-col {
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+}
+
+.library-table .ant-table-selection-column {
+  box-sizing: border-box !important;
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  padding-inline: 8px !important;
   text-align: center !important;
 }
 

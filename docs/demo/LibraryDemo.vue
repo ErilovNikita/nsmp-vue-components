@@ -80,7 +80,7 @@ const columns = ref<TableColumn<DemoObject>[]>([
   { title: 'Название', dataIndex: 'name', key: 'name', width: 220 },
   { title: 'Категория', dataIndex: 'category', key: 'category', width: 160 },
   { title: 'Статус', dataIndex: 'status', key: 'status', width: 140 },
-  { title: 'Рейтинг', dataIndex: 'rating', key: 'rating', width: 120 },
+  { title: 'Рейтинг', dataIndex: 'rating', key: 'rating' },
 ])
 const selectedObjects = ref<DemoObject[]>([])
 
@@ -213,7 +213,7 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
               }"
               row-key="id"
               title="Случайные объекты"
-              view-storage-key="library-full-demo-objects"
+              view-storage-key="library-full-demo-objects-v2"
             >
               <template #start>
                 <Button type="default" @click="regenerateObjects">Сгенерировать заново</Button>

@@ -89,6 +89,23 @@ describe('TableSettings', () => {
     expect(savedColumns.find(column => column.key === 'age')?.hidden).toBe(true)
   })
 
+  it('does not allow the last visible column to be hidden', async () => {
+    const wrapper = mount(TableSettings, {
+      props: { columns, open: true },
+      global: { stubs },
+    })
+
+    await wrapper.findAll('[aria-label="Скрыть колонку"]')[0].trigger('click')
+    await wrapper.findAll('[aria-label="Скрыть колонку"]')[0].trigger('click')
+
+    const lastHideButton = wrapper.find('[aria-label="Скрыть колонку"]')
+    expect(lastHideButton.attributes('disabled')).toBeDefined()
+    expect(lastHideButton.attributes('title')).toBe('Нельзя скрыть последний столбец')
+
+    await lastHideButton.trigger('click')
+    expect(wrapper.findAll('.table-settings-order tbody tr')).toHaveLength(1)
+  })
+
   it('emits reset when the reset view button is clicked', async () => {
     const wrapper = mount(TableSettings, {
       props: { columns, open: true },
