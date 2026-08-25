@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Select as AntSelect, Switch as AntSwitch } from 'ant-design-vue'
 import { reactive, ref, watch } from 'vue'
 
 const model = reactive<{
@@ -41,32 +40,30 @@ watch(demoMultiple, multiple => {
 Измените вид отображения и режим выбора — пример обновится сразу.
 
 <div class="demo">
-  <div class="demo-controls">
-    <label for="select-view">Вид отображения</label>
-    <AntSelect
-      id="select-view"
+  <Form style="margin-bottom: 20px;">
+    <FormSelect
       v-model:value="demoView"
+      label="Вид отображения"
       :options="viewOptions"
-      aria-label="Вид отображения"
+      :select-props="{ id: 'select-view', 'aria-label': 'Вид отображения' }"
     />
-  </div>
-  <div class="demo-controls">
-    <label for="select-multiple">Множественный выбор</label>
-    <AntSwitch
-      id="select-multiple"
+    <FormSwitch
       v-model:checked="demoMultiple"
-      aria-label="Множественный выбор"
+      label="Множественный выбор"
+      :switch-props="{ id: 'select-multiple', 'aria-label': 'Множественный выбор' }"
     />
-  </div>
-  <div v-if="demoView === 'radio-button'" class="demo-controls">
-    <label for="select-radio-button-style">Оформление выбранного элемента</label>
-    <AntSelect
-      id="select-radio-button-style"
+    <FormSelect
+      v-if="demoView === 'radio-button'"
       v-model:value="demoRadioButtonStyle"
+      label="Оформление выбранного элемента"
       :options="radioButtonStyleOptions"
-      aria-label="Оформление Radio Button"
+      :select-props="{
+        id: 'select-radio-button-style',
+        'aria-label': 'Оформление Radio Button',
+      }"
     />
-  </div>
+  </Form>
+
   <Form :model="model">
     <FormSelect
       v-model:value="model.selection"

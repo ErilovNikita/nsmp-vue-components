@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Select as AntSelect } from 'ant-design-vue'
 import { ref } from 'vue'
 import { openNotification } from '../../src/utils'
 
@@ -24,15 +23,13 @@ const notify = () => openNotification({
 `openNotification` создаёт уведомление в стиле NSMP и возвращает контроллер для ручного закрытия.
 
 <div class="demo">
-  <div class="demo-controls">
-    <label for="notification-type">Тип уведомления</label>
-    <AntSelect
-      id="notification-type"
-      v-model:value="type"
-      :options="typeOptions"
-      aria-label="Тип уведомления"
-    />
-  </div>
+  <FormSelect
+    v-model:value="type"
+    label="Тип уведомления"
+    :options="typeOptions"
+    :select-props="{ id: 'notification-type', 'aria-label': 'Тип уведомления' }"
+    style="margin-bottom: 20px;"
+  />
   <Button type="primary" @click="notify">Показать уведомление</Button>
 </div>
 

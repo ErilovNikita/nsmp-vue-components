@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Select as AntSelect } from 'ant-design-vue'
 import { computed, ref } from 'vue'
 
 const open = ref(true)
@@ -28,15 +27,13 @@ const message = computed(() => messages[type.value])
 :::
 
 <div class="demo">
-  <div class="demo-controls">
-    <label for="alert-type">Тип уведомления</label>
-    <AntSelect
-      id="alert-type"
-      v-model:value="type"
-      :options="typeOptions"
-      aria-label="Тип уведомления"
-    />
-  </div>
+  <FormSelect
+    v-model:value="type"
+    label="Тип уведомления"
+    :options="typeOptions"
+    :select-props="{ id: 'alert-type', 'aria-label': 'Тип уведомления' }"
+    style="margin-bottom: 20px;"
+  />
   <Alert
     v-model:open="open"
     :closable="false"
