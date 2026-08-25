@@ -42,6 +42,7 @@ defineExpose({
   <AntForm
     ref="form"
     v-bind="{ ...props, ...attrs }"
+    class="library-form"
   >
     <slot />
   </AntForm>

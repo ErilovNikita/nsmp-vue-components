@@ -9,7 +9,7 @@ describe('Form', () => {
       slots: { default: '<input name="title" />' },
     })
 
-    expect(wrapper.find('form.ant-form').exists()).toBe(true)
+    expect(wrapper.find('form.ant-form.library-form').exists()).toBe(true)
     expect(wrapper.find('input[name="title"]').exists()).toBe(true)
   })
 

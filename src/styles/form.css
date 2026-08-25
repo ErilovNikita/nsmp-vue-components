@@ -2,6 +2,10 @@
   margin-bottom: 15px !important;
 }
 
+.library-form > .library-form-field:not(:has(~ .library-form-field)) {
+  margin-bottom: 0 !important;
+}
+
 .ant-form-item-label {
   padding: 0 !important;
 }
