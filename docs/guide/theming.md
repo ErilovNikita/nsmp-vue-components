@@ -49,7 +49,7 @@ onMounted(async () => {
 ## Готовая тема
 
 ```ts
-import { naumen } from '@minitwiks/nsmp-vue-components'
+import { blue } from '@minitwiks/nsmp-vue-components'
 ```
 
 Переданные через `theme` токены имеют приоритет над встроенной темой и преобразованными свойствами `nsmpTheme`.

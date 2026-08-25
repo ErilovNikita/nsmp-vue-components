@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
-import { naumen } from '@/tokens'
+import { blue } from '@/tokens'
 import type { ConfigProviderProps } from './types'
 
 defineOptions({ name: 'LibraryConfigProvider' })
@@ -256,7 +256,7 @@ const providerProps = computed(() => {
   type ComponentName = keyof typeof nsmpComponents
 
   const mergeComponent = (componentName: ComponentName) => ({
-    ...(naumen.components?.[componentName] as TokenRecord | undefined),
+    ...(blue.components?.[componentName] as TokenRecord | undefined),
     ...nsmpComponents[componentName],
     ...(theme?.components?.[componentName] as TokenRecord | undefined),
   })
@@ -265,17 +265,17 @@ const providerProps = computed(() => {
     ...rest,
 
     theme: {
-      ...naumen,
+      ...blue,
       ...theme,
 
       token: {
-        ...naumen.token,
+        ...blue.token,
         ...nsmpTokens,
         ...theme?.token,
       },
 
       components: {
-        ...naumen.components,
+        ...blue.components,
         ...theme?.components,
 
         Button: mergeComponent('Button'),

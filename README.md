@@ -27,7 +27,7 @@ createApp(App)
 ```
 
 ## Использование готового NSMP ThemeProvider
-`ConfigProvider` — это стилизованная обертка над одноимённым компонентом из библиотеки Ant Design Vue. По умолчанию он использует тему `naumen`, поэтому приложению больше не нужно импортировать и подключать тему вручную:
+`ConfigProvider` — это стилизованная обертка над одноимённым компонентом из библиотеки Ant Design Vue. По умолчанию он использует тему `blue`, поэтому приложению больше не нужно импортировать и подключать тему вручную:
 
 ```vue
 <script setup lang="ts">
@@ -49,7 +49,7 @@ import { ConfigProvider } from '@minitwiks/nsmp-vue-components'
 </ConfigProvider>
 ```
 
-Тема по умолчанию также доступна под именем `naumen` в пакете `@minitwiks/nsmp-vue-components`.
+Тема по умолчанию также доступна под именем `blue` в пакете `@minitwiks/nsmp-vue-components`.
 
 Для использования механизма tree-shaking импортируйте компоненты напрямую:
 

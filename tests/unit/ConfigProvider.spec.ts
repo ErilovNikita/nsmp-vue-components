@@ -4,7 +4,7 @@ import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
 import { ConfigProvider } from '@/components'
 
 describe('ConfigProvider', () => {
-  it('provides the Naumen theme by default', () => {
+  it('provides the blue theme by default', () => {
     const wrapper = mount(ConfigProvider, {
       slots: { default: '<button class="probe">Content</button>' },
     })

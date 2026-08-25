@@ -1,6 +1,6 @@
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 
-export const naumen: ThemeConfig = {
+export const blue: ThemeConfig = {
   components: {
     Button: {
       colorPrimary: '#7f96b9',
