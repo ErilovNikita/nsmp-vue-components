@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseNsmpTheme } from '@/data'
+import { parseNsmpTheme } from '@/utils'
 
 describe('parseNsmpTheme', () => {
   it('parses an NSMP theme declaration into a typed object', () => {

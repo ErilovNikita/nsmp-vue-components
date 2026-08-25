@@ -21,8 +21,11 @@ NSMP возвращает исходный текст темы с объявле
 ```vue
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue'
-import { ConfigProvider, parseNsmpTheme } from '@minitwiks/nsmp-vue-components'
-import type { NsmpThemeProperties } from '@minitwiks/nsmp-vue-components'
+import { ConfigProvider } from '@minitwiks/nsmp-vue-components'
+import {
+  parseNsmpTheme,
+  type NsmpThemeProperties,
+} from '@minitwiks/nsmp-vue-components/utils'
 
 const props = defineProps<{
   themeName: string

@@ -19,7 +19,7 @@ const options = formatOptions(users, {
 Извлекает JSON-объект `themeProperties` из скрипта темы NSMP и проверяет, что все значения являются строками.
 
 ```ts
-import { parseNsmpTheme } from '@minitwiks/nsmp-vue-components'
+import { parseNsmpTheme } from '@minitwiks/nsmp-vue-components/utils'
 
 const theme = parseNsmpTheme(`
   const themeProperties = {
