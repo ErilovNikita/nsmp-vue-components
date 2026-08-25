@@ -1,0 +1,113 @@
+.nsmp-notification.ant-notification-notice {
+  --nsmp-notification-color: #7f96b9;
+
+  width: min(440px, calc(100vw - 32px));
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--nsmp-notification-color);
+  border-radius: 2px;
+  box-shadow: 0 4px 14px #899aa9;
+}
+
+.nsmp-notification .ant-notification-notice-content,
+.nsmp-notification .ant-notification-notice-message {
+  margin: 0;
+  padding: 0;
+  color: #323232;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.nsmp-notification .ant-notification-notice-close {
+  top: 16px;
+  right: 16px;
+  color: #5f5f5f;
+}
+
+.nsmp-notification__layout {
+  display: flex;
+  min-height: 48px;
+}
+
+.nsmp-notification__toggle {
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+  color: #fff;
+  cursor: pointer;
+  background: var(--nsmp-notification-color);
+  border: 0;
+}
+
+.nsmp-notification__toggle:disabled {
+  cursor: default;
+}
+
+.nsmp-notification--success {
+  --nsmp-notification-color: #94d1ad !important;
+}
+
+.nsmp-notification--info {
+  --nsmp-notification-color: #7f96b9 !important;
+}
+
+.nsmp-notification--error {
+  --nsmp-notification-color: #e08a85 !important;
+}
+
+.nsmp-notification--warning {
+  --nsmp-notification-color: #edd69a !important;
+}
+
+.nsmp-notification__chevron {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.15s ease;
+}
+
+.nsmp-notification__layout--expanded .nsmp-notification__chevron {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.nsmp-notification__content {
+  min-width: 0;
+  flex: 1;
+  padding: 14px 44px 14px 18px;
+}
+
+.nsmp-notification__layout:not(.nsmp-notification__layout--expanded) .nsmp-notification__content {
+  display: flex;
+  align-items: center;
+}
+
+.nsmp-notification__title {
+  font-weight: 700;
+}
+
+.nsmp-notification__icon {
+  display: inline-flex;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.nsmp-notification__description {
+  margin-top: 10px;
+  white-space: pre-line;
+}
+
+.nsmp-notification__action {
+  margin-top: 12px;
+}
+
+.nsmp-notification--not-closable .ant-notification-notice-close {
+  display: none;
+}
+
+.nsmp-notification--not-closable .nsmp-notification__content {
+  padding-right: 18px;
+}

@@ -92,6 +92,102 @@ const notify = () => {
 props `message`, `type`, `closable`, `showIcon` и остальные свойства Alert из
 Ant Design Vue.
 
+### Notification
+
+Для разовых уведомлений используйте `openNotification`. По умолчанию уведомление
+появляется справа сверху, закрывается через 4,5 секунды и показывает кнопку
+закрытия.
+
+```ts
+import { h } from 'vue'
+import { Button } from '@minitwiks/nsmp-vue-components'
+import { openNotification } from '@minitwiks/nsmp-vue-components/utils'
+
+const notice = openNotification({
+  title: 'Данные сохранены',
+  description: 'Изменения успешно применены',
+  type: 'success',
+  placement: 'topRight',
+  duration: 8,
+  autoClose: true,
+  closable: true,
+  expandedByDefault: false,
+  action: () => h(Button, { onClick: () => notice.close() }, () => 'Закрыть'),
+})
+```
+
+По умолчанию виден только заголовок. Левая кнопка со стрелкой раскрывает описание
+и дополнительные действия. Чтобы сразу показать полное содержимое, передайте
+`expandedByDefault: true`.
+
+Параметр `type` задаёт цвет рамки и левой панели: `success` — зелёный,
+`error` — красный, `warning` — жёлтый, `info` — синий. Если тип не указан,
+используется `info`.
+
+`action` принимает текст, VNode или render-функцию, поэтому в дополнительной
+области можно разместить одну или несколько кнопок либо любой Vue-компонент.
+Если указать `autoClose: false`, уведомление останется открытым независимо от
+`duration`. Метод возвращает `key` и `close()`. Для внешнего управления также
+экспортируются `closeNotification(key)` и `destroyNotifications()`.
+
+#### HTML-разметка в описании
+
+Для создания разметки используйте Vue-функцию `h`. Такой вариант не требует
+`v-html` и подходит для ссылок, форматированного текста и обработчиков событий:
+
+```ts
+import { h } from 'vue'
+import { openNotification } from '@minitwiks/nsmp-vue-components/utils'
+
+openNotification({
+  title: 'Назначен новый исполнитель',
+  description: () => h('div', [
+    h('strong', 'Исполнитель: '),
+    h('span', 'Иван Иванов'),
+    h('br'),
+    h('a', { href: '/tasks/123' }, 'Открыть задачу'),
+  ]),
+})
+```
+
+Если разметка уже получена в виде HTML-строки, её можно передать через
+`innerHTML`:
+
+```ts
+openNotification({
+  title: 'Информация о задаче',
+  description: () => h('div', {
+    innerHTML: '<strong>Статус:</strong> ожидает выполнения',
+  }),
+})
+```
+
+Используйте `innerHTML` только для доверенной или предварительно очищенной
+разметки. Непроверенный пользовательский HTML может привести к XSS-уязвимости.
+
+#### Vue-компонент в описании
+
+Готовый компонент передаётся через render-функцию. Ему можно передавать props и
+подписываться на события обычным способом:
+
+```ts
+import { h } from 'vue'
+import TaskNotificationDetails from './TaskNotificationDetails.vue'
+import { openNotification } from '@minitwiks/nsmp-vue-components/utils'
+
+openNotification({
+  title: 'Задача изменена',
+  description: () => h(TaskNotificationDetails, {
+    taskId: 123,
+    onOpen: () => console.log('Задача открыта'),
+  }),
+  expandedByDefault: true,
+})
+```
+
+Дополнительно доступны `key` (повторный ключ обновляет уведомление), `icon`,
+`class`, `style`, `onClick`, `onClose` и `getContainer`.
+
 ### AttrGroup
 
 `AttrGroup` выводит значения объекта в раскрывающейся группе. Методы старого

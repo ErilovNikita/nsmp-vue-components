@@ -6,7 +6,8 @@ export * from './composables'
 export * from './data'
 export * from './tokens'
 export * from './types'
-export * from './utils'
+// Kept in the root entry for backward compatibility.
+export * from './utils/localStorage'
 import './styles/index.css'
 
 export const NsmpVueComponents = {
