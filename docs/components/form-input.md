@@ -52,7 +52,7 @@ const model = reactive({ someTextWithDescription: '' })
 | Prop | Тип | Описание |
 | --- | --- | --- |
 | `value` | `string` | Значение Input для `v-model:value`. |
-| `label` | `FormItemProps['label']` | Подпись поля. |
+| `label` | `FormItemProps['label']` | Подпись поля. Для строкового значения в конце автоматически добавляется `:`. |
 | `name` | `FormItemProps['name']` | Путь поля в модели формы. |
 | `rules` | `FormItemProps['rules']` | Правила валидации. |
 | `description` | `string \| null` | Текст информационного Alert. |

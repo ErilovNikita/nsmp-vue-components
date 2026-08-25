@@ -1,5 +1,19 @@
 import type { App } from 'vue'
-import { Alert, AttrGroup, Button, ConfigProvider, Form, FormInput, Modal, Table, Tabs } from './components'
+import {
+  Alert,
+  AttrGroup,
+  Button,
+  ConfigProvider,
+  Form,
+  FormCheckbox,
+  FormInput,
+  FormNumber,
+  FormSelect,
+  FormSlider,
+  Modal,
+  Table,
+  Tabs,
+} from './components'
 
 export * from './components'
 export * from './composables'
@@ -12,7 +26,21 @@ import './styles/index.css'
 
 export const NsmpVueComponents = {
   install(app: App) {
-    const components = { Alert, AttrGroup, Button, ConfigProvider, Form, FormInput, Modal, Table, Tabs }
+    const components = {
+      Alert,
+      AttrGroup,
+      Button,
+      ConfigProvider,
+      Form,
+      FormCheckbox,
+      FormInput,
+      FormNumber,
+      FormSelect,
+      FormSlider,
+      Modal,
+      Table,
+      Tabs,
+    }
 
     Object.entries(components).forEach(([name, component]) => {
       app.component(name, component)

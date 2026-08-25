@@ -2,7 +2,7 @@ import type {
   FormItemProps as AntFormItemProps,
   InputProps as AntInputProps,
 } from 'ant-design-vue'
-import type { AlertProps } from '../Alert/types'
+import type { FormFieldAlertProps } from '../_internal/FormField.vue'
 
 export interface FormInputProps {
   /** Alert text displayed above the input. */
@@ -20,9 +20,7 @@ export interface FormInputProps {
   /** Additional FormItem props. Top-level props take precedence. */
   formItemProps?: AntFormItemProps
   /** Additional Alert props. Defaults to open info alert. */
-  alertProps?: Omit<AlertProps, 'onClose'> & {
-    onClose?: (event: MouseEvent) => void
-  }
+  alertProps?: FormFieldAlertProps
   /** Additional Input props. Top-level props take precedence. */
   inputProps?: AntInputProps
 }

@@ -30,13 +30,21 @@ describe('FormInput', () => {
       },
     })
 
-    expect(wrapper.findComponent(AntFormItem).props('label')).toBe('Поле')
+    expect(wrapper.findComponent(AntFormItem).props('label')).toBe('Поле:')
     expect(wrapper.findComponent(Alert).props()).toMatchObject({
       message: 'Описание поля',
       open: true,
       type: 'info',
     })
     expect(wrapper.findComponent(AntInput).props('placeholder')).toBe('Введите значение')
+  })
+
+  it('does not duplicate a trailing label colon', () => {
+    const wrapper = mount(FormInput, {
+      props: { label: 'Поле:' },
+    })
+
+    expect(wrapper.findComponent(AntFormItem).props('label')).toBe('Поле:')
   })
 
   it('supports v-model:value', async () => {
@@ -51,6 +59,7 @@ describe('FormInput', () => {
     const wrapper = mount(FormInput, {
       props: {
         alertProps: { closable: false, type: 'warning' },
+        description: 'Подсказка для поля',
         formItemProps: { extra: 'Подсказка' },
         inputProps: { allowClear: true, maxlength: 20 },
       },
