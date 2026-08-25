@@ -1,5 +1,7 @@
 # nsmp-vue-components
 
+[![Tests](https://github.com/ErilovNikita/nsmp-vue-components/actions/workflows/tests.yml/badge.svg?branch=dev)](https://github.com/ErilovNikita/nsmp-vue-components/actions/workflows/tests.yml) [![npm version](https://img.shields.io/npm/v/%40minitwiks%2Fnsmp-vue-components.svg)](https://www.npmjs.com/package/@minitwiks/nsmp-vue-components) [![npm downloads](https://img.shields.io/npm/dm/%40minitwiks%2Fnsmp-vue-components.svg)](https://www.npmjs.com/package/@minitwiks/nsmp-vue-components) [![License: MIT](https://img.shields.io/github/license/ErilovNikita/nsmp-vue-components.svg)](LICENSE)
+
 Стилизованные Vue-компоненты для встроенных приложений NSMP. Библиотека базируется на [`ant-design-vue`](https://github.com/vueComponent/ant-design-vue), сохраняя её проверенные временем базовые элементы и дополняя их токенами в стилистике NSMP, настройками по умолчанию и вспомогательными инструментами для работы с данными.
 
 ## Установка
