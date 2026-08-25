@@ -37,6 +37,27 @@ export default defineConfig({
         link: '/demo/',
         activeMatch: '^/demo/',
       },
+      {
+        text: 'Проект',
+        items: [
+          {
+            text: 'Репозиторий',
+            link: 'https://github.com/ErilovNikita/nsmp-vue-components',
+          },
+          {
+            text: 'Последний релиз',
+            link: 'https://github.com/ErilovNikita/nsmp-vue-components/releases/latest',
+          },
+          {
+            text: 'Пакет в npm',
+            link: 'https://www.npmjs.com/package/@minitwiks/nsmp-vue-components',
+          },
+          {
+            text: 'Сообщить о проблеме',
+            link: 'https://github.com/ErilovNikita/nsmp-vue-components/issues/new',
+          },
+        ],
+      },
     ],
     sidebar: {
       '/guide/': [
