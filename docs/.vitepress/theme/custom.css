@@ -5,6 +5,15 @@
   --vp-c-brand-soft: #e1e7ef;
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(120deg, #2a3f5a 10%, #7f96b9 90%);
+  --vp-home-hero-image-background-image: linear-gradient(
+    135deg,
+    #dbeafe 5%,
+    #93c5fd 28%,
+    #60a5fa 50%,
+    #7f96b9 74%,
+    #a5b4fc 100%
+  );
+  --vp-home-hero-image-filter: blur(56px) saturate(1.08);
   --vp-button-brand-bg: #556e95;
   --vp-button-brand-hover-bg: #3b4b63;
 }
@@ -16,14 +25,54 @@
   margin-top: 6%;
 }
 
+.VPHomeHero .image-bg {
+  width: min(78vw, 390px);
+  height: min(78vw, 390px);
+  border-radius: 50%;
+  opacity: 0.72;
+  animation: home-logo-glow 5s ease-in-out infinite alternate;
+}
+
+@keyframes home-logo-glow {
+  from {
+    opacity: 0.48;
+    filter: blur(50px);
+  }
+
+  to {
+    opacity: 0.72;
+    filter: blur(58px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .VPHomeHero .image-bg {
+    animation: none;
+  }
+}
+
 .dark {
   --vp-c-brand-1: #a9bad2;
   --vp-c-brand-2: #8ea4c4;
   --vp-c-brand-3: #7f96b9;
   --vp-c-brand-soft: rgba(127, 150, 185, .16);
+  --vp-home-hero-image-background-image: linear-gradient(
+    135deg,
+    #1e3a5f 5%,
+    #2563a8 30%,
+    #3b82c4 54%,
+    #556e95 76%,
+    #7f96b9 100%
+  );
+  --vp-home-hero-image-filter: blur(56px) saturate(1.2);
 }
 
 @media (min-width: 960px) {
+  .VPHomeHero .image-bg {
+    width: 560px;
+    height: 560px;
+  }
+
   .VPHomeHero .image-src {
     max-width: 440px;
     max-height: 440px;

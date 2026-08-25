@@ -17,47 +17,79 @@ export default defineConfig({
     siteTitle: 'NSMP Vue Components',
     search: { provider: 'local' },
     nav: [
-      { text: 'Руководство', link: '/guide/getting-started' },
-      { text: 'Компоненты', link: '/components/button' },
-      { text: 'Утилиты', link: '/utilities/notifications' },
-    ],
-    sidebar: [
       {
-        text: 'Начало работы',
-        items: [
-          { text: 'Введение', link: '/' },
-          { text: 'Установка', link: '/guide/getting-started' },
-          { text: 'Темизация', link: '/guide/theming' },
-        ],
+        text: 'Документация',
+        link: '/guide/getting-started',
+        activeMatch: '^/guide/',
       },
       {
         text: 'Компоненты',
-        items: [
-          { text: 'Alert', link: '/components/alert' },
-          { text: 'AttrGroup', link: '/components/attr-group' },
-          { text: 'Button', link: '/components/button' },
-          { text: 'Caption', link: '/components/caption' },
-          { text: 'ConfigProvider', link: '/components/config-provider' },
-          { text: 'Form', link: '/components/form' },
-          { text: 'FormCheckbox', link: '/components/form-checkbox' },
-          { text: 'FormInput', link: '/components/form-input' },
-          { text: 'FormNumber', link: '/components/form-number' },
-          { text: 'FormSelect', link: '/components/form-select' },
-          { text: 'FormSlider', link: '/components/form-slider' },
-          { text: 'FormSwitch', link: '/components/form-switch' },
-          { text: 'Modal', link: '/components/modal' },
-          { text: 'Table', link: '/components/table' },
-          { text: 'Tabs', link: '/components/tabs' },
-        ],
+        link: '/components/button',
+        activeMatch: '^/components/',
       },
       {
         text: 'Утилиты',
-        items: [
-          { text: 'Уведомления', link: '/utilities/notifications' },
-          { text: 'Данные и тема', link: '/utilities/data' },
-        ],
+        link: '/utilities/notifications',
+        activeMatch: '^/utilities/',
       },
     ],
+    sidebar: {
+      '/guide/': [
+        {
+          text: 'Документация',
+          items: [
+            { text: 'Начало работы', link: '/guide/getting-started' },
+            { text: 'Темизация', link: '/guide/theming' },
+          ],
+        },
+      ],
+      '/components/': [
+        {
+          text: 'Основные',
+          items: [
+            { text: 'Button', link: '/components/button' },
+            { text: 'Caption', link: '/components/caption' },
+            { text: 'ConfigProvider', link: '/components/config-provider' },
+          ],
+        },
+        {
+          text: 'Формы',
+          items: [
+            { text: 'Form', link: '/components/form' },
+            { text: 'FormCheckbox', link: '/components/form-checkbox' },
+            { text: 'FormInput', link: '/components/form-input' },
+            { text: 'FormNumber', link: '/components/form-number' },
+            { text: 'FormSelect', link: '/components/form-select' },
+            { text: 'FormSlider', link: '/components/form-slider' },
+            { text: 'FormSwitch', link: '/components/form-switch' },
+          ],
+        },
+        {
+          text: 'Данные и навигация',
+          items: [
+            { text: 'AttrGroup', link: '/components/attr-group' },
+            { text: 'Table', link: '/components/table' },
+            { text: 'Tabs', link: '/components/tabs' },
+          ],
+        },
+        {
+          text: 'Обратная связь',
+          items: [
+            { text: 'Alert', link: '/components/alert' },
+            { text: 'Modal', link: '/components/modal' },
+          ],
+        },
+      ],
+      '/utilities/': [
+        {
+          text: 'Утилиты',
+          items: [
+            { text: 'Уведомления', link: '/utilities/notifications' },
+            { text: 'Данные и тема', link: '/utilities/data' },
+          ],
+        },
+      ],
+    },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ErilovNikita/nsmp-vue-components' },
     ],
