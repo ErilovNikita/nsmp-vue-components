@@ -98,7 +98,6 @@
 
 .vp-doc .demo .ant-table-wrapper th,
 .vp-doc .demo .ant-table-wrapper td {
-  border-right: 0;
-  border-left: 0;
+  border: 0;
   color: #323232;
 }
