@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { FormItem as AntFormItem, Input as AntInput } from 'ant-design-vue'
 import { reactive, ref } from 'vue'
 
 const form = ref()
@@ -28,12 +27,20 @@ const submit = async () => {
 
 <div class="demo">
   <Form ref="form" :model="model" :rules="rules">
-    <AntFormItem label="Имя" name="name">
-      <AntInput v-model:value="model.name" placeholder="Иван Иванов" />
-    </AntFormItem>
-    <AntFormItem label="Email" name="email">
-      <AntInput v-model:value="model.email" placeholder="name@example.com" />
-    </AntFormItem>
+    <FormInput
+      v-model:value="model.name"
+      label="Имя"
+      name="name"
+      description="Укажите имя и фамилию"
+      placeholder="Иван Иванов"
+    />
+    <FormInput
+      v-model:value="model.email"
+      label="Email"
+      name="email"
+      description="На этот адрес будут приходить уведомления"
+      placeholder="name@example.com"
+    />
     <Button style="margin-top: 20px;" type="primary" @click="submit">Проверить</Button>
   </Form>
   <p v-if="submitted">Форма успешно проверена.</p>
@@ -42,8 +49,11 @@ const submit = async () => {
 ```vue
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { FormItem, Input } from 'ant-design-vue'
-import { Button, Form } from '@minitwiks/nsmp-vue-components'
+import {
+  Button,
+  Form,
+  FormInput,
+} from '@minitwiks/nsmp-vue-components'
 
 const form = ref<InstanceType<typeof Form>>()
 const model = reactive({ name: '', email: '' })
@@ -60,12 +70,22 @@ const submit = async () => {
 
 <template>
   <Form ref="form" :model="model" :rules="rules">
-    <FormItem label="Имя" name="name">
-      <Input v-model:value="model.name" />
-    </FormItem>
-    <FormItem label="Email" name="email">
-      <Input v-model:value="model.email" />
-    </FormItem>
+    <FormInput
+      v-model:value="model.name"
+      label="Имя"
+      name="name"
+      description="Укажите имя и фамилию"
+      placeholder="Иван Иванов"
+    />
+
+    <FormInput
+      v-model:value="model.email"
+      label="Email"
+      name="email"
+      description="На этот адрес будут приходить уведомления"
+      placeholder="name@example.com"
+    />
+
     <Button style="margin-top: 20px;" type="primary" @click="submit">Проверить</Button>
   </Form>
 </template>
