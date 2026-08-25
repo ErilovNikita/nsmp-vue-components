@@ -38,6 +38,7 @@ export default defineConfig({
           { text: 'Button', link: '/components/button' },
           { text: 'ConfigProvider', link: '/components/config-provider' },
           { text: 'Form', link: '/components/form' },
+          { text: 'FormInput', link: '/components/form-input' },
           { text: 'Modal', link: '/components/modal' },
           { text: 'Table', link: '/components/table' },
           { text: 'Tabs', link: '/components/tabs' },
