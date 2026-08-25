@@ -54,6 +54,7 @@ export default defineConfig({
           items: [
             { text: 'Button', link: '/components/button' },
             { text: 'Caption', link: '/components/caption' },
+            { text: 'Code', link: '/components/code' },
             { text: 'ConfigProvider', link: '/components/config-provider' },
           ],
         },

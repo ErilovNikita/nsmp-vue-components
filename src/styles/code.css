@@ -1,5 +1,132 @@
-pre .string { color: green; }
-pre .number { color: darkorange; }
-pre .boolean { color: blue; }
-pre .null { color: magenta; }
-pre .key { color: red; }
+.library-code {
+  overflow: hidden;
+  border: 1px solid #d9dce1;
+  border-radius: 4px;
+  background: #f7f8fa;
+  color: #323232;
+}
+
+.library-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+  padding: 0 12px;
+  border-bottom: 1px solid #d9dce1;
+  background: #eef1f5;
+}
+
+.library-code-title {
+  overflow: hidden;
+  color: #5f5f5f;
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.library-code-copy {
+  padding: 3px 7px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: #556e95;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.library-code-copy:hover {
+  background: #e1e7ef;
+}
+
+.library-code-copy:focus-visible {
+  outline: 2px solid #7f96b9;
+  outline-offset: 1px;
+}
+
+.library-code-body {
+  display: flex;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.library-code-pre,
+.library-code-lines {
+  margin: 0;
+  padding: 14px 16px;
+  background: transparent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.library-code-pre {
+  min-width: max-content;
+  flex: 1;
+}
+
+.library-code-pre-wrap {
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.library-code-lines {
+  padding-right: 10px;
+  border-right: 1px solid #e2e5e9;
+  color: #999;
+  text-align: right;
+  user-select: none;
+}
+
+.library-code .hljs {
+  display: block;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  color: #323232;
+}
+
+.library-code .hljs-comment,
+.library-code .hljs-quote {
+  color: #7a8694;
+  font-style: italic;
+}
+
+.library-code .hljs-keyword,
+.library-code .hljs-selector-tag,
+.library-code .hljs-built_in {
+  color: #7b4ab5;
+}
+
+.library-code .hljs-string,
+.library-code .hljs-attr,
+.library-code .hljs-template-tag,
+.library-code .hljs-template-variable {
+  color: #287a4b;
+}
+
+.library-code .hljs-number,
+.library-code .hljs-literal {
+  color: #b45f06;
+}
+
+.library-code .hljs-title,
+.library-code .hljs-section,
+.library-code .hljs-selector-id,
+.library-code .hljs-selector-class {
+  color: #154ea5;
+}
+
+.library-code .hljs-variable,
+.library-code .hljs-property,
+.library-code .hljs-params {
+  color: #9a3e62;
+}
+
+.library-code .hljs-tag,
+.library-code .hljs-name {
+  color: #0063b0;
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
-import { Alert, AttrGroup, Button, Caption, ConfigProvider, Modal, Table, Tabs } from '../../src'
+import { Alert, AttrGroup, Button, Caption, Code, ConfigProvider, Modal, Table, Tabs } from '../../src'
 import { Form, FormCheckbox, FormInput, FormNumber, FormSelect, FormSlider, FormSwitch } from '../../src'
 import type { TableColumn } from '../../src'
 
@@ -57,6 +57,7 @@ const formValues = computed<Record<string, unknown>>(() => ({
   notifications: model.notifications ? 'Включены' : 'Выключены',
   workload: `${model.workload}%`,
 }))
+const formCode = computed(() => JSON.stringify(model, null, 2))
 
 const save = async () => {
   try {
@@ -197,6 +198,14 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
 
             <aside class="library-demo-panel library-demo-values">
               <AttrGroup title="Параметры формы" :items="attrItems" :values="formValues" open/>
+              <AttrGroup #start title="В виде JSON" :items="[]" :values="{}">
+                <Code
+                  :code="formCode"
+                  language="json"
+                  title="Текущие значения"
+                  line-numbers
+                />
+              </AttrGroup>
             </aside>
           </div>
         </template>
