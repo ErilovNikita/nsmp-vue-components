@@ -132,6 +132,7 @@ const save = () => {
     :open="open"
     title="Настройка полей"
     :width="920"
+    wrap-class-name="library-table-settings-modal"
     @update:open="value => !value && emit('close')"
   >
     <div class="table-settings">
