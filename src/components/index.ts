@@ -1,6 +1,7 @@
 export * from './Alert'
 export * from './AttrGroup'
 export * from './Button'
+export * from './Caption'
 export * from './ConfigProvider'
 export * from './Form'
 export * from './FormInput'

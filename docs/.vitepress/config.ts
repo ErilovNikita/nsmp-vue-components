@@ -36,6 +36,7 @@ export default defineConfig({
           { text: 'Alert', link: '/components/alert' },
           { text: 'AttrGroup', link: '/components/attr-group' },
           { text: 'Button', link: '/components/button' },
+          { text: 'Caption', link: '/components/caption' },
           { text: 'ConfigProvider', link: '/components/config-provider' },
           { text: 'Form', link: '/components/form' },
           { text: 'FormCheckbox', link: '/components/form-checkbox' },
