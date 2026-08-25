@@ -6,6 +6,7 @@ import {
   RadioGroup as AntRadioGroup,
   Select as AntSelect,
   Slider as AntSlider,
+  Switch as AntSwitch,
 } from 'ant-design-vue'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import {
@@ -14,6 +15,7 @@ import {
   FormNumber,
   FormSelect,
   FormSlider,
+  FormSwitch,
 } from '@/components'
 
 beforeAll(() => {
@@ -53,6 +55,25 @@ describe('form controls', () => {
 
     expect(wrapper.find('.ant-form-item-label').exists()).toBe(false)
     expect(wrapper.findComponent(AntCheckbox).text()).toBe('Согласен')
+  })
+
+  it('renders FormSwitch without a top label and forwards switch props', async () => {
+    const wrapper = mount(FormSwitch, {
+      props: {
+        checked: true,
+        label: 'Уведомления',
+        switchProps: { disabled: true },
+      },
+    })
+    const control = wrapper.findComponent(AntSwitch)
+
+    expect(wrapper.find('.ant-form-item-label').exists()).toBe(false)
+    expect(wrapper.find('.library-form-switch-label').text()).toBe('Уведомления')
+    expect(control.props()).toMatchObject({ checked: true, disabled: true })
+
+    control.vm.$emit('update:checked', false)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted('update:checked')).toEqual([[false]])
   })
 
   it('forwards options to FormSelect', () => {

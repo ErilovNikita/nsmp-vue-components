@@ -43,6 +43,7 @@ export default defineConfig({
           { text: 'FormNumber', link: '/components/form-number' },
           { text: 'FormSelect', link: '/components/form-select' },
           { text: 'FormSlider', link: '/components/form-slider' },
+          { text: 'FormSwitch', link: '/components/form-switch' },
           { text: 'Modal', link: '/components/modal' },
           { text: 'Table', link: '/components/table' },
           { text: 'Tabs', link: '/components/tabs' },

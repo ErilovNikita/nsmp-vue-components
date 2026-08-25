@@ -20,6 +20,16 @@
   margin-bottom: 8px;
 }
 
+.library-form-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.library-form-switch-label {
+  color: #323232;
+}
+
 .library-form-select-radio-multiple .ant-checkbox,
 .library-form-select-radio-multiple .ant-checkbox-inner,
 .library-form-select-radio-multiple .ant-checkbox::after {
