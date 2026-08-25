@@ -10,6 +10,10 @@ export default defineConfig({
   lastUpdated: true,
   head: [['meta', { name: 'theme-color', content: '#556e95' }]],
   themeConfig: {
+    logo: {
+      src: '/logo.png',
+      alt: 'NSMP Vue Components',
+    },
     siteTitle: 'NSMP Vue Components',
     search: { provider: 'local' },
     nav: [
