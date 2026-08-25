@@ -15,3 +15,6 @@ hero:
     - theme: alt
       text: Смотреть компоненты
       link: /components/button
+    - theme: alt
+      text: Демо
+      link: /demo/

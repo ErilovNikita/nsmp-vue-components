@@ -32,6 +32,11 @@ export default defineConfig({
         link: '/utilities/notifications',
         activeMatch: '^/utilities/',
       },
+      {
+        text: 'Демо',
+        link: '/demo/',
+        activeMatch: '^/demo/',
+      },
     ],
     sidebar: {
       '/guide/': [
