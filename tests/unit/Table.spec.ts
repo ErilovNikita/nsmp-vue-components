@@ -73,7 +73,24 @@ describe('Table', () => {
       showSizeChanger: true,
     })
     expect(wrapper.findComponent(AntTable).props('tableLayout')).toBe('fixed')
-    expect(wrapper.findComponent(AntTable).props('rowSelection')).toBeDefined()
+    expect(wrapper.findComponent(AntTable).props('rowSelection')).toMatchObject({
+      columnWidth: 48,
+    })
+  })
+
+  it('keeps the selection column at a fixed width', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns,
+        dataSource,
+        rowSelection: { columnWidth: 120 },
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    expect(wrapper.findComponent(AntTable).props('rowSelection')).toMatchObject({
+      columnWidth: 48,
+    })
   })
 
   it('emits complete selected objects when rows are checked', () => {

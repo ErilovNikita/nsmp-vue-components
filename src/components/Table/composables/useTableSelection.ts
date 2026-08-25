@@ -3,6 +3,8 @@ import type { TableRowSelection } from 'ant-design-vue/es/table/interface'
 import { computed, ref, watch } from 'vue'
 import type { TableProps, TableRecord } from '../types'
 
+const selectionColumnWidth = 48
+
 export const useTableSelection = (
   props: Readonly<TableProps>,
   onUpdate: (records: TableRecord[]) => void,
@@ -25,6 +27,7 @@ export const useTableSelection = (
 
     return {
       ...props.rowSelection,
+      columnWidth: selectionColumnWidth,
       selectedRowKeys: props.rowSelection?.selectedRowKeys ?? selectedRowKeys.value,
       onChange: (keys, rows) => {
         selectedObjects.value = [...rows]

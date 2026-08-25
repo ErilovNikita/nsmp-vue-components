@@ -104,6 +104,10 @@ const moveColumn = (index: number, offset: number) => {
 }
 
 const hideColumn = (column: TableColumn) => {
+  if (visibleColumns.value.length <= 1) {
+    return
+  }
+
   draftColumns.value = draftColumns.value.map(item =>
     item === column ? { ...item, hidden: true } : item,
   )
@@ -123,6 +127,10 @@ const handleDrop = (targetIndex: number) => {
 }
 
 const save = () => {
+  if (visibleColumns.value.length === 0) {
+    return
+  }
+
   emit('save', draftColumns.value.map(column => ({ ...column })))
 }
 </script>
@@ -132,6 +140,7 @@ const save = () => {
     :open="open"
     title="Настройка полей"
     :width="920"
+    wrap-class-name="library-table-settings-modal"
     @update:open="value => !value && emit('close')"
   >
     <div class="table-settings">
@@ -192,7 +201,11 @@ const save = () => {
               </button>
               <button
                 type="button"
+                :disabled="visibleColumns.length === 1"
                 aria-label="Скрыть колонку"
+                :title="visibleColumns.length === 1
+                  ? 'Нельзя скрыть последний столбец'
+                  : 'Скрыть столбец'"
                 @click="hideColumn(column)"
               >
                 ×

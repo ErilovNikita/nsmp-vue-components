@@ -1,6 +1,12 @@
-h4.ant-typography {
+.library-caption-title.ant-typography {
   margin-top: 0 !important;
   margin-bottom: 5px !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  color: #323232 !important;
+}
+
+h4.library-caption-title.ant-typography {
   font-size: 17px !important;
   line-height: 20px !important;
 }
