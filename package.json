@@ -1,7 +1,26 @@
 {
   "name": "@minitwiks/nsmp-vue-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Styled Vue components and data helpers for NSMP embedded applications.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ErilovNikita/nsmp-vue-components.git"
+  },
+  "homepage": "https://github.com/ErilovNikita/nsmp-vue-components#readme",
+  "bugs": {
+    "url": "https://github.com/ErilovNikita/nsmp-vue-components/issues"
+  },
+  "keywords": [
+    "nsmp",
+    "jsapi",
+    "js-api",
+    "naumen",
+    "vue",
+    "vue3",
+    "vite",
+    "embedded-application"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
