@@ -37,6 +37,7 @@ export default defineConfig({
           { text: 'AttrGroup', link: '/components/attr-group' },
           { text: 'Button', link: '/components/button' },
           { text: 'ConfigProvider', link: '/components/config-provider' },
+          { text: 'Form', link: '/components/form' },
           { text: 'Modal', link: '/components/modal' },
           { text: 'Table', link: '/components/table' },
           { text: 'Tabs', link: '/components/tabs' },
