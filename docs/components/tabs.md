@@ -25,10 +25,24 @@ const items = [
 </div>
 
 ```vue
-<Tabs v-model:active-key="active" :items="items">
-  <template #overview>Общая информация</template>
-  <template #history>История изменений</template>
-</Tabs>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Tabs } from '@minitwiks/nsmp-vue-components'
+
+const active = ref('overview')
+const items = [
+  { key: 'overview', label: 'Обзор' },
+  { key: 'history', label: 'История' },
+  { key: 'settings', label: 'Настройки', disabled: true },
+]
+</script>
+
+<template>
+  <Tabs v-model:active-key="active" :items="items">
+    <template #overview>Общая информация об объекте.</template>
+    <template #history>История изменений.</template>
+  </Tabs>
+</template>
 ```
 
 ## Основные props

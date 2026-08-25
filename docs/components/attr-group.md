@@ -16,12 +16,20 @@ const fields: Array<[string, string]> = [['Имя', 'name'], ['Роль', 'role'
 </div>
 
 ```vue
-<AttrGroup
-  title="Сотрудник"
-  :items="[['Имя', 'name'], ['Роль', 'role']]"
-  :values="employee"
-  open
-/>
+<script setup lang="ts">
+import { AttrGroup } from '@minitwiks/nsmp-vue-components'
+
+const employee = { name: 'Никита', role: 'Разработчик', team: 'Platform' }
+const fields: Array<[string, string]> = [
+  ['Имя', 'name'],
+  ['Роль', 'role'],
+  ['Команда', 'team'],
+]
+</script>
+
+<template>
+  <AttrGroup title="Сотрудник" :items="fields" :values="employee" open />
+</template>
 ```
 
 ## Props

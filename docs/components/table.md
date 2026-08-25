@@ -37,13 +37,36 @@ const selected = ref<typeof rows>([])
 </div>
 
 ```vue
-<Table
-  v-model:columns="columns"
-  v-model:selected-objects="selected"
-  title="Сотрудники"
-  :data-source="employees"
-  view-storage-key="employees-table"
-/>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Table } from '@minitwiks/nsmp-vue-components'
+
+const columns = ref([
+  { title: 'Имя', dataIndex: 'name', key: 'name', width: 160 },
+  { title: 'Роль', dataIndex: 'role', key: 'role', width: 180 },
+  { title: 'Команда', dataIndex: 'team', key: 'team', width: 140 },
+])
+
+const rows = [
+  { key: 1, name: 'Анна', role: 'Аналитик', team: 'Core' },
+  { key: 2, name: 'Никита', role: 'Разработчик', team: 'Platform' },
+  { key: 3, name: 'Мария', role: 'Дизайнер', team: 'Product' },
+]
+
+const selected = ref<typeof rows>([])
+</script>
+
+<template>
+  <Table
+    v-model:columns="columns"
+    v-model:selected-objects="selected"
+    title="Команда"
+    :data-source="rows"
+    :pagination="false"
+    :min-column-width="90"
+    view-storage-key="docs-team-table-view"
+  />
+</template>
 ```
 
 ## Изменение ширины столбцов

@@ -23,9 +23,22 @@ const save = () => {
 </div>
 
 ```vue
-<Button type="primary">Сохранить</Button>
-<Button type="default">Отмена</Button>
-<Button type="text">Подробнее</Button>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@minitwiks/nsmp-vue-components'
+
+const loading = ref(false)
+const save = () => {
+  loading.value = true
+  window.setTimeout(() => { loading.value = false }, 700)
+}
+</script>
+
+<template>
+  <Button type="primary" :loading="loading" @click="save">Сохранить</Button>
+  <Button type="default">Отмена</Button>
+  <Button type="text">Подробнее</Button>
+</template>
 ```
 
 ## Props

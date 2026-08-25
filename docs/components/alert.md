@@ -44,20 +44,40 @@ const message = computed(() => messages[type.value])
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { Alert, FormSelect } from '@minitwiks/nsmp-vue-components'
 
+const open = ref(true)
 const type = ref<'success' | 'info' | 'warning' | 'error'>('info')
+const typeOptions = [
+  { label: 'Info', value: 'info' },
+  { label: 'Success', value: 'success' },
+  { label: 'Warning', value: 'warning' },
+  { label: 'Error', value: 'error' },
+]
+const messages = {
+  info: 'Информационное сообщение',
+  success: 'Операция выполнена успешно',
+  warning: 'Обратите внимание на предупреждение',
+  error: 'Во время выполнения произошла ошибка',
+}
+const message = computed(() => messages[type.value])
 </script>
 
 <template>
-  <select v-model="type">
-    <option value="info">Info</option>
-    <option value="success">Success</option>
-    <option value="warning">Warning</option>
-    <option value="error">Error</option>
-  </select>
-
-  <Alert open :closable="false" :type="type" message="Динамический Alert" />
+  <FormSelect
+    v-model:value="type"
+    label="Тип уведомления"
+    :options="typeOptions"
+    :select-props="{ id: 'alert-type', 'aria-label': 'Тип уведомления' }"
+    style="margin-bottom: 20px;"
+  />
+  <Alert
+    v-model:open="open"
+    :closable="false"
+    :type="type"
+    :message="message"
+  />
 </template>
 ```
 

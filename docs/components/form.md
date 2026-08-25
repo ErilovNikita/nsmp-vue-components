@@ -59,16 +59,17 @@ import {
   FormInput,
 } from '@minitwiks/nsmp-vue-components'
 
-const form = ref<InstanceType<typeof Form>>()
+const form = ref()
 const model = reactive({ name: '', email: '' })
 const rules = {
   name: [{ required: true, message: 'Введите имя' }],
   email: [{ required: true, type: 'email', message: 'Введите корректный email' }],
 }
+const submitted = ref(false)
 
 const submit = async () => {
-  const values = await form.value?.validate()
-  console.log(values)
+  await form.value?.validate()
+  submitted.value = true
 }
 </script>
 
@@ -92,6 +93,7 @@ const submit = async () => {
 
     <Button style="margin-top: 20px;" type="primary" @click="submit">Проверить</Button>
   </Form>
+  <p v-if="submitted">Форма успешно проверена.</p>
 </template>
 ```
 

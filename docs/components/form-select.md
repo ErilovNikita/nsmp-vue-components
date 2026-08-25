@@ -80,14 +80,79 @@ watch(demoMultiple, multiple => {
 </div>
 
 ```vue
-<FormSelect
-  v-model:value="model.city"
-  label="Город"
-  name="city"
-  description="Выберите ближайший офис"
-  placeholder="Выберите город"
-  :options="cities"
-/>
+<script setup lang="ts">
+import { reactive, ref, watch } from 'vue'
+import {
+  Form,
+  FormSelect,
+  FormSwitch,
+} from '@minitwiks/nsmp-vue-components'
+
+const model = reactive<{
+  selection: string | string[] | undefined
+}>({ selection: undefined })
+const demoView = ref<'select' | 'radio' | 'radio-button'>('select')
+const demoRadioButtonStyle = ref<'outline' | 'solid'>('outline')
+const demoMultiple = ref(false)
+const viewOptions = [
+  { label: 'Выпадающий список', value: 'select' },
+  { label: 'Radio', value: 'radio' },
+  { label: 'Radio Button', value: 'radio-button' },
+]
+const radioButtonStyleOptions = [
+  { label: 'Outline', value: 'outline' },
+  { label: 'Solid', value: 'solid' },
+]
+const cities = [
+  { label: 'Москва', value: 'moscow' },
+  { label: 'Санкт-Петербург', value: 'spb' },
+  { label: 'Казань', value: 'kazan' },
+]
+
+watch(demoMultiple, multiple => {
+  model.selection = multiple ? [] : undefined
+})
+</script>
+
+<template>
+  <Form style="margin-bottom: 20px;">
+    <FormSelect
+      v-model:value="demoView"
+      label="Вид отображения"
+      :options="viewOptions"
+      :select-props="{ id: 'select-view', 'aria-label': 'Вид отображения' }"
+    />
+    <FormSwitch
+      v-model:checked="demoMultiple"
+      label="Множественный выбор"
+      :switch-props="{ id: 'select-multiple', 'aria-label': 'Множественный выбор' }"
+    />
+    <FormSelect
+      v-if="demoView === 'radio-button'"
+      v-model:value="demoRadioButtonStyle"
+      label="Оформление выбранного элемента"
+      :options="radioButtonStyleOptions"
+      :select-props="{
+        id: 'select-radio-button-style',
+        'aria-label': 'Оформление Radio Button',
+      }"
+    />
+  </Form>
+
+  <Form :model="model">
+    <FormSelect
+      v-model:value="model.selection"
+      label="Города"
+      name="selection"
+      description="Внешний вид и режим выбора управляются параметрами демо"
+      placeholder="Выберите город или несколько городов"
+      :options="cities"
+      :view="demoView"
+      :multiple="demoMultiple"
+      :radio-button-style="demoRadioButtonStyle"
+    />
+  </Form>
+</template>
 ```
 
 ## Вид отображения

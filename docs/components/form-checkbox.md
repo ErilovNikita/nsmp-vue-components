@@ -23,12 +23,23 @@ const model = reactive({ accepted: false })
 </div>
 
 ```vue
-<FormCheckbox
-  v-model:checked="model.accepted"
-  label="Я принимаю условия"
-  name="accepted"
-  description="Подтвердите согласие перед продолжением"
-/>
+<script setup lang="ts">
+import { reactive } from 'vue'
+import { Form, FormCheckbox } from '@minitwiks/nsmp-vue-components'
+
+const model = reactive({ accepted: false })
+</script>
+
+<template>
+  <Form :model="model">
+    <FormCheckbox
+      v-model:checked="model.accepted"
+      label="Я принимаю условия"
+      name="accepted"
+      description="Подтвердите согласие перед продолжением"
+    />
+  </Form>
+</template>
 ```
 
 Prop `label` отображается справа от самого чекбокса и не создаёт отдельный заголовок над полем. Его содержимое можно переопределить default-слотом. Доступны быстрые props `checked`, `label`, `name`, `rules` и `description`, а полная настройка выполняется через `formItemProps`, `alertProps` и `checkboxProps`.

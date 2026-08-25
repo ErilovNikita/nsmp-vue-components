@@ -23,12 +23,23 @@ const model = reactive({ notifications: true })
 </div>
 
 ```vue
-<FormSwitch
-  v-model:checked="model.notifications"
-  label="Получать уведомления"
-  name="notifications"
-  description="Уведомления можно отключить в любой момент"
-/>
+<script setup lang="ts">
+import { reactive } from 'vue'
+import { Form, FormSwitch } from '@minitwiks/nsmp-vue-components'
+
+const model = reactive({ notifications: true })
+</script>
+
+<template>
+  <Form :model="model">
+    <FormSwitch
+      v-model:checked="model.notifications"
+      label="Получать уведомления"
+      name="notifications"
+      description="Уведомления можно отключить в любой момент"
+    />
+  </Form>
+</template>
 ```
 
 Prop `label` отображается справа от переключателя и может быть переопределён default-слотом. Доступны быстрые props `checked`, `label`, `name`, `rules` и `description`, а полная настройка выполняется через `formItemProps`, `alertProps` и `switchProps`.

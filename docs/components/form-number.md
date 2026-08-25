@@ -26,15 +26,26 @@ const model = reactive({ age: 18 })
 </div>
 
 ```vue
-<FormNumber
-  v-model:value="model.age"
-  label="Возраст"
-  name="age"
-  description="Допустимое значение — от 18 до 120"
-  :min="18"
-  :max="120"
-  :step="1"
-/>
+<script setup lang="ts">
+import { reactive } from 'vue'
+import { Form, FormNumber } from '@minitwiks/nsmp-vue-components'
+
+const model = reactive({ age: 18 })
+</script>
+
+<template>
+  <Form :model="model">
+    <FormNumber
+      v-model:value="model.age"
+      label="Возраст"
+      name="age"
+      description="Допустимое значение — от 18 до 120"
+      :min="18"
+      :max="120"
+      :rules="[{ required: true, message: 'Укажите возраст' }]"
+    />
+  </Form>
+</template>
 ```
 
 Быстрые props: `value`, `label`, `name`, `rules`, `description`, `placeholder`, `min`, `max` и `step`. Все остальные параметры доступны через `formItemProps`, `alertProps` и `inputNumberProps`. Через ref доступны `focus()` и `blur()`.
