@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html -- highlight.js escapes source before returning markup. */
 import { computed, onUnmounted, ref } from 'vue'
+import { theme as antTheme } from 'ant-design-vue'
 import { highlightCode } from './highlighter'
 import type { CodeProps } from './types'
 
@@ -17,6 +18,26 @@ const emit = defineEmits<{
   copied: [code: string]
   copyError: [error: unknown]
 }>()
+
+const { token } = antTheme.useToken()
+const themeStyles = computed(() => ({
+  '--library-code-color-bg': token.value.colorBgContainer,
+  '--library-code-color-bg-header': token.value.colorFillSecondary,
+  '--library-code-color-border': token.value.colorBorderSecondary,
+  '--library-code-color-split': token.value.colorSplit,
+  '--library-code-color-text': token.value.colorText,
+  '--library-code-color-text-secondary': token.value.colorTextSecondary,
+  '--library-code-color-text-tertiary': token.value.colorTextTertiary,
+  '--library-code-color-link': token.value.colorLink,
+  '--library-code-color-link-hover-bg': token.value.colorPrimaryBg,
+  '--library-code-color-focus': token.value.colorPrimary,
+  '--library-code-color-keyword': token.value.colorPrimary,
+  '--library-code-color-string': token.value.colorSuccessText,
+  '--library-code-color-number': token.value.colorWarningText,
+  '--library-code-color-title': token.value.colorPrimaryActive,
+  '--library-code-color-variable': token.value.colorErrorText,
+  '--library-code-color-tag': token.value.colorPrimaryHover,
+}))
 
 const copied = ref(false)
 let copiedTimer: ReturnType<typeof globalThis.setTimeout> | undefined
@@ -46,7 +67,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="library-code">
+  <section class="library-code" :style="themeStyles">
     <header
       v-if="title || copyable"
       class="library-code-header"

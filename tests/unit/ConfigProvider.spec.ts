@@ -11,6 +11,7 @@ describe('ConfigProvider', () => {
 
     expect(wrapper.find('.probe').exists()).toBe(true)
     expect(wrapper.find('.ant-btn').exists()).toBe(false)
+
   })
 
   it('provides the Russian Ant Design locale by default', () => {
@@ -51,6 +52,32 @@ describe('ConfigProvider', () => {
     const antTheme = wrapper.findComponent(AntConfigProvider).props('theme')
 
     expect(antTheme?.components?.Button).toMatchObject({ colorPrimary: '#123456' })
+  })
+
+  it('maps the default button colors for every interaction state', () => {
+    const wrapper = mount(ConfigProvider, {
+      props: {
+        nsmpTheme: {
+          advlistButtonTextColor: '#111111',
+          advlistButtonBackground: '#222222',
+          advlistButtonHoverTextColor: '#333333',
+          advlistButtonHoverBackground: '#444444',
+          advlistButtonActiveTextColor: '#555555',
+          advlistButtonActiveBackground: '#666666',
+        },
+      },
+    })
+
+    const antTheme = wrapper.findComponent(AntConfigProvider).props('theme')
+
+    expect(antTheme?.components?.Button).toMatchObject({
+      defaultColor: '#111111',
+      defaultBg: '#222222',
+      defaultHoverColor: '#333333',
+      defaultHoverBg: '#444444',
+      defaultActiveColor: '#555555',
+      defaultActiveBg: '#666666',
+    })
   })
 
   it('maps inputBackground to every form input component', () => {

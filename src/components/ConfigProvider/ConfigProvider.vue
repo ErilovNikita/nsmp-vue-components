@@ -1,14 +1,29 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
 import ruRU from 'ant-design-vue/lib/locale/ru_RU'
 import 'dayjs/locale/ru'
 import { blue } from '@/tokens'
 import type { ConfigProviderProps } from './types'
+import {
+  defaultButtonTokens,
+  defaultButtonTokensKey,
+} from './context'
 
 defineOptions({ name: 'LibraryConfigProvider' })
 
 const props = defineProps<ConfigProviderProps>()
+
+const providedDefaultButtonTokens = computed(() => ({
+  defaultColor: props.nsmpTheme?.advlistButtonTextColor ?? defaultButtonTokens.defaultColor,
+  defaultBg: props.nsmpTheme?.advlistButtonBackground ?? defaultButtonTokens.defaultBg,
+  defaultHoverColor: props.nsmpTheme?.advlistButtonHoverTextColor ?? defaultButtonTokens.defaultHoverColor,
+  defaultHoverBg: props.nsmpTheme?.advlistButtonHoverBackground ?? defaultButtonTokens.defaultHoverBg,
+  defaultActiveColor: props.nsmpTheme?.advlistButtonActiveTextColor ?? defaultButtonTokens.defaultActiveColor,
+  defaultActiveBg: props.nsmpTheme?.advlistButtonActiveBackground ?? defaultButtonTokens.defaultActiveBg,
+}))
+
+provide(defaultButtonTokensKey, providedDefaultButtonTokens)
 
 type TokenRecord = Record<string, unknown>
 
@@ -174,6 +189,8 @@ const providerProps = computed(() => {
     motionDurationSlow: '0.3s',
 
     // Links
+    colorLink: nsmpTheme?.linkColor,
+    colorLinkHover: nsmpTheme?.actionLinkHoverColor,
     linkDecoration: 'none',
     linkHoverDecoration: 'none',
     linkFocusDecoration: 'none',
