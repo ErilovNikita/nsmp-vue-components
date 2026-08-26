@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
 import { ConfigProvider } from '@/components'
+import { blue } from '@/tokens'
 
 describe('ConfigProvider', () => {
   it('provides the blue theme by default', () => {
@@ -11,7 +12,19 @@ describe('ConfigProvider', () => {
 
     expect(wrapper.find('.probe').exists()).toBe(true)
     expect(wrapper.find('.ant-btn').exists()).toBe(false)
+    const antTheme = wrapper.findComponent(AntConfigProvider).props('theme')
 
+    expect(blue).toMatchObject({
+      accentColor: '#7f96b9',
+      inputHeight: '32px',
+    })
+    expect(antTheme?.token).toMatchObject({
+      colorPrimary: blue.accentColor,
+      controlHeight: 32,
+    })
+    expect(antTheme?.components?.Button).toMatchObject({
+      colorPrimary: blue.buttonBackground,
+    })
   })
 
   it('provides the Russian Ant Design locale by default', () => {

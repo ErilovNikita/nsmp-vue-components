@@ -9,14 +9,14 @@ export const createProviderTheme = (
   nsmpTheme?: NsmpThemeProperties,
   theme?: ThemeConfig,
 ): ThemeConfig => {
-  const componentTokens = createComponentTokens(nsmpTheme)
+  const themeProperties = { ...blue, ...nsmpTheme }
+  const componentTokens = createComponentTokens(themeProperties)
   type ComponentName = keyof typeof componentTokens
 
   const mergedComponents = Object.fromEntries(
     (Object.keys(componentTokens) as ComponentName[]).map(componentName => [
       componentName,
       {
-        ...(blue.components?.[componentName] as TokenRecord | undefined),
         ...componentTokens[componentName],
         ...(theme?.components?.[componentName] as TokenRecord | undefined),
       },
@@ -24,15 +24,12 @@ export const createProviderTheme = (
   )
 
   return {
-    ...blue,
     ...theme,
     token: {
-      ...blue.token,
-      ...createGlobalTokens(nsmpTheme),
+      ...createGlobalTokens(themeProperties),
       ...theme?.token,
     },
     components: {
-      ...blue.components,
       ...theme?.components,
       ...mergedComponents,
     },
