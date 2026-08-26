@@ -4,7 +4,7 @@ import {
   InputNumber, Row, Select, Slider, Switch, TypographyTitle,
 } from 'ant-design-vue'
 import type { FormInstance } from 'ant-design-vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { acceptanceRules, cities } from '../demoData'
 import type { DemoFormModel } from '../types'
 
@@ -15,6 +15,22 @@ const emit = defineEmits<{
 }>()
 const model = props.model
 const form = ref<FormInstance>()
+
+const attrItems: Array<[string, string]> = [
+  ['Имя', 'name'], ['Возраст', 'age'], ['Дата рождения', 'birthDate'],
+  ['Город', 'city'], ['Нагрузка', 'workload'], ['Уведомления', 'notifications'],
+  ['Условия приняты', 'accepted'],
+]
+const formValues = computed<Record<string, unknown>>(() => ({
+  accepted: model.accepted ? 'Да' : 'Нет',
+  age: model.age,
+  birthDate: model.birthDate,
+  city: cities.find(city => city.value === model.city)?.label ?? 'Не выбран',
+  name: model.name || 'Не указано',
+  notifications: model.notifications ? 'Включены' : 'Выключены',
+  workload: `${model.workload}%`,
+}))
+const formCode = computed(() => JSON.stringify(model, null, 2))
 
 const save = async () => {
   try {

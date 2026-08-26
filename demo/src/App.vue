@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { Button, ConfigProvider, Modal, Tabs } from '../../src'
+import { ConfigProvider, Tabs } from '../../src'
 import type { TableColumn } from '../../src'
 import type { NsmpThemeProperties } from '../../src/utils'
+import AntCancelModal from './components/AntCancelModal.vue'
+import CustomCancelModal from './components/CustomCancelModal.vue'
 import AntFormDemo from './tabs/AntFormDemo.vue'
 import AntTableDemo from './tabs/AntTableDemo.vue'
 import CustomFormDemo from './tabs/CustomFormDemo.vue'
@@ -18,7 +20,8 @@ const customForm = ref<FormDemoExpose>()
 const antForm = ref<FormDemoExpose>()
 const model = reactive<DemoFormModel>({ ...initialForm })
 const saved = ref(false)
-const resetConfirmationOpen = ref(false)
+const customResetConfirmationOpen = ref(false)
+const antResetConfirmationOpen = ref(false)
 const appliedTheme = ref<NsmpThemeProperties>()
 const columns = ref<TableColumn[]>([...initialColumns])
 const objects = ref<DemoObject[]>(createObjects(2026))
@@ -37,7 +40,8 @@ const reset = () => {
   customForm.value?.clearValidate()
   antForm.value?.clearValidate()
   saved.value = false
-  resetConfirmationOpen.value = false
+  customResetConfirmationOpen.value = false
+  antResetConfirmationOpen.value = false
 }
 
 const regenerateObjects = () => {
@@ -48,20 +52,26 @@ const regenerateObjects = () => {
 
 <template>
   <ConfigProvider :nsmp-theme="appliedTheme">
-    <Modal v-model:open="resetConfirmationOpen" title="Отменить изменения?">
-      <p>Значения формы будут возвращены к исходному состоянию.</p>
-      <template #footer>
-        <Button type="primary" @click="reset">Сбросить</Button>
-        <Button type="text" @click="resetConfirmationOpen = false">Продолжить редактирование</Button>
-      </template>
-    </Modal>
+    <CustomCancelModal
+      v-model:open="customResetConfirmationOpen"
+      @confirm="reset"
+    />
+    <AntCancelModal
+      v-model:open="antResetConfirmationOpen"
+      @confirm="reset"
+    />
 
     <Tabs v-model:active-key="activeTab" :items="tabs">
       <template #form>
-        <CustomFormDemo #form ref="customForm" v-model:saved="saved" :model="model" @request-reset="resetConfirmationOpen = true" />
+        <CustomFormDemo
+          ref="customForm"
+          v-model:saved="saved"
+          :model="model"
+          @request-reset="customResetConfirmationOpen = true"
+        />
       </template>
       <template #ant-form>
-        <AntFormDemo ref="antForm" v-model:saved="saved" :model="model" @request-reset="resetConfirmationOpen = true" />
+        <AntFormDemo ref="antForm" v-model:saved="saved" :model="model" @request-reset="antResetConfirmationOpen = true" />
       </template>
       <template #objects>
         <CustomTableDemo v-model:columns="columns" v-model:selected-objects="selectedObjects" :objects="objects" @regenerate="regenerateObjects" />

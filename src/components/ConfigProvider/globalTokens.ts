@@ -83,6 +83,9 @@ export const createGlobalTokens = (theme?: NsmpThemeProperties) => compact({
   controlItemBgActive: theme?.itemSelectedBackground,
   controlItemBgActiveHover: theme?.tableRowSelectedBackground,
   controlItemBgActiveDisabled: theme?.inputDisabledBackground,
+  controlHeight: pxToNumber(theme?.inputHeight),
+  controlHeightXS: pxToNumber(theme?.buttonHeight),
+  controlHeightSM: pxToNumber(theme?.buttonHeight),
 
   borderRadius: pxToNumber(theme?.inputRadius),
   borderRadiusXS: pxToNumber(theme?.inputRadius),
