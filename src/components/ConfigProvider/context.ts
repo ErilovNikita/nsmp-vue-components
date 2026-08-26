@@ -1,4 +1,6 @@
+import { computed, provide } from 'vue'
 import type { ComputedRef, InjectionKey } from 'vue'
+import type { NsmpThemeProperties } from '@/utils'
 
 export interface DefaultButtonTokens {
   defaultColor: string
@@ -20,3 +22,18 @@ export const defaultButtonTokens: DefaultButtonTokens = {
 
 export const defaultButtonTokensKey: InjectionKey<ComputedRef<DefaultButtonTokens>> =
   Symbol('library-default-button-tokens')
+
+export const provideDefaultButtonTokens = (
+  getTheme: () => NsmpThemeProperties | undefined,
+) => provide(defaultButtonTokensKey, computed(() => {
+  const theme = getTheme()
+
+  return {
+    defaultColor: theme?.advlistButtonTextColor ?? defaultButtonTokens.defaultColor,
+    defaultBg: theme?.advlistButtonBackground ?? defaultButtonTokens.defaultBg,
+    defaultHoverColor: theme?.advlistButtonHoverTextColor ?? defaultButtonTokens.defaultHoverColor,
+    defaultHoverBg: theme?.advlistButtonHoverBackground ?? defaultButtonTokens.defaultHoverBg,
+    defaultActiveColor: theme?.advlistButtonActiveTextColor ?? defaultButtonTokens.defaultActiveColor,
+    defaultActiveBg: theme?.advlistButtonActiveBackground ?? defaultButtonTokens.defaultActiveBg,
+  }
+}))
