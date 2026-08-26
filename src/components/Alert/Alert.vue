@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Alert as AntAlert } from 'ant-design-vue'
+import { Alert as AntAlert, theme as antTheme } from 'ant-design-vue'
 import { computed, ref, watch } from 'vue'
 import type { AlertProps, AlertType } from './types'
 
@@ -17,6 +17,12 @@ const emit = defineEmits<{
   close: [event: globalThis.MouseEvent]
   'update:open': [open: boolean]
 }>()
+
+const { token } = antTheme.useToken()
+const themeStyles = computed(() => ({
+  '--library-alert-color-fill-tertiary': token.value.colorFillTertiary,
+  '--library-alert-color-text-description': token.value.colorTextDescription,
+}))
 
 const isOpen = ref(props.open)
 const currentMessage = ref<string | null>(props.message)
@@ -96,6 +102,7 @@ defineExpose(alertApi)
     v-if="isOpen"
     v-bind="alertProps"
     :message="currentMessage ?? undefined"
+    :style="themeStyles"
     :type="currentType"
     @close="handleClose"
   >

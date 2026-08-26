@@ -113,10 +113,11 @@ const providerProps = computed(() => {
     colorSplit: nsmpTheme?.rowBorderColorLight,
 
     // Backgrounds
+    colorBgBase: nsmpTheme?.baseBackground,
     colorBgContainer: nsmpTheme?.contentBackground,
     colorBgContainerDisabled: nsmpTheme?.inputDisabledBackground,
     colorBgLayout: nsmpTheme?.baseBackground,
-    colorBgElevated: nsmpTheme?.menuPopupBackground,
+    colorBgElevated: nsmpTheme?.popupFooterBackgroundColor,
     colorBgSpotlight: nsmpTheme?.popupHeaderBackgroundColor,
 
     // Fills
@@ -213,6 +214,28 @@ const providerProps = computed(() => {
       borderRadius: pxToNumber(nsmpTheme?.inputRadius),
     }),
 
+    InputNumber: compact({
+      colorBgContainer: nsmpTheme?.inputBackground,
+      colorBgContainerDisabled: nsmpTheme?.inputDisabledBackground,
+      colorText: nsmpTheme?.inputTextColor,
+      colorTextDisabled: nsmpTheme?.disabledTextColor,
+      activeBorderColor: nsmpTheme?.inputFocusBorderColor,
+      hoverBorderColor: nsmpTheme?.inputFocusBorderColor,
+      controlHeight: pxToNumber(nsmpTheme?.inputHeight),
+      borderRadius: pxToNumber(nsmpTheme?.inputRadius),
+    }),
+
+    DatePicker: compact({
+      colorBgContainer: nsmpTheme?.inputBackground,
+      colorBgContainerDisabled: nsmpTheme?.inputDisabledBackground,
+      colorText: nsmpTheme?.inputTextColor,
+      colorTextDisabled: nsmpTheme?.disabledTextColor,
+      activeBorderColor: nsmpTheme?.inputFocusBorderColor,
+      hoverBorderColor: nsmpTheme?.inputFocusBorderColor,
+      controlHeight: pxToNumber(nsmpTheme?.inputHeight),
+      borderRadius: pxToNumber(nsmpTheme?.inputRadius),
+    }),
+
     Select: compact({
       colorBgContainer: nsmpTheme?.inputBackground,
       colorBgElevated: nsmpTheme?.menuPopupBackground,
@@ -263,6 +286,11 @@ const providerProps = computed(() => {
     ...(theme?.components?.[componentName] as TokenRecord | undefined),
   })
 
+  const mergedComponents = Object.fromEntries(
+    (Object.keys(nsmpComponents) as ComponentName[])
+      .map(componentName => [componentName, mergeComponent(componentName)]),
+  )
+
   return {
     ...rest,
     locale: rest.locale ?? ruRU,
@@ -280,9 +308,7 @@ const providerProps = computed(() => {
       components: {
         ...blue.components,
         ...theme?.components,
-
-        Button: mergeComponent('Button'),
-        Input: mergeComponent('Input'),
+        ...mergedComponents,
       },
     },
   }
@@ -291,6 +317,10 @@ const providerProps = computed(() => {
 
 <template>
   <AntConfigProvider v-bind="providerProps">
-    <slot />
+    <a-layout>
+      <a-layout-content>
+        <slot />
+      </a-layout-content>
+    </a-layout>
   </AntConfigProvider>
 </template>

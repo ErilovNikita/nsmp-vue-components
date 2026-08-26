@@ -3,8 +3,8 @@
   margin-bottom: 5px;
   border: none;
   border-radius: 2px !important;
-  background-color: #f4f4f4;
-  color: #323232 !important;
+  background-color: var(--library-alert-color-fill-tertiary) !important;
+  color: var(--library-alert-color-text-description) !important;
   font-size: 12px !important;
   line-height: 18px;
 }
@@ -12,6 +12,11 @@
 .ant-alert-error {
   border-left: 4px solid #e08a85 !important;
   background-color: #faeceb !important;
+}
+
+.ant-alert .ant-alert-message,
+.ant-alert .ant-alert-description {
+  color: var(--library-alert-color-text-description) !important;
 }
 
 .ant-alert-success {

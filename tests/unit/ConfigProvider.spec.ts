@@ -52,4 +52,21 @@ describe('ConfigProvider', () => {
 
     expect(antTheme?.components?.Button).toMatchObject({ colorPrimary: '#123456' })
   })
+
+  it('maps inputBackground to every form input component', () => {
+    const wrapper = mount(ConfigProvider, {
+      props: {
+        nsmpTheme: {
+          inputBackground: '#123456',
+        },
+      },
+    })
+
+    const antTheme = wrapper.findComponent(AntConfigProvider).props('theme')
+
+    expect(antTheme?.components?.Input).toMatchObject({ colorBgContainer: '#123456' })
+    expect(antTheme?.components?.InputNumber).toMatchObject({ colorBgContainer: '#123456' })
+    expect(antTheme?.components?.DatePicker).toMatchObject({ colorBgContainer: '#123456' })
+    expect(antTheme?.components?.Select).toMatchObject({ colorBgContainer: '#123456' })
+  })
 })

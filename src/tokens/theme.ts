@@ -29,7 +29,6 @@ export const blue: ThemeConfig = {
 
     Select: {
       colorBgContainer: '#fff',
-      colorBgElevated: '#fff',
       colorText: '#323232',
       colorBorder: '#c0c0c0',
       controlHeight: 32,
@@ -113,7 +112,6 @@ export const blue: ThemeConfig = {
     colorBgContainer: '#fff',
     colorBgContainerDisabled: '#fafafa',
     colorBgLayout: '#eff3f8',
-    colorBgElevated: '#fff',
     colorBgSpotlight: '#2a3f5a',
 
     // Fills

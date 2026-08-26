@@ -6,11 +6,12 @@
 
 .ant-modal .ant-modal-content {
   padding: 0 !important;
+  background: var(--library-modal-color-bg-base) !important;
 }
 
 .ant-modal .ant-modal-header {
   padding: 13px 20px 13px 24px;
-  background: #154ea5;
+  background: var(--library-modal-color-bg-spotlight) !important;
 }
 
 .ant-modal .ant-modal-title {
@@ -31,11 +32,12 @@
 
 .ant-modal .ant-modal-body {
   padding: 10px 20px 8px;
+  background: var(--library-modal-color-bg-base) !important;
 }
 
 .ant-modal .ant-modal-footer {
   display: block !important;
   padding: 16px 24px;
-  background: #f2f2f2;
+  background: var(--library-modal-color-bg-elevated) !important;
   text-align: start !important;
 }

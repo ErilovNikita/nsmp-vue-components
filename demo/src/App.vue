@@ -3,7 +3,9 @@ import { computed, reactive, ref } from 'vue'
 import { Alert, AttrGroup, Button, Caption, Code, ConfigProvider, Modal, Table, Tabs } from '../../src'
 import { Form, FormCheckbox, FormDate, FormInput, FormNumber, FormSelect, FormSlider, FormSwitch } from '../../src'
 import type { TableColumn } from '../../src'
-
+import { parseNsmpTheme } from '../../src/utils'
+import type { NsmpThemeProperties } from '../../src/utils'
+import * as themeSources from './themes'
 
 interface DemoObject {
   category: string
@@ -31,7 +33,22 @@ const resetConfirmationOpen = ref(false)
 const tabs = [
   { key: 'form', label: 'Форма' },
   { key: 'objects', label: 'Список объектов' },
+  { key: 'settings', label: 'Настройки' },
 ]
+const themeOptions = Object.keys(themeSources).map(themeName => ({
+  label: themeName.charAt(0).toUpperCase() + themeName.slice(1),
+  value: themeName,
+}))
+const settings = reactive({ theme: themeOptions[0]?.value ?? '' })
+const appliedTheme = ref<NsmpThemeProperties>()
+
+const applyTheme = () => {
+  const source = themeSources[settings.theme as keyof typeof themeSources]
+
+  if (source) {
+    appliedTheme.value = parseNsmpTheme(source)
+  }
+}
 const cities = [
   { label: 'Москва', value: 'moscow' },
   { label: 'Санкт-Петербург', value: 'spb' },
@@ -114,7 +131,7 @@ const regenerateObjects = () => {
 </script>
 
 <template>
-  <ConfigProvider>
+  <ConfigProvider :nsmp-theme="appliedTheme">
     <Modal v-model:open="resetConfirmationOpen" title="Отменить изменения?">
       <p>Значения формы будут возвращены к исходному состоянию.</p>
 
@@ -228,6 +245,24 @@ const regenerateObjects = () => {
         </Table>
         <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
       </template>
+
+      <template #settings>
+        <Form :model="settings" class="settings-form">
+          <Caption label="Оформление демо">
+            <FormSelect
+              v-model:value="settings.theme"
+              label="Тема"
+              name="theme"
+              placeholder="Выберите тему"
+              :options="themeOptions"
+            />
+          </Caption>
+
+          <div class="form-actions">
+            <Button type="primary" @click="applyTheme">Применить</Button>
+          </div>
+        </Form>
+      </template>
     </Tabs>
   </ConfigProvider>
 </template>
@@ -235,5 +270,9 @@ const regenerateObjects = () => {
 <style scoped>
   .form-actions {
     margin-top: 40px
+  }
+
+  .settings-form {
+    max-width: 480px;
   }
 </style>

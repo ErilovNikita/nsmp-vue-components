@@ -10,8 +10,8 @@
   padding: 0 !important;
 }
 
-.ant-form-item-label > label {
-  color: #5f5f5f !important;
+.library-form-field .ant-form-item-label > label {
+  color: var(--library-form-color-text-label) !important;
   font-size: 13px !important;
 }
 
@@ -31,7 +31,11 @@
 }
 
 .library-form-switch-label {
-  color: #323232;
+  color: var(--library-form-color-text-label);
+}
+
+.library-form-checkbox {
+  color: var(--library-form-color-text-label);
 }
 
 .library-form-select-radio-multiple .ant-checkbox,
