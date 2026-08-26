@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Modal as AntModal, theme as antTheme } from 'ant-design-vue'
+import { Modal as AntModal } from 'ant-design-vue'
 import { computed, ref, watch } from 'vue'
 import type { ModalProps } from './types'
 
@@ -22,13 +22,6 @@ const props = withDefaults(defineProps<ModalProps>(), {
 const emit = defineEmits<{
   'update:open': [open: boolean]
 }>()
-
-const { token } = antTheme.useToken()
-const themeStyles = computed(() => ({
-  '--library-modal-color-bg-base': token.value.colorBgContainer,
-  '--library-modal-color-bg-spotlight': token.value.colorBgSpotlight,
-  '--library-modal-color-bg-elevated': token.value.colorBgElevated,
-}))
 
 const isOpen = ref(props.open ?? false)
 
@@ -72,7 +65,6 @@ defineExpose(modalApi)
   <AntModal
     v-bind="modalProps"
     :open="isOpen"
-    :style="themeStyles"
     @update:open="setVisible"
   >
     <slot name="alert" />

@@ -25,6 +25,12 @@ describe('ConfigProvider', () => {
     expect(antTheme?.components?.Button).toMatchObject({
       colorPrimary: blue.buttonBackground,
     })
+    expect(wrapper.find('.library-theme').attributes('style')).toContain(
+      '--library-button-default-bg: #f4f4f4',
+    )
+    expect(wrapper.find('.library-theme').attributes('style')).toContain(
+      '--library-modal-color-bg-base: #fff',
+    )
   })
 
   it('provides the Russian Ant Design locale by default', () => {

@@ -65,7 +65,7 @@ defineExpose({ clearValidate: () => form.value?.clearValidate() })
         <FormItem name="accepted" :rules="acceptanceRules"><Checkbox v-model:checked="model.accepted">Я принимаю условия обработки данных</Checkbox></FormItem>
         <FormItem>
           <Button type="primary" @click="save">Сохранить</Button>
-          <Button class="reset" @click="emit('requestReset')">Отменить</Button>
+          <Button type="text" class="reset" @click="emit('requestReset')">Отменить</Button>
         </FormItem>
       </Form>
     </Col>

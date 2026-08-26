@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FormItem as AntFormItem, theme as antTheme } from 'ant-design-vue'
+import { FormItem as AntFormItem } from 'ant-design-vue'
 import type { FormItemProps as AntFormItemProps } from 'ant-design-vue'
 import { computed } from 'vue'
 import Alert from '../Alert/Alert.vue'
@@ -18,16 +18,8 @@ const props = defineProps<{
   rules?: AntFormItemProps['rules']
 }>()
 
-const { token } = antTheme.useToken()
-const themeStyles = computed(() => ({
-  '--library-form-color-text-label': token.value.colorTextLabel,
-}))
-
 const labelWithColon = computed(() => {
-  if (typeof props.label !== 'string') {
-    return props.label
-  }
-
+  if (typeof props.label !== 'string') return props.label
   return props.label.endsWith(':') ? props.label : `${props.label}:`
 })
 
@@ -48,11 +40,7 @@ const alertBindings = computed(() => ({
 </script>
 
 <template>
-  <AntFormItem
-    v-bind="formItemBindings"
-    class="library-form-field"
-    :style="themeStyles"
-  >
+  <AntFormItem v-bind="formItemBindings" class="library-form-field">
     <template v-if="$slots.label" #label>
       <slot name="label" />
     </template>

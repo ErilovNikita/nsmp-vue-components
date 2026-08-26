@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TabPane as AntTabPane, Tabs as AntTabs, theme as antTheme } from 'ant-design-vue'
+import { TabPane as AntTabPane, Tabs as AntTabs } from 'ant-design-vue'
 import { computed, ref, useAttrs, watch } from 'vue'
 import type { TabKey, TabsExposed, TabsProps } from './types'
 
@@ -28,11 +28,6 @@ const emit = defineEmits<{
 }>()
 
 const attrs = useAttrs()
-const { token } = antTheme.useToken()
-const themeStyles = computed(() => ({
-  '--library-tabs-color-bg-container': token.value.colorBgContainer,
-  '--library-tabs-color-text': token.value.colorText,
-}))
 const initialKey = () => props.activeKey
   ?? props.defaultTab
   ?? props.items[0]?.key
@@ -69,7 +64,6 @@ defineExpose({ activeTab, defaultTab, ...exposed })
   <AntTabs
     v-bind="attrs"
     class="library-tabs"
-    :style="themeStyles"
     :active-key="antActiveKey"
     :animated="animated"
     :centered="centered"
