@@ -13,6 +13,24 @@ describe('ConfigProvider', () => {
     expect(wrapper.find('.ant-btn').exists()).toBe(false)
   })
 
+  it('provides the Russian Ant Design locale by default', () => {
+    const wrapper = mount(ConfigProvider)
+    const locale = wrapper.findComponent(AntConfigProvider).props('locale')
+
+    expect(locale).toMatchObject({
+      locale: 'ru',
+      Modal: { cancelText: 'Отмена' },
+    })
+    expect(locale?.DatePicker?.lang.placeholder).toBe('Выберите дату')
+  })
+
+  it('allows the default locale to be overridden', () => {
+    const locale = { locale: 'custom' }
+    const wrapper = mount(ConfigProvider, { props: { locale } })
+
+    expect(wrapper.findComponent(AntConfigProvider).props('locale')).toStrictEqual(locale)
+  })
+
   it('accepts a custom Ant Design theme', () => {
     const wrapper = mount(ConfigProvider, {
       props: { theme: { token: { colorPrimary: '#00aa00' } } },

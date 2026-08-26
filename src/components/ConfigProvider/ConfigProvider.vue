@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ConfigProvider as AntConfigProvider } from 'ant-design-vue'
+import ruRU from 'ant-design-vue/lib/locale/ru_RU'
+import 'dayjs/locale/ru'
 import { blue } from '@/tokens'
 import type { ConfigProviderProps } from './types'
 
@@ -263,6 +265,7 @@ const providerProps = computed(() => {
 
   return {
     ...rest,
+    locale: rest.locale ?? ruRU,
 
     theme: {
       ...blue,

@@ -21,7 +21,7 @@ export default defineConfig({
       cssFileName: 'style',
     },
     rollupOptions: {
-      external: ['vue', 'ant-design-vue'],
+      external: ['vue', /^ant-design-vue(?:\/|$)/, /^dayjs(?:\/|$)/],
       output: {
         assetFileNames: (assetInfo) => assetInfo.name === 'style.css' ? 'style.css' : assetInfo.name ?? 'asset',
       },
