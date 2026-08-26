@@ -34,8 +34,7 @@ export default defineConfig({
       },
       {
         text: 'Демо',
-        link: '/demo/',
-        activeMatch: '^/demo/',
+        link: 'https://erilovnikita.github.io/nsmp-vue-components/demo/',
       },
       {
         text: 'Проект',

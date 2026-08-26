@@ -88,7 +88,7 @@ const reset = () => {
   resetConfirmationOpen.value = false
 }
 
-const columns = ref<TableColumn<DemoObject>[]>([
+const columns = ref<TableColumn[]>([
   { title: 'ID', dataIndex: 'id', key: 'id', width: 90 },
   { title: 'Название', dataIndex: 'name', key: 'name', width: 220 },
   { title: 'Категория', dataIndex: 'category', key: 'category', width: 160 },
@@ -216,13 +216,15 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
 
             <aside class="library-demo-panel library-demo-values">
               <AttrGroup title="Параметры формы" :items="attrItems" :values="formValues" open/>
-              <AttrGroup #start title="В виде JSON" :items="[]" :values="{}">
-                <Code
-                  :code="formCode"
-                  language="json"
-                  title="Текущие значения"
-                  line-numbers
-                />
+              <AttrGroup title="В виде JSON" :items="[]" :values="{}">
+                <template #start>
+                  <Code
+                    :code="formCode"
+                    language="json"
+                    title="Текущие значения"
+                    line-numbers
+                  />
+                </template>
               </AttrGroup>
             </aside>
           </div>

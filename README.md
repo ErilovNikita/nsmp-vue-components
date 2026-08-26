@@ -28,5 +28,16 @@ createApp(App)
 
 Описание компонентов, API и интерактивные примеры находятся в [документации](https://erilovnikita.github.io/nsmp-vue-components/).
 
+## Локальная разработка
+
+Документация и демо запускаются как отдельные приложения:
+
+```bash
+npm run docs:dev
+npm run demo:dev
+```
+
+Команда `npm run pages:build` собирает единый артефакт для GitHub Pages: документацию в корне сайта и демо по маршруту `/demo/`.
+
 ## Лицензия
 [MIT](LICENSE)
