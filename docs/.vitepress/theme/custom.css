@@ -18,6 +18,48 @@
   --vp-button-brand-hover-bg: #3b4b63;
 }
 
+/*
+ * ConfigProvider uses Ant Layout as the documentation shell. Keep that shell
+ * on VitePress colours: the NSMP baseBackground belongs to component demos,
+ * not to the documentation page itself.
+ */
+.library-theme > .ant-layout,
+.library-theme > .ant-layout > .ant-layout-content {
+  min-height: 100vh;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-base);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ant Design's global reset loads after VitePress and makes bold text heavier. */
+.vp-doc strong,
+.vp-doc b {
+  font-weight: 600;
+}
+
+/* Ant Reset adds paragraph and heading margins to every sidebar item. */
+.VPSidebarItem .text {
+  margin: 0;
+}
+
+/* Keep the external-link marker visible in the top navigation. */
+.VPNavBarMenuLink.vp-external-link-icon::after {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-top: -1px;
+  margin-left: 4px;
+  flex-shrink: 0;
+  background: currentcolor;
+  content: '';
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5H9z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5H9z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 .local-search {
   width: 200px;
 }

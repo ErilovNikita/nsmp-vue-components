@@ -18,8 +18,8 @@ const save = () => {
 
 <div class="demo demo-row">
   <Button type="primary" :loading="loading" @click="save">Сохранить</Button>
-  <Button type="default">Отмена</Button>
-  <Button type="text">Подробнее</Button>
+  <Button type="text">Отмена</Button>
+  <Button type="default">Подробнее</Button>
 </div>
 
 ```vue
@@ -36,8 +36,8 @@ const save = () => {
 
 <template>
   <Button type="primary" :loading="loading" @click="save">Сохранить</Button>
-  <Button type="default">Отмена</Button>
-  <Button type="text">Подробнее</Button>
+  <Button type="text">Отмена</Button>
+  <Button type="default">Подробнее</Button>
 </template>
 ```
 
@@ -47,5 +47,6 @@ const save = () => {
 | --- | --- | --- | --- |
 | `type` | `'primary' \| 'default' \| 'text'` | `'default'` | Визуальный вариант |
 | `icon` | `Component` | — | Vue-компонент иконки |
+| `disabled` | `boolean` | `false` | Отключает кнопку и устанавливает прозрачность `50%` |
 
 Также поддерживаются стандартные props и события `Button` из Ant Design Vue, кроме `danger`.

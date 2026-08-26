@@ -1,6 +1,6 @@
 {
   "name": "@minitwiks/nsmp-vue-components",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Styled Vue components and data helpers for NSMP embedded applications.",
   "license": "MIT",
   "repository": {
@@ -47,6 +47,10 @@
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
+    "demo:build": "vue-tsc --noEmit -p demo/tsconfig.json && vite build --config demo/vite.config.ts",
+    "demo:dev": "vite --config demo/vite.config.ts",
+    "demo:preview": "vite preview --config demo/vite.config.ts",
+    "pages:build": "npm run docs:build && npm run demo:build",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint ."

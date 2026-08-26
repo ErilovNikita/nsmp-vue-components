@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 })
 
 const attrs = useAttrs()
-
 const buttonBindings = computed(() => {
   const antButtonProps: Partial<ButtonProps> = { ...props }
   delete antButtonProps.icon
@@ -28,14 +27,7 @@ const buttonBindings = computed(() => {
 </script>
 
 <template>
-  <AntButton
-    v-bind="buttonBindings"
-  >
-    <component
-      :is="icon"
-      v-if="icon"
-      class="btn-icon"
-    />
-    <slot />
+  <AntButton v-bind="buttonBindings">
+    <component :is="icon" v-if="icon" class="btn-icon"/><slot />
   </AntButton>
 </template>

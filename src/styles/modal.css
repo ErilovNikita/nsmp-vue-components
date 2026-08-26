@@ -6,11 +6,13 @@
 
 .ant-modal .ant-modal-content {
   padding: 0 !important;
+  background: var(--library-modal-color-bg-base) !important;
 }
 
 .ant-modal .ant-modal-header {
-  padding: 13px 20px 13px 24px;
-  background: #154ea5;
+  min-height: 44px;
+  padding: 13px 56px 13px 24px;
+  background: var(--library-modal-color-bg-spotlight) !important;
 }
 
 .ant-modal .ant-modal-title {
@@ -21,7 +23,51 @@
 
 .ant-modal .ant-modal-close {
   display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  inset-block-start: 6px;
+  inset-inline-end: 12px;
   color: white;
+  line-height: 1;
+  margin-top: 3px;
+}
+
+.ant-modal .ant-modal-close-x {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+
+.ant-modal .ant-modal-close-x > * {
+  visibility: hidden;
+}
+
+.ant-modal .ant-modal-close-x::before,
+.ant-modal .ant-modal-close-x::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  content: '';
+  transform-origin: center;
+}
+
+.ant-modal .ant-modal-close-x::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ant-modal .ant-modal-close-x::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .ant-modal .ant-modal-close:hover {
@@ -31,11 +77,12 @@
 
 .ant-modal .ant-modal-body {
   padding: 10px 20px 8px;
+  background: var(--library-modal-color-bg-base) !important;
 }
 
 .ant-modal .ant-modal-footer {
   display: block !important;
   padding: 16px 24px;
-  background: #f2f2f2;
+  background: var(--library-modal-color-bg-elevated) !important;
   text-align: start !important;
 }

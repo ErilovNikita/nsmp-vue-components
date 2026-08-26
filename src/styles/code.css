@@ -1,9 +1,9 @@
 .library-code {
   overflow: hidden;
-  border: 1px solid #d9dce1;
+  border: 1px solid var(--library-code-color-border);
   border-radius: 4px;
-  background: #f7f8fa;
-  color: #323232;
+  background: var(--library-code-color-bg);
+  color: var(--library-code-color-text);
 }
 
 .library-code-header {
@@ -12,13 +12,13 @@
   justify-content: space-between;
   min-height: 36px;
   padding: 0 12px;
-  border-bottom: 1px solid #d9dce1;
-  background: #eef1f5;
+  border-bottom: 1px solid var(--library-code-color-border);
+  background: var(--library-code-color-bg-header);
 }
 
 .library-code-title {
   overflow: hidden;
-  color: #5f5f5f;
+  color: var(--library-code-color-text-secondary);
   font-size: 12px;
   font-weight: 600;
   text-overflow: ellipsis;
@@ -30,18 +30,18 @@
   border: 0;
   border-radius: 2px;
   background: transparent;
-  color: #556e95;
+  color: var(--library-code-color-link);
   cursor: pointer;
   font: inherit;
   font-size: 12px;
 }
 
 .library-code-copy:hover {
-  background: #e1e7ef;
+  background: var(--library-code-color-link-hover-bg);
 }
 
 .library-code-copy:focus-visible {
-  outline: 2px solid #7f96b9;
+  outline: 2px solid var(--library-code-color-focus);
   outline-offset: 1px;
 }
 
@@ -75,8 +75,8 @@
 
 .library-code-lines {
   padding-right: 10px;
-  border-right: 1px solid #e2e5e9;
-  color: #999;
+  border-right: 1px solid var(--library-code-color-split);
+  color: var(--library-code-color-text-tertiary);
   text-align: right;
   user-select: none;
 }
@@ -86,47 +86,47 @@
   padding: 0;
   overflow: visible;
   background: transparent;
-  color: #323232;
+  color: var(--library-code-color-text);
 }
 
 .library-code .hljs-comment,
 .library-code .hljs-quote {
-  color: #7a8694;
+  color: var(--library-code-color-text-tertiary);
   font-style: italic;
 }
 
 .library-code .hljs-keyword,
 .library-code .hljs-selector-tag,
 .library-code .hljs-built_in {
-  color: #7b4ab5;
+  color: var(--library-code-color-keyword);
 }
 
 .library-code .hljs-string,
 .library-code .hljs-attr,
 .library-code .hljs-template-tag,
 .library-code .hljs-template-variable {
-  color: #287a4b;
+  color: var(--library-code-color-string);
 }
 
 .library-code .hljs-number,
 .library-code .hljs-literal {
-  color: #b45f06;
+  color: var(--library-code-color-number);
 }
 
 .library-code .hljs-title,
 .library-code .hljs-section,
 .library-code .hljs-selector-id,
 .library-code .hljs-selector-class {
-  color: #154ea5;
+  color: var(--library-code-color-title);
 }
 
 .library-code .hljs-variable,
 .library-code .hljs-property,
 .library-code .hljs-params {
-  color: #9a3e62;
+  color: var(--library-code-color-variable);
 }
 
 .library-code .hljs-tag,
 .library-code .hljs-name {
-  color: #0063b0;
+  color: var(--library-code-color-tag);
 }

@@ -22,17 +22,9 @@ const isOpen = ref(props.open)
 const currentMessage = ref<string | null>(props.message)
 const currentType = ref<AlertType>(props.type)
 
-watch(() => props.open, open => {
-  isOpen.value = open
-})
-
-watch(() => props.message, message => {
-  currentMessage.value = message
-})
-
-watch(() => props.type, type => {
-  currentType.value = type
-})
+watch(() => props.open, open => isOpen.value = open)
+watch(() => props.message, message => currentMessage.value = message)
+watch(() => props.type, type => currentType.value = type)
 
 const alertProps = computed(() => {
   const bindings: Partial<AlertProps> = { ...props }

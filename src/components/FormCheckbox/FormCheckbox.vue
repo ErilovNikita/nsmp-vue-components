@@ -29,6 +29,7 @@ const controlBindings = computed(() => ({
     <template v-if="$slots.description" #description><slot name="description" /></template>
     <AntCheckbox
       v-bind="controlBindings"
+      class="library-form-checkbox"
       @change="event => emit('change', event)"
       @update:checked="value => emit('update:checked', value)"
     >

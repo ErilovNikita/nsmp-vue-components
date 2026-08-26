@@ -19,10 +19,7 @@ const props = defineProps<{
 }>()
 
 const labelWithColon = computed(() => {
-  if (typeof props.label !== 'string') {
-    return props.label
-  }
-
+  if (typeof props.label !== 'string') return props.label
   return props.label.endsWith(':') ? props.label : `${props.label}:`
 })
 
@@ -43,10 +40,7 @@ const alertBindings = computed(() => ({
 </script>
 
 <template>
-  <AntFormItem
-    v-bind="formItemBindings"
-    class="library-form-field"
-  >
+  <AntFormItem v-bind="formItemBindings" class="library-form-field">
     <template v-if="$slots.label" #label>
       <slot name="label" />
     </template>

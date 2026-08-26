@@ -2,24 +2,31 @@
   box-shadow: none !important;
 }
 
+.ant-btn:disabled,
+.ant-btn.ant-btn-disabled {
+  opacity: 50% !important;
+}
+
 .ant-btn-default {
   height: 24px !important;
   padding: 0 12px !important;
   border: none !important;
   border-radius: 1px !important;
-  background: #f4f4f4 !important;
-  color: #5f5f5f !important;
-  fill: #5f5f5f !important;
+  background: var(--library-button-default-bg) !important;
+  color: var(--library-button-default-color) !important;
+  fill: currentColor !important;
   font-size: 13px !important;
   font-weight: 600 !important;
 }
 
-.ant-btn-default:hover {
-  background-color: #e4e4e4 !important;
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  background: var(--library-button-default-hover-bg) !important;
+  color: var(--library-button-default-hover-color) !important;
 }
 
-.ant-btn-default:active {
-  background-color: #bbb !important;
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):active {
+  background: var(--library-button-default-active-bg) !important;
+  color: var(--library-button-default-active-color) !important;
 }
 
 .ant-btn-default>svg,
@@ -31,7 +38,9 @@
   width: 16px !important;
   overflow: unset !important;
 }
-
+.btn-toolkit {
+  margin-bottom: 8px;
+}
 .btn-toolkit>button,
 .btn-toolkit>span {
   margin-right: 10px !important;

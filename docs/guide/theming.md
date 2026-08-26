@@ -52,4 +52,8 @@ onMounted(async () => {
 import { blue } from '@minitwiks/nsmp-vue-components'
 ```
 
+`blue` содержит исходные свойства основной темы NSMP. Токены Ant Design Vue не
+дублируются в репозитории: `ConfigProvider` рассчитывает их из `blue` тем же
+способом, что и для темы, полученной через `parseNsmpTheme()`.
+
 Переданные через `theme` токены имеют приоритет над встроенной темой и преобразованными свойствами `nsmpTheme`.
