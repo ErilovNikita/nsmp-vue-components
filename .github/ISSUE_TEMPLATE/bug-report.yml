@@ -1,0 +1,90 @@
+name: Сообщить об ошибке
+description: Компонент работает неправильно или не соответствует документации
+title: "[Баг]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за сообщение! Заполните обязательные поля — это поможет быстрее воспроизвести и исправить ошибку.
+
+  - type: checkboxes
+    id: existing-issue
+    attributes:
+      label: Проверка существующих обращений
+      options:
+        - label: Я проверил открытые и закрытые Issues и не нашёл такого же обращения.
+          required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: Версия библиотеки
+      description: Укажите версию `@minitwiks/nsmp-vue-components` из package.json или lock-файла.
+      placeholder: Например, 1.0.2
+    validations:
+      required: true
+
+  - type: input
+    id: component
+    attributes:
+      label: Компонент или модуль
+      placeholder: Например, FormDate
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Что произошло?
+      description: Кратко и понятно опишите наблюдаемое поведение.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Ожидаемое поведение
+      description: Опишите, как компонент должен был работать.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Шаги для воспроизведения
+      placeholder: |
+        1. Подключить компонент с параметрами ...
+        2. Выполнить ...
+        3. Увидеть ошибку ...
+    validations:
+      required: true
+
+  - type: input
+    id: reproduction-link
+    attributes:
+      label: Минимальный пример
+      description: Ссылка на репозиторий, StackBlitz, CodeSandbox или другой воспроизводимый пример.
+      placeholder: https://...
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Окружение
+      description: Укажите версии Vue, Ant Design Vue, Node.js, браузер и операционную систему.
+      value: |
+        - Vue:
+        - Ant Design Vue:
+        - Node.js:
+        - Браузер:
+        - ОС:
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи и дополнительная информация
+      description: Добавьте сообщения консоли, скриншоты или другие полезные материалы. Файлы можно перетащить прямо в это поле.
+      render: shell

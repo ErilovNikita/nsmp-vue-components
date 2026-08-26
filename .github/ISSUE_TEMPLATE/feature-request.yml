@@ -1,0 +1,71 @@
+name: Предложить новую функцию
+description: Предложение нового компонента, API или улучшения существующего поведения
+title: "[Функция]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за идею! Опишите задачу и желаемый результат — это поможет оценить предложение и спроектировать удобный API.
+
+  - type: checkboxes
+    id: existing-issue
+    attributes:
+      label: Проверка существующих обращений
+      options:
+        - label: Я проверил открытые и закрытые Issues и не нашёл такого же предложения.
+          required: true
+
+  - type: dropdown
+    id: request-area
+    attributes:
+      label: Область изменения
+      options:
+        - Новый компонент
+        - Улучшение существующего компонента
+        - Новое API или утилита
+        - Документация или демо
+        - Другое
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую задачу нужно решить?
+      description: Опишите пользовательский сценарий и текущее ограничение.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Предлагаемое решение
+      description: Расскажите, как должна выглядеть и работать новая возможность.
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-example
+    attributes:
+      label: Пример использования или API
+      description: Если возможно, покажите желаемое использование компонента или функции.
+      placeholder: |
+        <NewComponent
+          v-model:value="value"
+          option="..."
+        />
+      render: vue
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Рассмотренные альтернативы
+      description: Какие обходные решения или другие варианты вы уже рассматривали?
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Дополнительная информация
+      description: Добавьте ссылки, макеты или скриншоты. Файлы можно перетащить прямо в это поле.
