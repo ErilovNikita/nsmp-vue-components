@@ -2,6 +2,11 @@
   box-shadow: none !important;
 }
 
+.ant-btn:disabled,
+.ant-btn.ant-btn-disabled {
+  opacity: 50% !important;
+}
+
 .ant-btn-default {
   height: 24px !important;
   padding: 0 12px !important;

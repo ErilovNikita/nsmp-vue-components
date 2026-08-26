@@ -20,6 +20,7 @@ const rowSelection = computed(() => ({
 <template>
   <TypographyTitle :level="4">Случайные объекты</TypographyTitle>
   <Button @click="emit('regenerate')">Сгенерировать заново</Button>
+  <Button @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
   <Table :columns="columns" :data-source="objects" :row-selection="rowSelection" row-key="id"/>
   <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
 </template>

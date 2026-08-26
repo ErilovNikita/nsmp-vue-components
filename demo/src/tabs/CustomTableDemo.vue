@@ -16,7 +16,10 @@ const selection = computed({ get: () => props.selectedObjects, set: value => emi
 
 <template>
   <Table v-model:columns="columnsModel" v-model:selected-objects="selection" :data-source="objects" :min-column-width="80" :pagination="{ showSizeChanger: true }" row-key="id" title="Случайные объекты" view-storage-key="demo-objects-table">
-    <template #start><Button type="default" @click="emit('regenerate')">Сгенерировать заново</Button></template>
+    <template #start>
+      <Button type="default" @click="emit('regenerate')">Сгенерировать заново</Button>
+      <Button type="default" @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
+    </template>
   </Table>
   <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
 </template>

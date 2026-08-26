@@ -47,5 +47,6 @@ const save = () => {
 | --- | --- | --- | --- |
 | `type` | `'primary' \| 'default' \| 'text'` | `'default'` | Визуальный вариант |
 | `icon` | `Component` | — | Vue-компонент иконки |
+| `disabled` | `boolean` | `false` | Отключает кнопку и устанавливает прозрачность `50%` |
 
 Также поддерживаются стандартные props и события `Button` из Ant Design Vue, кроме `danger`.
