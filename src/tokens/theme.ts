@@ -112,6 +112,7 @@ export const blue: ThemeConfig = {
     colorBgContainer: '#fff',
     colorBgContainerDisabled: '#fafafa',
     colorBgLayout: '#eff3f8',
+    colorBgElevated: '#f2f2f2',
     colorBgSpotlight: '#2a3f5a',
 
     // Fills
