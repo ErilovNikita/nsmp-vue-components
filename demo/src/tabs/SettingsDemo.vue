@@ -5,10 +5,21 @@ import { parseNsmpTheme } from '../../../src/utils'
 import type { NsmpThemeProperties } from '../../../src/utils'
 import * as themeSources from '../themes'
 
-const emit = defineEmits<{ apply: [theme: NsmpThemeProperties] }>()
-const options = Object.keys(themeSources).map(name => ({ label: name.charAt(0).toUpperCase() + name.slice(1), value: name }))
-const settings = reactive({ theme: options[0]?.value ?? '' })
+const emit = defineEmits<{ apply: [theme: NsmpThemeProperties | undefined] }>()
+const options = [
+  { label: 'Blue', value: 'blue' },
+  ...Object.keys(themeSources).map(name => ({
+    label: name.charAt(0).toUpperCase() + name.slice(1),
+    value: name,
+  })),
+]
+const settings = reactive({ theme: 'blue' })
 const apply = () => {
+  if (settings.theme === 'blue') {
+    emit('apply', undefined)
+    return
+  }
+
   const source = themeSources[settings.theme as keyof typeof themeSources]
   if (source) emit('apply', parseNsmpTheme(source))
 }
