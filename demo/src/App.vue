@@ -1,4 +1,23 @@
 <script setup lang="ts">
+import {
+  Alert as AntAlert,
+  Button as AntButton,
+  Checkbox as AntCheckbox,
+  Col as AntCol,
+  DatePicker as AntDatePicker,
+  TypographyTitle as AntTypographyTitle,
+  Form as AntForm,
+  FormItem as AntFormItem,
+  Input as AntInput,
+  InputNumber as AntInputNumber,
+  Row as AntRow,
+  Select as AntSelect,
+  Slider as AntSlider,
+  Switch as AntSwitch,
+  Table as AntTable,
+} from 'ant-design-vue'
+import type { FormInstance as AntFormInstance } from 'ant-design-vue'
+import type { Key } from 'ant-design-vue/es/_util/type'
 import { computed, reactive, ref } from 'vue'
 import { Alert, AttrGroup, Button, Caption, Code, ConfigProvider, Modal, Table, Tabs } from '../../src'
 import { Form, FormCheckbox, FormDate, FormInput, FormNumber, FormSelect, FormSlider, FormSwitch } from '../../src'
@@ -27,12 +46,15 @@ const initialForm = {
 
 const activeTab = ref('form')
 const form = ref()
+const antForm = ref<AntFormInstance>()
 const model = reactive({ ...initialForm })
 const saved = ref(false)
 const resetConfirmationOpen = ref(false)
 const tabs = [
-  { key: 'form', label: 'Форма' },
-  { key: 'objects', label: 'Список объектов' },
+  { key: 'form', label: 'Форма встроенных компонентов' },
+  { key: 'ant-form', label: 'Форма компонентовAnt Design' },
+  { key: 'objects', label: 'Встроенная таблица' },
+  { key: 'ant-table', label: 'Таблица Ant Design' },
   { key: 'settings', label: 'Настройки' },
 ]
 const themeOptions = Object.keys(themeSources).map(themeName => ({
@@ -89,9 +111,20 @@ const save = async () => {
   }
 }
 
+const saveAntForm = async () => {
+  try {
+    await antForm.value?.validate()
+    saved.value = true
+  }
+  catch {
+    saved.value = false
+  }
+}
+
 const reset = () => {
   Object.assign(model, initialForm)
   form.value?.clearValidate()
+  antForm.value?.clearValidate()
   saved.value = false
   resetConfirmationOpen.value = false
 }
@@ -128,6 +161,18 @@ const regenerateObjects = () => {
   objects.value = createObjects(Date.now())
   selectedObjects.value = []
 }
+
+const antSelectedRowKeys = computed<Key[]>({
+  get: () => selectedObjects.value.map(object => object.id),
+  set: keys => {
+    const selectedKeys = new Set(keys)
+    selectedObjects.value = objects.value.filter(object => selectedKeys.has(object.id))
+  },
+})
+const antRowSelection = computed(() => ({
+  selectedRowKeys: antSelectedRowKeys.value,
+  onChange: (keys: Key[]) => { antSelectedRowKeys.value = keys },
+}))
 </script>
 
 <template>
@@ -226,6 +271,90 @@ const regenerateObjects = () => {
         </a-row>
       </template>
 
+      <template #ant-form>
+        <AntRow :gutter="32">
+          <AntCol :xs="24" :md="12" :lg="10">
+            <AntAlert
+              v-if="saved"
+              closable
+              message="Форма успешно сохранена"
+              type="success"
+              show-icon
+              @close="saved = false"
+            />
+
+            <AntForm ref="antForm" :model="model" layout="vertical">
+              <AntTypographyTitle :level="4">Данные пользователя</AntTypographyTitle>
+
+              <AntFormItem
+                label="Имя"
+                name="name"
+                :rules="[{ required: true, message: 'Введите имя' }]"
+              >
+                <AntAlert
+                  open
+                  message="Полное ФИО"
+                  type="info"
+                  show-icon
+                />
+                <AntInput v-model:value="model.name" placeholder="Введите имя" />
+              </AntFormItem>
+
+              <AntFormItem
+                label="Возраст"
+                name="age"
+                :rules="[{ required: true, message: 'Обязательное поле. От 18 до 120 лет!' }]"
+              >
+                <AntInputNumber v-model:value="model.age" :min="18" :max="120" />
+              </AntFormItem>
+
+              <AntFormItem label="Дата рождения" name="birthDate">
+                <AntDatePicker
+                  v-model:value="model.birthDate"
+                  value-format="YYYY-MM-DD"
+                />
+              </AntFormItem>
+
+              <AntFormItem label="Город" name="city">
+                <AntSelect
+                  v-model:value="model.city"
+                  placeholder="Выберите город"
+                  :options="cities"
+                />
+              </AntFormItem>
+
+              <AntTypographyTitle :level="4">Дополнительная информация</AntTypographyTitle>
+
+              <AntFormItem label="Рабочая нагрузка" name="workload">
+                <AntSlider
+                  v-model:value="model.workload"
+                  :min="0"
+                  :max="100"
+                  :step="5"
+                />
+              </AntFormItem>
+
+              <AntFormItem label="Получать уведомления" name="notifications">
+                <AntSwitch v-model:checked="model.notifications" />
+              </AntFormItem>
+
+              <AntFormItem name="accepted" :rules="acceptanceRules">
+                <AntCheckbox v-model:checked="model.accepted">
+                  Я принимаю условия обработки данных
+                </AntCheckbox>
+              </AntFormItem>
+
+              <AntFormItem>
+                <AntButton type="primary" @click="saveAntForm">Сохранить</AntButton>
+                <AntButton class="ant-form-reset" @click="resetConfirmationOpen = true">
+                  Отменить
+                </AntButton>
+              </AntFormItem>
+            </AntForm>
+          </AntCol>
+        </AntRow>
+      </template>
+
       <template #objects>
         <Table
           v-model:columns="columns"
@@ -243,6 +372,27 @@ const regenerateObjects = () => {
             <Button type="default" @click="regenerateObjects">Сгенерировать заново</Button>
           </template>
         </Table>
+        <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
+      </template>
+
+      <template #ant-table>
+        <AntTable
+          :columns="columns"
+          :data-source="objects"
+          :row-selection="antRowSelection"
+          row-key="id"
+          bordered
+        >
+          <template #title>
+            <div class="ant-table-title">
+              <strong>Случайные объекты</strong>
+              <AntButton @click="regenerateObjects">
+                Сгенерировать заново
+              </AntButton>
+            </div>
+          </template>
+        </AntTable>
+
         <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
       </template>
 
@@ -274,5 +424,16 @@ const regenerateObjects = () => {
 
   .settings-form {
     max-width: 480px;
+  }
+
+  .ant-form-reset {
+    margin-inline-start: 8px;
+  }
+
+  .ant-table-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
   }
 </style>
