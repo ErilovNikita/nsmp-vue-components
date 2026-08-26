@@ -84,6 +84,7 @@ export default defineConfig({
           items: [
             { text: 'Form', link: '/components/form' },
             { text: 'FormCheckbox', link: '/components/form-checkbox' },
+            { text: 'FormDate', link: '/components/form-date' },
             { text: 'FormInput', link: '/components/form-input' },
             { text: 'FormNumber', link: '/components/form-number' },
             { text: 'FormSelect', link: '/components/form-select' },

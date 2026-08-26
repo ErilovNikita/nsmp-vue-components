@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { Alert, AttrGroup, Button, Caption, Code, ConfigProvider, Modal, Table, Tabs } from '../../src'
-import { Form, FormCheckbox, FormInput, FormNumber, FormSelect, FormSlider, FormSwitch } from '../../src'
+import {
+  Form,
+  FormCheckbox,
+  FormDate,
+  FormInput,
+  FormNumber,
+  FormSelect,
+  FormSlider,
+  FormSwitch,
+} from '../../src'
 import type { TableColumn } from '../../src'
 
 
@@ -16,6 +25,7 @@ interface DemoObject {
 const initialForm = {
   accepted: false,
   age: 30,
+  birthDate: '1996-05-18',
   city: 'moscow',
   name: 'Анна Смирнова',
   notifications: true,
@@ -44,6 +54,7 @@ const acceptanceRules = [{
 const attrItems: Array<[string, string]> = [
   ['Имя', 'name'],
   ['Возраст', 'age'],
+  ['Дата рождения', 'birthDate'],
   ['Город', 'city'],
   ['Нагрузка', 'workload'],
   ['Уведомления', 'notifications'],
@@ -52,6 +63,7 @@ const attrItems: Array<[string, string]> = [
 const formValues = computed<Record<string, unknown>>(() => ({
   accepted: model.accepted ? 'Да' : 'Нет',
   age: model.age,
+  birthDate: model.birthDate,
   city: cities.find(city => city.value === model.city)?.label ?? 'Не выбран',
   name: model.name || 'Не указано',
   notifications: model.notifications ? 'Включены' : 'Выключены',
@@ -158,6 +170,12 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
                     :max="120"
                     :rules="[{ required: true, message: 'Обязательное поле. От 18 до 120 лет!' }]"
                   />
+                  <FormDate
+                    v-model:value="model.birthDate"
+                    label="Дата рождения"
+                    name="birthDate"
+                    :date-picker-props="{ valueFormat: 'YYYY-MM-DD' }"
+                  />
                   <FormSelect
                     v-model:value="model.city"
                     label="Город"
@@ -259,6 +277,7 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
 .library-demo :deep(.ant-input),
 .library-demo :deep(.ant-input-affix-wrapper),
 .library-demo :deep(.ant-input-number),
+.library-demo :deep(.ant-picker),
 .library-demo :deep(.ant-select-selector) {
   box-sizing: border-box;
   border: 1px solid #c0c0c0 !important;
@@ -269,6 +288,7 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
 .library-demo :deep(.ant-input:hover),
 .library-demo :deep(.ant-input-affix-wrapper:hover),
 .library-demo :deep(.ant-input-number:hover),
+.library-demo :deep(.ant-picker:hover),
 .library-demo :deep(.ant-select:hover .ant-select-selector) {
   border-color: #7f96b9 !important;
 }
@@ -277,6 +297,7 @@ onUnmounted(() => globalThis.document.body.classList.remove('library-demo-body')
 .library-demo :deep(.ant-input-focused),
 .library-demo :deep(.ant-input-affix-wrapper-focused),
 .library-demo :deep(.ant-input-number-focused),
+.library-demo :deep(.ant-picker-focused),
 .library-demo :deep(.ant-select-focused .ant-select-selector) {
   border-color: #556e95 !important;
   outline: 0 !important;
