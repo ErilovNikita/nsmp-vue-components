@@ -64,6 +64,7 @@ export default defineConfig({
           text: 'Документация',
           items: [
             { text: 'Начало работы', link: '/guide/getting-started' },
+            { text: 'Демо', link: '/guide/demo' },
             { text: 'Темизация', link: '/guide/theming' },
           ],
         },
