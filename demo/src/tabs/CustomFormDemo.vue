@@ -63,7 +63,7 @@ defineExpose({ clearValidate: () => form.value?.clearValidate() })
           <FormInput v-model:value="model.name" label="Имя" description="Полное ФИО" name="name" placeholder="Введите имя" :rules="[{ required: true, message: 'Введите имя' }]" />
           <FormNumber v-model:value="model.age" label="Возраст" name="age" :min="18" :max="120" :rules="[{ required: true, message: 'Обязательное поле. От 18 до 120 лет!' }]" />
           <FormDate v-model:value="model.birthDate" label="Дата рождения" name="birthDate" :date-picker-props="{ valueFormat: 'YYYY-MM-DD' }" />
-          <FormSelect v-model:value="model.city" label="Город" name="city" placeholder="Выберите город" :options="cities" />
+          <FormSelect v-model:value="model.city" label="Город" name="city" placeholder="Начните вводить город" :options="cities" searchable />
         </Caption>
         <Caption label="Дополнительная информация">
           <FormSlider v-model:value="model.workload" label="Рабочая нагрузка" name="workload" :min="0" :max="100" :step="5" />

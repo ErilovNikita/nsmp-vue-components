@@ -5,18 +5,22 @@ const hoverClass = 'library-table-gear-hover'
 export const useTableSettingsGear = (
   enabled: () => boolean,
   settingsOpen: Ref<boolean>,
+  headerSelector: () => string = () => 'th.ant-table-selection-column',
+  align: () => 'center' | 'left' = () => 'center',
 ) => {
   const findGear = (event: globalThis.MouseEvent): globalThis.HTMLElement | null => {
     if (!enabled() || !(event.target instanceof globalThis.Element)) return null
-    const header = event.target.closest(
-      'th.ant-table-selection-column',
-    ) as globalThis.HTMLElement | null
+    if (event.target.closest('.library-table') !== event.currentTarget) return null
+    const header = event.target.closest(headerSelector()) as globalThis.HTMLElement | null
     if (!header) return null
 
     const bounds = header.getBoundingClientRect()
+    const gearCenterX = align() === 'left'
+      ? bounds.left + 16
+      : bounds.left + bounds.width / 2
     const isGear = event.clientY >= bounds.top
       && event.clientY <= bounds.top + 26
-      && Math.abs(event.clientX - (bounds.left + bounds.width / 2)) <= 12
+      && Math.abs(event.clientX - gearCenterX) <= 12
     return isGear ? header : null
   }
 

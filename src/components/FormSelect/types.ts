@@ -21,6 +21,8 @@ export interface FormSelectProps {
   /** Selected radio-button appearance. @default 'outline' */
   radioButtonStyle?: FormSelectRadioButtonStyle
   radioGroupProps?: RadioGroupProps
+  /** Enables text search by option label in select view. */
+  searchable?: boolean
   selectProps?: SelectProps
   value?: SelectProps['value']
   /** Control presentation. @default 'select' */

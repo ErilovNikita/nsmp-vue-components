@@ -121,3 +121,38 @@ Prop `viewStorageKey` включает настройку и сохранени�
 | `title` | `string \| null` | `null` | Заголовок |
 
 События: `columnClick`, `columnResize`, `update:columns`, `update:selectedObjects`. Доступны слоты `start`, `bodyCell`, `headerCell`, `emptyText`, `expandedRowRender` и `summary`.
+
+## Вложенные строки
+
+Для древовидной таблицы добавьте массив `children` к родительской записи. Плоские наборы данных продолжают работать без изменений. Настройки раскрытия передаются через `expandable`.
+
+```vue
+<script setup lang="ts">
+const rows = [
+  {
+    id: 'development',
+    name: 'Разработка',
+    children: [
+      { id: 'frontend', name: 'Frontend' },
+      {
+        id: 'backend',
+        name: 'Backend',
+        children: [{ id: 'employee-1', name: 'Анна Смирнова' }],
+      },
+    ],
+  },
+]
+</script>
+
+<template>
+  <Table
+    :columns="columns"
+    :data-source="rows"
+    :expandable="{ defaultExpandAllRows: true, indentSize: 20 }"
+    :pagination="false"
+    row-key="id"
+  />
+</template>
+```
+
+Если данные используют другое поле, например `nodes`, укажите `children-column-name="nodes"`. Значение по умолчанию — `children`.

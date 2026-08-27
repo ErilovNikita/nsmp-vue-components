@@ -83,6 +83,18 @@ describe('form controls', () => {
     expect(wrapper.findComponent(AntSelect).props('options')).toEqual(options)
   })
 
+  it('enables option label search in FormSelect', () => {
+    const options = [{ label: 'Москва', value: 'moscow' }]
+    const wrapper = mount(FormSelect, {
+      props: { options, searchable: true },
+    })
+
+    expect(wrapper.findComponent(AntSelect).props()).toMatchObject({
+      optionFilterProp: 'label',
+      showSearch: true,
+    })
+  })
+
   it('renders a radio group in radio view', () => {
     const options = [{ label: 'Москва', value: 'moscow' }]
     const wrapper = mount(FormSelect, {

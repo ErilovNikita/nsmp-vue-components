@@ -21,8 +21,10 @@ const dataSource = [
 const tableStub = {
   name: 'AntTable',
   props: [
+    'childrenColumnName',
     'columns',
     'dataSource',
+    'expandable',
     'loading',
     'pagination',
     'rowSelection',
@@ -41,6 +43,7 @@ const tableStub = {
       <div class="next-header" />
       <slot name="bodyCell" :text="'Cell'" />
       <slot name="emptyText" />
+      <slot name="expandColumnTitle" />
     </section>
   `,
 }
@@ -75,6 +78,31 @@ describe('Table', () => {
     expect(wrapper.findComponent(AntTable).props('tableLayout')).toBe('fixed')
     expect(wrapper.findComponent(AntTable).props('rowSelection')).toMatchObject({
       columnWidth: 48,
+    })
+    expect(wrapper.findComponent(AntTable).props('childrenColumnName')).toBe('children')
+  })
+
+  it('passes nested row configuration to Ant Table', () => {
+    const nestedRows = [{
+      key: 1,
+      name: 'Parent',
+      nodes: [{ key: 2, name: 'Child' }],
+    }]
+    const expandable = { defaultExpandAllRows: true, indentSize: 24 }
+    const wrapper = mount(Table, {
+      props: {
+        childrenColumnName: 'nodes',
+        columns,
+        dataSource: nestedRows,
+        expandable,
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    expect(wrapper.findComponent(AntTable).props()).toMatchObject({
+      childrenColumnName: 'nodes',
+      dataSource: nestedRows,
+      expandable,
     })
   })
 
@@ -293,6 +321,52 @@ describe('Table', () => {
 
   })
 
+  it('keeps column settings available when row selection is disabled', async () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns,
+        dataSource,
+        selectable: false,
+        viewStorageKey: 'employees-view',
+      },
+      slots: {
+        start: `
+          <table>
+            <thead class="ant-table-thead">
+              <tr>
+                <th class="ant-table-cell"><span class="gear-target" /></th>
+              </tr>
+            </thead>
+          </table>
+        `,
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+    const header = wrapper.find('th.ant-table-cell')
+
+    vi.spyOn(header.element, 'getBoundingClientRect').mockReturnValue({
+      bottom: 50,
+      height: 50,
+      left: 0,
+      right: 160,
+      top: 0,
+      width: 160,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    })
+
+    expect(wrapper.classes()).toContain('library-table-view-settings-without-selection')
+    expect(wrapper.findComponent(AntTable).props('rowSelection')).toBeUndefined()
+
+    await wrapper.find('.gear-target').trigger('click', {
+      clientX: 16,
+      clientY: 10,
+    })
+
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('open')).toBe(true)
+  })
+
   it('does not render view settings without a storage key', () => {
     const wrapper = mount(Table, {
       props: { columns, dataSource },
@@ -301,6 +375,29 @@ describe('Table', () => {
 
     expect(wrapper.classes()).not.toContain('library-table-view-settings-enabled')
     expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).exists()).toBe(false)
+  })
+
+  it('does not open parent settings from a nested table header', async () => {
+    const wrapper = mount(Table, {
+      props: { columns, dataSource, viewStorageKey: 'employees-view' },
+      slots: {
+        start: `
+          <div class="library-table library-table-view-settings-disabled">
+            <table>
+              <thead><tr><th class="ant-table-cell nested-header">Nested</th></tr></thead>
+            </table>
+          </div>
+        `,
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    await wrapper.find('.nested-header').trigger('click', {
+      clientX: 16,
+      clientY: 10,
+    })
+
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('open')).toBe(false)
   })
 
   it('restores, saves, and resets a view using the configured storage key', async () => {
@@ -372,11 +469,13 @@ describe('Table', () => {
       slots: {
         bodyCell: '<template #default="{ text }"><b class="cell">{{ text }}</b></template>',
         emptyText: '<span class="empty">Nothing found</span>',
+        expandColumnTitle: '<span class="expand-title">Files</span>',
       },
       global: { stubs: { ATable: tableStub } },
     })
 
     expect(wrapper.find('.cell').text()).toBe('Cell')
     expect(wrapper.find('.empty').text()).toBe('Nothing found')
+    expect(wrapper.find('.expand-title').text()).toBe('Files')
   })
 })

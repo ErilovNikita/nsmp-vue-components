@@ -224,4 +224,15 @@ Prop `view` определяет используемый контрол:
 
 ## Настройка
 
-Быстрые props: `value`, `label`, `name`, `rules`, `description`, `placeholder`, `options`, `view`, `multiple` и `radioButtonStyle`. Для полной настройки используются `formItemProps`, `alertProps`, `selectProps`, `radioGroupProps` и `checkboxGroupProps`. Select-режим поддерживает слоты `option`, `tagRender`, `dropdownRender`, `notFoundContent` и методы `focus()` / `blur()`.
+Быстрые props: `value`, `label`, `name`, `rules`, `description`, `placeholder`, `options`, `view`, `multiple`, `searchable` и `radioButtonStyle`. Для полной настройки используются `formItemProps`, `alertProps`, `selectProps`, `radioGroupProps` и `checkboxGroupProps`. Select-режим поддерживает слоты `option`, `tagRender`, `dropdownRender`, `notFoundContent` и методы `focus()` / `blur()`.
+
+Для поиска по тексту метки опции включите `searchable`:
+
+```vue
+<FormSelect
+  v-model:value="city"
+  :options="cities"
+  placeholder="Начните вводить город"
+  searchable
+/>
+```
