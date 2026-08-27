@@ -33,6 +33,12 @@ const choiceOptions = computed(() => (props.options ?? []).flatMap(option => {
   }]
 }))
 const selectBindings = computed(() => ({
+  ...(props.searchable
+    ? {
+        optionFilterProp: 'label',
+        showSearch: true,
+      }
+    : {}),
   ...props.selectProps,
   ...(props.multiple ? { mode: 'multiple' as const } : {}),
   ...(props.options === undefined ? {} : { options: props.options }),
