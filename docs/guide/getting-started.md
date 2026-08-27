@@ -27,6 +27,10 @@ app.mount('#app')
 
 ## Отдельные импорты
 
+::: warning Важно
+Не забудьте обернуть корневой компонент приложения в [`ConfigProvider`](/components/config-provider), чтобы применить тему NSMP ко всем вложенным компонентам. Получение и подключение темы описаны в руководстве [«Темизация»](/guide/theming).
+:::
+
 Для tree-shaking импортируйте только нужные компоненты:
 
 ```vue
@@ -41,7 +45,3 @@ import '@minitwiks/nsmp-vue-components/style.css'
   </ConfigProvider>
 </template>
 ```
-
-::: tip
-Оберните корневой компонент приложения в `ConfigProvider`, чтобы применить тему NSMP ко всем вложенным компонентам.
-:::
