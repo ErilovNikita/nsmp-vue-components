@@ -10,6 +10,7 @@ describe('Caption', () => {
     })
 
     expect(wrapper.find('h4').text()).toBe('Настройки')
+    expect(wrapper.find('h4').classes()).toContain('library-caption-title')
     expect(wrapper.find('.content').text()).toBe('Содержимое')
   })
 

@@ -32,11 +32,18 @@
 .ant-btn-default>svg,
 .ant-btn-default>img,
 .ant-btn-default>.btn-icon {
+  display: inline-block;
   margin-bottom: -4px !important;
   margin-right: 6px !important;
   height: 16px !important;
   width: 16px !important;
   overflow: unset !important;
+}
+
+.ant-btn-default>.btn-icon>svg {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 .btn-toolkit {
   margin-bottom: 8px;

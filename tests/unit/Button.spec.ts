@@ -30,6 +30,18 @@ describe('Button', () => {
     expect(wrapper.find('button').text()).toBe('Delete')
   })
 
+  it('renders an SVG string before the button content', () => {
+    const icon = '<svg viewBox="0 0 16 16" aria-label="Save icon"><path d="M1 1h14v14H1z" /></svg>'
+    const wrapper = mount(Button, {
+      props: { icon },
+      slots: { default: 'Save' },
+    })
+
+    expect(wrapper.find('button .btn-icon svg').attributes('aria-label')).toBe('Save icon')
+    expect(wrapper.find('button .btn-icon path').attributes('d')).toBe('M1 1h14v14H1z')
+    expect(wrapper.find('button').text()).toBe('Save')
+  })
+
   it('forwards click handlers to the Ant Design button', async () => {
     const onClick = vi.fn()
     const wrapper = mount(Button, {

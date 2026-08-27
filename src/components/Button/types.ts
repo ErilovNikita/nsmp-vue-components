@@ -5,5 +5,5 @@ export type ButtonVariant = 'primary' | 'default' | 'text'
 
 export interface ButtonProps extends Omit<AntButtonProps, 'type' | 'danger'> {
   type?: ButtonVariant
-  icon?: Component
+  icon?: Component | string
 }
