@@ -69,12 +69,27 @@
 
 .ant-table > .ant-table-container > .ant-table-content > table > tbody.ant-table-tbody > tr:hover > td,
 .ant-table > .ant-table-container > .ant-table-body > table > tbody.ant-table-tbody > tr:hover > td {
-  background: #ebebeb !important;
+  background: #ebebeb;
 }
 
 .ant-table > .ant-table-container > .ant-table-content > table > tbody.ant-table-tbody > tr.ant-table-row-selected > td,
 .ant-table > .ant-table-container > .ant-table-body > table > tbody.ant-table-tbody > tr.ant-table-row-selected > td {
   background: #f4f4f4 !important;
+}
+
+/* Keep expanded content visually connected to its parent row, as in Ant Design. */
+.library-table .ant-table-expanded-row > .ant-table-cell,
+.library-table .ant-table-expanded-row:hover > .ant-table-cell {
+  padding: 16px 16px 16px 56px !important;
+  background: #fff !important;
+}
+
+.library-table .ant-table-expanded-row > .ant-table-cell > .library-table {
+  margin: 0;
+}
+
+.library-table .ant-table-expanded-row > .ant-table-cell > .library-table > .ant-table-wrapper {
+  background: #fff;
 }
 
 .library-table .ant-table-selection-col {
@@ -92,12 +107,14 @@
   text-align: center !important;
 }
 
-.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column {
+.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column,
+.library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child {
   position: relative;
   padding-top: 28px !important;
 }
 
-.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column::after {
+.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column::after,
+.library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child::after {
   position: absolute;
   top: 6px;
   left: 50%;
@@ -116,6 +133,32 @@
 
 .library-table-view-settings-enabled .ant-table-thead > tr > th.library-table-gear-hover::after {
   opacity: 0.9;
+}
+
+.library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child::after {
+  left: 8px;
+  transform: none;
+}
+
+/* Do not let settings styles from a parent table leak into a nested table. */
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-thead > tr > th.ant-table-cell:first-child,
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-thead > tr > th.ant-table-selection-column {
+  padding-top: 16px !important;
+}
+
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-middle .ant-table-thead > tr > th.ant-table-cell:first-child,
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-middle .ant-table-thead > tr > th.ant-table-selection-column {
+  padding-top: 12px !important;
+}
+
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-small .ant-table-thead > tr > th.ant-table-cell:first-child,
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-small .ant-table-thead > tr > th.ant-table-selection-column {
+  padding-top: 8px !important;
+}
+
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-thead > tr > th.ant-table-cell:first-child::after,
+.library-table-view-settings-enabled .library-table-view-settings-disabled .ant-table-thead > tr > th.ant-table-selection-column::after {
+  content: none;
 }
 
 .library-table-settings-modal .ant-modal-content,

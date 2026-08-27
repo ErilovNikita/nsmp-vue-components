@@ -1,14 +1,7 @@
 import type { SpinProps } from 'ant-design-vue'
 import type { Key } from 'ant-design-vue/es/_util/type'
-import type {
-  TablePaginationConfig,
-  TableProps as AntTableProps,
-} from 'ant-design-vue/es/table'
-import type {
-  ColumnType,
-  TableRowSelection,
-} from 'ant-design-vue/es/table/interface'
-
+import type { TablePaginationConfig, TableProps as AntTableProps } from 'ant-design-vue/es/table'
+import type { ColumnType, ExpandableConfig, TableRowSelection } from 'ant-design-vue/es/table/interface'
 export type TableRecord = Record<string, unknown>
 export type TableColumn<RecordType = TableRecord> = ColumnType<RecordType> & {
   hidden?: boolean
@@ -17,8 +10,12 @@ export type TableColumn<RecordType = TableRecord> = ColumnType<RecordType> & {
 
 export interface TableProps<RecordType = TableRecord> {
   bordered?: boolean
+  /** Record property that contains nested rows. */
+  childrenColumnName?: string
   columns: TableColumn<RecordType>[]
   dataSource?: RecordType[]
+  /** Expansion behavior for tree rows and expanded row content. */
+  expandable?: ExpandableConfig<RecordType>
   loading?: boolean | SpinProps
   locale?: AntTableProps<RecordType>['locale']
   pagination?: false | TablePaginationConfig

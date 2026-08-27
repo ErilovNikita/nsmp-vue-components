@@ -21,6 +21,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<TableProps>(), {
   bordered: false,
+  childrenColumnName: 'children',
   dataSource: () => [],
   loading: false,
   minColumnWidth: 70,
@@ -64,12 +65,18 @@ const { displayColumns } = useResizableColumns({
 const settingsGear = useTableSettingsGear(
   () => Boolean(props.viewStorageKey),
   tableView.settingsOpen,
+  () => props.selectable
+    ? 'th.ant-table-selection-column'
+    : 'th.ant-table-cell:first-child',
+  () => props.selectable ? 'center' : 'left',
 )
 
 const tableBindings = computed(() => {
   return {
     bordered: props.bordered,
+    childrenColumnName: props.childrenColumnName,
     dataSource: props.dataSource,
+    expandable: props.expandable,
     loading: props.loading,
     locale: props.locale,
     rowKey: props.rowKey,
@@ -87,7 +94,12 @@ const tableBindings = computed(() => {
 
 <template>
   <div
-    :class="['library-table', viewStorageKey && 'library-table-view-settings-enabled']"
+    :class="[
+      'library-table',
+      viewStorageKey && 'library-table-view-settings-enabled',
+      !viewStorageKey && 'library-table-view-settings-disabled',
+      viewStorageKey && !selectable && 'library-table-view-settings-without-selection',
+    ]"
     @click.capture="settingsGear.onClick"
     @pointerleave="settingsGear.onPointerLeave"
     @pointermove="settingsGear.onPointerMove"
@@ -115,6 +127,10 @@ const tableBindings = computed(() => {
 
       <template v-if="$slots.emptyText" #emptyText>
         <slot name="emptyText" />
+      </template>
+
+      <template v-if="$slots.expandColumnTitle" #expandColumnTitle>
+        <slot name="expandColumnTitle" />
       </template>
 
       <template v-if="$slots.expandedRowRender" #expandedRowRender="slotProps">
