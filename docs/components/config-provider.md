@@ -6,6 +6,10 @@
 Компонент построен на [ConfigProvider из Ant Design Vue](https://antdv.com/components/config-provider).
 :::
 
+::: tip Документация
+Вся информация о получении темы текущего пользователя, загрузки ее из NSMP и подключение к провайдеру описаны в руководстве [«Темизация»](/guide/theming).
+:::
+
 ```vue
 <script setup lang="ts">
 import { ConfigProvider } from '@minitwiks/nsmp-vue-components'
@@ -26,4 +30,4 @@ import { ConfigProvider } from '@minitwiks/nsmp-vue-components'
 | `nsmpTheme` | `Record<string, string>` | Свойства темы, полученные от NSMP |
 | `locale` | `Locale` | Локаль Ant Design Vue. По умолчанию используется `ru_RU`; переданное значение имеет приоритет. |
 
-Остальные свойства напрямую передаются в Ant Design Vue. Подробнее о приоритетах токенов — в разделе [«Темизация»](/guide/theming).
+Остальные свойства напрямую передаются в Ant Design Vue.
