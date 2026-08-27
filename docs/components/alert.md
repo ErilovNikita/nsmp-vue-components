@@ -26,6 +26,10 @@ const message = computed(() => messages[type.value])
 Компонент построен на [Alert из Ant Design Vue](https://antdv.com/components/alert).
 :::
 
+::: tip Всплывающие уведомления
+Если сообщение должно появляться поверх интерфейса, используйте утилиту [`openNotification`](/utilities/notifications). Компонент `Alert` предназначен для сообщений внутри разметки страницы.
+:::
+
 <div class="demo">
   <FormSelect
     v-model:value="type"

@@ -22,6 +22,10 @@ const notify = () => openNotification({
 
 `openNotification` создаёт уведомление в стиле NSMP и возвращает контроллер для ручного закрытия.
 
+::: tip Связанный компонент
+Для сообщения, которое должно оставаться частью разметки страницы, используйте компонент [`Alert`](/components/alert). `openNotification` подходит для всплывающих уведомлений поверх интерфейса.
+:::
+
 <div class="demo">
   <FormSelect
     v-model:value="type"
