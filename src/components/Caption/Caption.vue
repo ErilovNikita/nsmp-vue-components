@@ -10,7 +10,7 @@ withDefaults(defineProps<CaptionProps>(), {
 </script>
 
 <template>
-  <AntTypographyTitle :level="level">
+  <AntTypographyTitle class="library-caption-title" :level="level">
     {{ label }}
   </AntTypographyTitle>
   <slot />
