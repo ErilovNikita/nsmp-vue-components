@@ -236,3 +236,21 @@ Prop `view` определяет используемый контрол:
   searchable
 />
 ```
+
+### Кастомная загрузка и фильтрация
+
+Если варианты загружаются и фильтруются вашей логикой, отключите встроенную фильтрацию Select с помощью `filterOption: false` в `selectProps`. Иначе Ant Design Vue дополнительно отфильтрует уже полученный список на клиенте.
+
+```vue
+<FormSelect
+  v-model:value="city"
+  :options="cities"
+  :select-props="{
+    filterOption: false,
+    loading: isLoading,
+    onSearch: loadCities,
+  }"
+  placeholder="Начните вводить для поиска"
+  searchable
+/>
+```
