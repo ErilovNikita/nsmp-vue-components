@@ -119,10 +119,13 @@
   left: 50%;
   width: 16px;
   height: 16px;
-  background-image: url('../assets/cog-30.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  -webkit-mask-image: url('../assets/cog.svg');
+  mask-image: url('../assets/cog.svg');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-color: var(--library-code-color-text) !important;
   content: '';
   cursor: pointer;
   opacity: 0.65;
