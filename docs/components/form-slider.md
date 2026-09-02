@@ -11,10 +11,15 @@ const model = reactive({ volume: 35 })
 Компонент построен на [Slider](https://antdv.com/components/slider) и [Form](https://antdv.com/components/form) из Ant Design Vue.
 :::
 
+::: tip Привязка к модели формы
+Если данный компонен расположен внутри [Form](/components/form) достаточно указать `name:`, отдельный `v-model` не требуется. 
+
+Подробнее — [в документации Form](/components/form#model-binding-by-name).
+:::
+
 <div class="demo">
   <Form :model="model">
     <FormSlider
-      v-model:value="model.volume"
       label="Громкость"
       name="volume"
       description="Выберите комфортный уровень"
@@ -36,7 +41,6 @@ const model = reactive({ volume: 35 })
 <template>
   <Form :model="model">
     <FormSlider
-      v-model:value="model.volume"
       label="Громкость"
       name="volume"
       description="Выберите комфортный уровень"

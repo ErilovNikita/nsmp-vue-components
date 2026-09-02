@@ -3,6 +3,7 @@ import { DatePicker as AntDatePicker } from 'ant-design-vue'
 import type { Dayjs } from 'dayjs'
 import { computed, ref } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type {
   FormDateRangeValue,
   FormDateProps,
@@ -20,6 +21,12 @@ const emit = defineEmits<{
   change: [value: FormDateValue, dateString: FormDateString]
   'update:value': [value: FormDateValue]
 }>()
+const model = useFormModel<FormDateValue>(
+  () => props.name,
+  () => props.value,
+  'value',
+  value => emit('update:value', value),
+)
 
 type PickerExpose = { blur: () => void; focus: () => void }
 
@@ -35,20 +42,22 @@ const isDateTime = computed(() => props.type.startsWith('datetime'))
 const datePickerBindings = computed(() => ({
   ...props.datePickerProps,
   showTime: isDateTime.value,
-  ...(props.value === undefined ? {} : { value: props.value as Dayjs | string }),
+  ...(model.value.value === undefined
+    ? {}
+    : { value: model.value.value as Dayjs | string }),
   ...(typeof props.placeholder === 'string' ? { placeholder: props.placeholder } : {}),
 }) as DatePickerBindings)
 const rangePickerBindings = computed(() => ({
   ...props.rangePickerProps,
   showTime: isDateTime.value,
-  ...(props.value === undefined
+  ...(model.value.value === undefined
     ? {}
-    : { value: props.value as [Dayjs, Dayjs] | [string, string] }),
+    : { value: model.value.value as [Dayjs, Dayjs] | [string, string] }),
   ...(Array.isArray(props.placeholder) ? { placeholder: props.placeholder } : {}),
 }) as RangePickerBindings)
 
-const updateSingleValue = (value: FormDateSingleValue) => emit('update:value', value)
-const updateRangeValue = (value: FormDateRangeValue) => emit('update:value', value)
+const updateSingleValue = (value: FormDateSingleValue) => model.update(value)
+const updateRangeValue = (value: FormDateRangeValue) => model.update(value)
 const changeSingleValue = (value: FormDateSingleValue, dateString: string) => {
   emit('change', value, dateString)
 }

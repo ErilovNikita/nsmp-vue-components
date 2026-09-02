@@ -2,6 +2,7 @@
 import { Slider as AntSlider } from 'ant-design-vue'
 import { computed } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type { FormSliderProps } from './types'
 
 defineOptions({ name: 'LibraryFormSlider' })
@@ -12,12 +13,18 @@ const emit = defineEmits<{
   change: [value: FormSliderProps['value']]
   'update:value': [value: FormSliderProps['value']]
 }>()
+const model = useFormModel(
+  () => props.name,
+  () => props.value,
+  'value',
+  value => emit('update:value', value),
+)
 const controlBindings = computed(() => ({
   ...props.sliderProps,
   ...(props.max === undefined ? {} : { max: props.max }),
   ...(props.min === undefined ? {} : { min: props.min }),
   ...(props.step === undefined ? {} : { step: props.step }),
-  ...(props.value === undefined ? {} : { value: props.value }),
+  ...(model.value.value === undefined ? {} : { value: model.value.value }),
 }))
 </script>
 
@@ -36,7 +43,7 @@ const controlBindings = computed(() => ({
       v-bind="controlBindings"
       @after-change="value => emit('afterChange', value)"
       @change="value => emit('change', value)"
-      @update:value="value => emit('update:value', value)"
+      @update:value="model.update"
     />
   </FormField>
 </template>

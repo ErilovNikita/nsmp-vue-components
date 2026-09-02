@@ -35,6 +35,12 @@ watch(demoMultiple, multiple => {
 Компонент построен на [Select](https://antdv.com/components/select), [Radio](https://antdv.com/components/radio), [Checkbox](https://antdv.com/components/checkbox) и [Form](https://antdv.com/components/form) из Ant Design Vue.
 :::
 
+::: tip Привязка к модели формы
+Если данный компонен расположен внутри [Form](/components/form) достаточно указать `name:`, отдельный `v-model` не требуется. 
+
+Подробнее — [в документации Form](/components/form#model-binding-by-name).
+:::
+
 ## Демо
 
 Измените вид отображения и режим выбора — пример обновится сразу.
@@ -66,7 +72,6 @@ watch(demoMultiple, multiple => {
 
   <Form :model="model">
     <FormSelect
-      v-model:value="model.selection"
       label="Города"
       name="selection"
       description="Внешний вид и режим выбора управляются параметрами демо"
@@ -141,7 +146,6 @@ watch(demoMultiple, multiple => {
 
   <Form :model="model">
     <FormSelect
-      v-model:value="model.selection"
       label="Города"
       name="selection"
       description="Внешний вид и режим выбора управляются параметрами демо"

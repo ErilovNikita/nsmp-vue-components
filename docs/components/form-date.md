@@ -13,13 +13,19 @@ const model = reactive({
 
 Поле выбора даты на базе `FormField` и `DatePicker` из Ant Design Vue. Один prop `type` переключает одиночный выбор, диапазон и ввод времени.
 
+::: tip Привязка к модели формы
+Если данный компонен расположен внутри [Form](/components/form) достаточно указать `name:`, отдельный `v-model` не требуется. 
+
+Подробнее — [в документации Form](/components/form#model-binding-by-name).
+:::
+
 <div class="demo">
   <Form :model="model">
-    <FormDate v-model:value="model.date" label="Дата" type="date" />
-    <FormDate v-model:value="model.datetime" label="Дата и время" type="datetime" />
-    <FormDate v-model:value="model.dateRange" label="Период" type="date-range" />
+    <FormDate name="date" label="Дата" type="date" />
+    <FormDate name="datetime" label="Дата и время" type="datetime" />
+    <FormDate name="dateRange" label="Период" type="date-range" />
     <FormDate
-      v-model:value="model.datetimeRange"
+      name="datetimeRange"
       label="Период с временем"
       type="datetime-range"
     />

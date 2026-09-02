@@ -11,10 +11,15 @@ const model = reactive({ notifications: true })
 Компонент построен на [Switch](https://antdv.com/components/switch) и [Form](https://antdv.com/components/form) из Ant Design Vue.
 :::
 
+::: tip Привязка к модели формы
+Если данный компонен расположен внутри [Form](/components/form) достаточно указать `name:`, отдельный `v-model` не требуется. 
+
+Подробнее — [в документации Form](/components/form#model-binding-by-name).
+:::
+
 <div class="demo">
   <Form :model="model">
     <FormSwitch
-      v-model:checked="model.notifications"
       label="Получать уведомления"
       name="notifications"
       description="Уведомления можно отключить в любой момент"
@@ -33,7 +38,6 @@ const model = reactive({ notifications: true })
 <template>
   <Form :model="model">
     <FormSwitch
-      v-model:checked="model.notifications"
       label="Получать уведомления"
       name="notifications"
       description="Уведомления можно отключить в любой момент"

@@ -2,6 +2,7 @@
 import { Input as AntInput } from 'ant-design-vue'
 import { computed, ref } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type { FormInputProps } from './types'
 
 defineOptions({ name: 'LibraryFormInput' })
@@ -10,14 +11,20 @@ const props = defineProps<FormInputProps>()
 const emit = defineEmits<{
   change: [event: Event]
   input: [event: Event]
-  'update:value': [value: string]
+  'update:value': [value: FormInputProps['value']]
 }>()
 const input = ref<{ blur: () => void; focus: () => void }>()
+const model = useFormModel<FormInputProps['value']>(
+  () => props.name,
+  () => props.value,
+  'value',
+  value => emit('update:value', value),
+)
 
 const inputBindings = computed(() => ({
   ...props.inputProps,
   ...(props.placeholder === undefined ? {} : { placeholder: props.placeholder }),
-  ...(props.value === undefined ? {} : { value: props.value }),
+  ...(model.value.value === undefined ? {} : { value: model.value.value }),
 }))
 
 defineExpose({
@@ -42,7 +49,7 @@ defineExpose({
       v-bind="inputBindings"
       @change="event => emit('change', event)"
       @input="event => emit('input', event)"
-      @update:value="value => emit('update:value', value)"
+      @update:value="model.update"
     >
       <template v-if="$slots.prefix" #prefix><slot name="prefix" /></template>
       <template v-if="$slots.suffix" #suffix><slot name="suffix" /></template>

@@ -7,6 +7,7 @@ import {
 import type { CheckboxValueType } from 'ant-design-vue/es/checkbox/interface'
 import { computed, ref } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type { FormSelectProps } from './types'
 
 defineOptions({ name: 'LibraryFormSelect' })
@@ -21,6 +22,12 @@ const emit = defineEmits<{
   'update:value': [value: FormSelectProps['value']]
 }>()
 const select = ref<{ blur: () => void; focus: () => void }>()
+const model = useFormModel<FormSelectProps['value']>(
+  () => props.name,
+  () => props.value,
+  'value',
+  value => emit('update:value', value),
+)
 
 const choiceOptions = computed(() => (props.options ?? []).flatMap(option => {
   if (!option || typeof option !== 'object' || !('value' in option)) return []
@@ -43,12 +50,12 @@ const selectBindings = computed(() => ({
   ...(props.multiple ? { mode: 'multiple' as const } : {}),
   ...(props.options === undefined ? {} : { options: props.options }),
   ...(props.placeholder === undefined ? {} : { placeholder: props.placeholder }),
-  ...(props.value === undefined ? {} : { value: props.value }),
+  ...(model.value.value === undefined ? {} : { value: model.value.value }),
 }))
 const radioBindings = computed(() => ({
   ...props.radioGroupProps,
   options: choiceOptions.value,
-  value: props.value,
+  value: model.value.value,
   ...(props.view === 'radio-button'
     ? {
         buttonStyle: props.radioButtonStyle,
@@ -59,14 +66,14 @@ const radioBindings = computed(() => ({
 const checkboxBindings = computed(() => ({
   ...props.checkboxGroupProps,
   options: choiceOptions.value,
-  value: Array.isArray(props.value)
-    ? props.value.filter((value): value is string | number =>
+  value: Array.isArray(model.value.value)
+    ? model.value.value.filter((value): value is string | number =>
       typeof value === 'string' || typeof value === 'number')
     : [],
 }))
 
 const updateChoice = (value: FormSelectProps['value']) => {
-  emit('update:value', value)
+  model.update(value)
   emit('change', value, undefined)
 }
 const updateMultipleChoice = (value: CheckboxValueType[]) => {
@@ -97,7 +104,7 @@ defineExpose({
       ref="select"
       v-bind="selectBindings"
       @change="(value, option) => emit('change', value, option)"
-      @update:value="value => emit('update:value', value)"
+      @update:value="model.update"
     >
       <template v-if="$slots.dropdownRender" #dropdownRender="slotProps">
         <slot name="dropdownRender" v-bind="slotProps" />
