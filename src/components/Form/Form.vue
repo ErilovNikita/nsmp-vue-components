@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Form as AntForm } from 'ant-design-vue'
 import type { FormInstance } from 'ant-design-vue'
-import { ref, useAttrs } from 'vue'
+import { computed, provide, ref, useAttrs } from 'vue'
+import { formModelKey } from './context'
 import type { FormProps } from './types'
 
 defineOptions({
@@ -14,6 +15,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 })
 const attrs = useAttrs()
 const form = ref<FormInstance>()
+
+provide(formModelKey, computed(() => props.model))
 
 const resetFields: FormInstance['resetFields'] = (...args) =>
   form.value?.resetFields(...args)

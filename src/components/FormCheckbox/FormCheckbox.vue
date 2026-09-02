@@ -3,6 +3,7 @@ import { Checkbox as AntCheckbox } from 'ant-design-vue'
 import type { CheckboxProps } from 'ant-design-vue'
 import { computed } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type { FormCheckboxProps } from './types'
 
 defineOptions({ name: 'LibraryFormCheckbox' })
@@ -12,9 +13,15 @@ const emit = defineEmits<{
   change: [event: Parameters<NonNullable<CheckboxProps['onChange']>>[0]]
   'update:checked': [checked: boolean]
 }>()
+const model = useFormModel(
+  () => props.name,
+  () => props.checked,
+  'checked',
+  value => emit('update:checked', value),
+)
 const controlBindings = computed(() => ({
   ...props.checkboxProps,
-  ...(props.checked === undefined ? {} : { checked: props.checked }),
+  ...(model.value.value === undefined ? {} : { checked: model.value.value }),
 }))
 </script>
 
@@ -31,7 +38,7 @@ const controlBindings = computed(() => ({
       v-bind="controlBindings"
       class="library-form-checkbox"
       @change="event => emit('change', event)"
-      @update:checked="value => emit('update:checked', value)"
+      @update:checked="model.update"
     >
       <slot>{{ label }}</slot>
     </AntCheckbox>

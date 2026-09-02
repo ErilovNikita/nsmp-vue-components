@@ -12,10 +12,15 @@ const model = reactive({ someTextWithDescription: '' })
 Компонент объединяет [Form](https://antdv.com/components/form), [Alert](https://antdv.com/components/alert) и [Input](https://antdv.com/components/input) из Ant Design Vue.
 :::
 
+::: tip Привязка к модели формы
+Если данный компонен расположен внутри [Form](/components/form) достаточно указать `name:`, отдельный `v-model` не требуется. 
+
+Подробнее — [в документации Form](/components/form#model-binding-by-name).
+:::
+
 <div class="demo">
   <Form :model="model">
     <FormInput
-      v-model:value="model.someTextWithDescription"
       label="Текст с описанием"
       name="someTextWithDescription"
       description="Описание поля"
@@ -36,7 +41,6 @@ const model = reactive({ someTextWithDescription: '' })
 <template>
   <Form :model="model">
     <FormInput
-      v-model:value="model.someTextWithDescription"
       label="Текст с описанием"
       name="someTextWithDescription"
       description="Описание поля"

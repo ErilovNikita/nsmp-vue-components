@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { Button, Table, TypographyTitle } from 'ant-design-vue'
 import type { Key } from 'ant-design-vue/es/_util/type'
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import type { TableColumn } from '../../../src'
 import type { DemoObject } from '../types'
+import LockIcon from '../assets/Lock.svg'
+import RefreshIcon from '../assets/Refresh.svg'
 
 const props = defineProps<{ columns: TableColumn[]; objects: DemoObject[]; selectedObjects: DemoObject[] }>()
 const emit = defineEmits<{ regenerate: []; 'update:selectedObjects': [objects: DemoObject[]] }>()
@@ -19,8 +21,18 @@ const rowSelection = computed(() => ({
 
 <template>
   <TypographyTitle :level="4">Случайные объекты</TypographyTitle>
-  <Button @click="emit('regenerate')">Сгенерировать заново</Button>
-  <Button @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
+  <Button @click="emit('regenerate')">
+    <template #icon>
+      <img :src="RefreshIcon" alt="Refresh" />
+    </template>
+    Сгенерировать заново
+  </Button>
+  <Button @click="emit('regenerate')" disabled>
+    <template #icon>
+      <img :src="LockIcon" alt="Lock" />
+    </template>
+    Выключенная кнопка
+  </Button>
   <Table :columns="columns" :data-source="objects" :row-selection="rowSelection" row-key="id"/>
   <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
 </template>

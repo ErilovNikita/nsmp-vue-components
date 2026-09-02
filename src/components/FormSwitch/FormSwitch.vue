@@ -3,6 +3,7 @@ import { Switch as AntSwitch } from 'ant-design-vue'
 import type { SwitchProps } from 'ant-design-vue'
 import { computed } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type { FormSwitchProps } from './types'
 
 defineOptions({ name: 'LibraryFormSwitch' })
@@ -15,9 +16,15 @@ const emit = defineEmits<{
   ]
   'update:checked': [checked: Parameters<NonNullable<SwitchProps['onChange']>>[0]]
 }>()
+const model = useFormModel(
+  () => props.name,
+  () => props.checked,
+  'checked',
+  value => emit('update:checked', value),
+)
 const controlBindings = computed(() => ({
   ...props.switchProps,
-  ...(props.checked === undefined ? {} : { checked: props.checked }),
+  ...(model.value.value === undefined ? {} : { checked: model.value.value }),
 }))
 </script>
 
@@ -34,7 +41,7 @@ const controlBindings = computed(() => ({
       <AntSwitch
         v-bind="controlBindings"
         @change="(checked, event) => emit('change', checked, event)"
-        @update:checked="value => emit('update:checked', value)"
+        @update:checked="model.update"
       />
       <span v-if="$slots.default || label" class="library-form-switch-label">
         <slot>{{ label }}</slot>

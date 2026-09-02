@@ -32,14 +32,12 @@ Form-компоненты автоматически добавляют `:` в �
 <div class="demo">
   <Form ref="form" :model="model" :rules="rules">
     <FormInput
-      v-model:value="model.name"
       label="Имя"
       name="name"
       description="Укажите имя и фамилию"
       placeholder="Иван Иванов"
     />
     <FormInput
-      v-model:value="model.email"
       label="Email"
       name="email"
       description="На этот адрес будут приходить уведомления"
@@ -76,7 +74,6 @@ const submit = async () => {
 <template>
   <Form ref="form" :model="model" :rules="rules">
     <FormInput
-      v-model:value="model.name"
       label="Имя"
       name="name"
       description="Укажите имя и фамилию"
@@ -84,7 +81,6 @@ const submit = async () => {
     />
 
     <FormInput
-      v-model:value="model.email"
       label="Email"
       name="email"
       description="На этот адрес будут приходить уведомления"
@@ -100,6 +96,20 @@ const submit = async () => {
 ## Props и события
 
 Компонент поддерживает все props и события `Form` из Ant Design Vue, включая `model`, `rules`, `layout`, `labelCol`, `wrapperCol`, `validateTrigger`, `scrollToFirstError`, `finish` и `finishFailed`.
+
+### Привязка полей по `name` {#model-binding-by-name}
+
+Дочерние Form-компоненты автоматически связываются с `model` по prop `name`, поэтому дублировать путь в `v-model` не требуется:
+
+```vue
+<Form :model="model">
+  <FormInput name="name" />
+  <FormNumber :name="['profile', 'age']" />
+  <FormSwitch name="notifications" />
+</Form>
+```
+
+При изменении поля соответствующее свойство `model` обновляется напрямую, а событие `update:value` или `update:checked` продолжает отправляться. Явный `v-model` можно использовать для поля вне `Form` или когда требуется отдельный источник значения.
 
 ## Методы
 

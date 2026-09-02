@@ -2,6 +2,7 @@
 import { InputNumber as AntInputNumber } from 'ant-design-vue'
 import { computed, ref } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import { useFormModel } from '../_internal/useFormModel'
 import type { FormNumberProps } from './types'
 
 defineOptions({ name: 'LibraryFormNumber' })
@@ -12,13 +13,19 @@ const emit = defineEmits<{
   'update:value': [value: FormNumberProps['value']]
 }>()
 const input = ref<{ blur: () => void; focus: () => void }>()
+const model = useFormModel(
+  () => props.name,
+  () => props.value,
+  'value',
+  value => emit('update:value', value),
+)
 const controlBindings = computed(() => ({
   ...props.inputNumberProps,
   ...(props.max === undefined ? {} : { max: props.max }),
   ...(props.min === undefined ? {} : { min: props.min }),
   ...(props.placeholder === undefined ? {} : { placeholder: props.placeholder }),
   ...(props.step === undefined ? {} : { step: props.step }),
-  ...(props.value === undefined ? {} : { value: props.value }),
+  ...(model.value.value === undefined ? {} : { value: model.value.value }),
 }))
 
 defineExpose({
@@ -42,7 +49,7 @@ defineExpose({
       ref="input"
       v-bind="controlBindings"
       @change="value => emit('change', value)"
-      @update:value="value => emit('update:value', value)"
+      @update:value="model.update"
     />
   </FormField>
 </template>

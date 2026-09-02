@@ -35,6 +35,12 @@ watch(demoMultiple, multiple => {
 Компонент построен на [Select](https://antdv.com/components/select), [Radio](https://antdv.com/components/radio), [Checkbox](https://antdv.com/components/checkbox) и [Form](https://antdv.com/components/form) из Ant Design Vue.
 :::
 
+::: tip Привязка к модели формы
+Если данный компонен расположен внутри [Form](/components/form) достаточно указать `name:`, отдельный `v-model` не требуется. 
+
+Подробнее — [в документации Form](/components/form#model-binding-by-name).
+:::
+
 ## Демо
 
 Измените вид отображения и режим выбора — пример обновится сразу.
@@ -66,7 +72,6 @@ watch(demoMultiple, multiple => {
 
   <Form :model="model">
     <FormSelect
-      v-model:value="model.selection"
       label="Города"
       name="selection"
       description="Внешний вид и режим выбора управляются параметрами демо"
@@ -141,7 +146,6 @@ watch(demoMultiple, multiple => {
 
   <Form :model="model">
     <FormSelect
-      v-model:value="model.selection"
       label="Города"
       name="selection"
       description="Внешний вид и режим выбора управляются параметрами демо"
@@ -233,6 +237,24 @@ Prop `view` определяет используемый контрол:
   v-model:value="city"
   :options="cities"
   placeholder="Начните вводить город"
+  searchable
+/>
+```
+
+### Кастомная загрузка и фильтрация
+
+Если варианты загружаются и фильтруются вашей логикой, отключите встроенную фильтрацию Select с помощью `filterOption: false` в `selectProps`. Иначе Ant Design Vue дополнительно отфильтрует уже полученный список на клиенте.
+
+```vue
+<FormSelect
+  v-model:value="city"
+  :options="cities"
+  :select-props="{
+    filterOption: false,
+    loading: isLoading,
+    onSearch: loadCities,
+  }"
+  placeholder="Начните вводить для поиска"
   searchable
 />
 ```
