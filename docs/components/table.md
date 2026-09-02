@@ -120,7 +120,16 @@ Prop `viewStorageKey` включает настройку и сохранени�
 | `viewStorageKey` | `string` | — | Сохранение порядка, видимости и ширины |
 | `title` | `string \| null` | `null` | Заголовок |
 
-События: `columnClick`, `columnResize`, `update:columns`, `update:selectedObjects`. Доступны слоты `start`, `bodyCell`, `headerCell`, `emptyText`, `expandedRowRender` и `summary`.
+Доступны слоты `start`, `bodyCell`, `headerCell`, `emptyText`, `expandedRowRender` и `summary`.
+
+## События
+
+| Событие | Аргументы | Описание |
+| --- | --- | --- |
+| `columnClick` | `key: Key` | Вызывается при нажатии на заголовок столбца. Передаёт `key`, `dataIndex` или индекс столбца |
+| `columnResize` | `column: TableColumn`, `width: number`, `index: number` | Вызывается после завершения изменения ширины. Передаёт столбец, его новую ширину и индекс среди видимых столбцов |
+| `update:columns` | `columns: TableColumn[]` | Передаёт обновлённую конфигурацию столбцов после изменения ширины, сохранения или сброса вида. Поддерживает `v-model:columns` |
+| `update:selectedObjects` | `objects: TableRecord[]` | Передаёт выбранные строки после изменения выбора. Поддерживает `v-model:selected-objects` |
 
 ## Вложенные строки
 
