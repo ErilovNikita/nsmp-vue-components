@@ -2,9 +2,18 @@ import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import svgLoader from 'vite-svg-loader'
 
 export default defineConfig({
-  plugins: [vue(), dts({ entryRoot: 'src', exclude: ['tests', '*.config.ts'], insertTypesEntry: true })],
+  plugins: [
+    vue(), 
+    svgLoader(),
+    dts({ 
+      entryRoot: 'src', 
+      exclude: ['tests', '*.config.ts'], 
+      insertTypesEntry: true 
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

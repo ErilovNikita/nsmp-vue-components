@@ -3,6 +3,8 @@ import { computed } from 'vue'
 import { Button, Table } from '../../../src'
 import type { TableColumn } from '../../../src'
 import type { DemoObject } from '../types'
+import LockIcon from '../assets/Lock.svg?raw'
+import RefreshIcon from '../assets/Refresh.svg?raw'
 
 const props = defineProps<{ columns: TableColumn[]; objects: DemoObject[]; selectedObjects: DemoObject[] }>()
 const emit = defineEmits<{
@@ -131,8 +133,8 @@ const getFiles = (record: Record<string, unknown>) => record.files as Array<Reco
     row-key="id" 
   >
     <template #start>
-      <Button type="default" @click="emit('regenerate')">Сгенерировать заново</Button>
-      <Button type="default" @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
+      <Button type="default" :icon="RefreshIcon" @click="emit('regenerate')">Сгенерировать заново</Button>
+      <Button type="default" :icon="LockIcon" @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
     </template>
   </Table>
 
