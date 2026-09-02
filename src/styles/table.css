@@ -66,29 +66,14 @@
   border-top: none !important;
 }
 
-.ant-table > .ant-table-container > .ant-table-content > table > tbody.ant-table-tbody > tr:hover > td,
-.ant-table > .ant-table-container > .ant-table-body > table > tbody.ant-table-tbody > tr:hover > td {
-  background: #ebebeb;
-}
-
-.ant-table > .ant-table-container > .ant-table-content > table > tbody.ant-table-tbody > tr.ant-table-row-selected > td,
-.ant-table > .ant-table-container > .ant-table-body > table > tbody.ant-table-tbody > tr.ant-table-row-selected > td {
-  background: #f4f4f4 !important;
-}
-
 /* Keep expanded content visually connected to its parent row, as in Ant Design. */
 .library-table .ant-table-expanded-row > .ant-table-cell,
 .library-table .ant-table-expanded-row:hover > .ant-table-cell {
   padding: 16px 16px 16px 56px !important;
-  background: #fff !important;
 }
 
 .library-table .ant-table-expanded-row > .ant-table-cell > .library-table {
   margin: 0;
-}
-
-.library-table .ant-table-expanded-row > .ant-table-cell > .library-table > .ant-table-wrapper {
-  background: #fff;
 }
 
 .library-table .ant-table-selection-col {
@@ -166,7 +151,6 @@
 .library-table-settings-modal .ant-modal-content,
 .library-table-settings-modal .ant-modal-body {
   background: #fff;
-  color: #323232;
   color-scheme: light;
 }
 
@@ -187,7 +171,6 @@
 
 .library-table-settings-modal .table-settings-add .ant-select-selector {
   border-color: #d9d9d9 !important;
-  background: #fff !important;
 }
 
 .library-table-settings-modal .table-settings-add .ant-btn {
@@ -209,15 +192,12 @@
   margin: 0;
   border: 0;
   border-collapse: collapse;
-  background: #fff;
-  color: #323232;
   table-layout: fixed;
 }
 
 .library-table-settings-modal .table-settings-order tr {
   border-top: 0;
   border-bottom: 1px solid #d9d9d9;
-  background: #fff;
 }
 
 .library-table-settings-modal .table-settings-order tr[draggable='true'] {
@@ -232,7 +212,6 @@
   padding: 4px 6px;
   border: 0;
   overflow: hidden;
-  color: #323232;
   font-size: 13px;
   text-overflow: ellipsis;
   white-space: nowrap;
