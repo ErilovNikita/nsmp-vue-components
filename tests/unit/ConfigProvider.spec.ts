@@ -51,6 +51,18 @@ describe('ConfigProvider', () => {
     expect(wrapper.findComponent(AntConfigProvider).props('locale')).toStrictEqual(locale)
   })
 
+  it('adds global compact styles when compact mode is enabled', async () => {
+    const wrapper = mount(ConfigProvider, { props: { compact: true } })
+    const themeStyles = wrapper.find('.library-theme')
+
+    expect(themeStyles.classes()).toContain('library-theme--compact')
+
+    await wrapper.setProps({ compact: false })
+    expect(themeStyles.classes()).not.toContain('library-theme--compact')
+
+    wrapper.unmount()
+  })
+
   it('accepts a custom Ant Design theme', () => {
     const wrapper = mount(ConfigProvider, {
       props: { theme: { token: { colorPrimary: '#00aa00' } } },

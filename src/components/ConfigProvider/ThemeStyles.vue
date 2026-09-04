@@ -3,6 +3,8 @@ import { theme as antTheme } from 'ant-design-vue'
 import { computed, inject, ref } from 'vue'
 import { defaultButtonTokens, defaultButtonTokensKey } from './context'
 
+const props = defineProps<{ compact?: boolean }>()
+
 const { token } = antTheme.useToken()
 const buttonTokens = inject(
   defaultButtonTokensKey,
@@ -47,7 +49,20 @@ const themeStyles = computed(() => ({
 </script>
 
 <template>
-  <div ref="root" class="library-theme" :style="themeStyles">
+  <div
+    ref="root"
+    :class="['library-theme', { 'library-theme--compact': props.compact }]"
+    :style="themeStyles"
+  >
     <slot />
   </div>
 </template>
+
+<style>
+.library-theme.library-theme--compact .ant-table-cell.ant-table-cell.ant-table-cell {
+  padding: 4px 4px;
+}
+.library-theme.library-theme--compact th.ant-table-selection-column {
+  padding-top: 28px !important;
+}
+</style>

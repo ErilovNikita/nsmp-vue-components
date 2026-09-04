@@ -5,4 +5,5 @@ import type { NsmpThemeProperties } from '@/utils'
 export interface ConfigProviderProps extends Omit<AntConfigProviderProps, 'theme'> {
   theme?: ThemeConfig
   nsmpTheme?: NsmpThemeProperties
+  compact?: boolean
 }

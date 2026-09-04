@@ -28,6 +28,7 @@ import { ConfigProvider } from '@minitwiks/nsmp-vue-components'
 | --- | --- | --- |
 | `theme` | `ThemeConfig` | Стандартные токены Ant Design Vue |
 | `nsmpTheme` | `Record<string, string>` | Свойства темы, полученные от NSMP |
+| `compact` | `boolean` | Включает компактный режим интефейса |
 | `locale` | `Locale` | Локаль Ant Design Vue. По умолчанию используется `ru_RU`; переданное значение имеет приоритет. |
 
 Остальные свойства напрямую передаются в Ant Design Vue.

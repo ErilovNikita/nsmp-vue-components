@@ -26,6 +26,7 @@ const appliedTheme = ref<NsmpThemeProperties>()
 const columns = ref<TableColumn[]>([...initialColumns])
 const objects = ref<DemoObject[]>(createObjects(2026))
 const selectedObjects = ref<DemoObject[]>([])
+const compact = ref(false)
 
 const tabs = [
   { key: 'form', label: 'Форма встроенных компонентов' },
@@ -48,10 +49,15 @@ const regenerateObjects = () => {
   objects.value = createObjects(Date.now())
   selectedObjects.value = []
 }
+
+const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: boolean) => {
+  if (theme) appliedTheme.value = theme
+  compact.value = compactMode
+}
 </script>
 
 <template>
-  <ConfigProvider :nsmp-theme="appliedTheme">
+  <ConfigProvider :nsmp-theme="appliedTheme" :compact="compact">
     <CustomCancelModal
       v-model:open="customResetConfirmationOpen"
       @confirm="reset"
@@ -80,7 +86,7 @@ const regenerateObjects = () => {
         <AntTableDemo v-model:selected-objects="selectedObjects" :columns="columns" :objects="objects" @regenerate="regenerateObjects" />
       </template>
       <template #settings>
-        <SettingsDemo @apply="appliedTheme = $event" />
+        <SettingsDemo @apply="applySettings" />
       </template>
     </Tabs>
   </ConfigProvider>
