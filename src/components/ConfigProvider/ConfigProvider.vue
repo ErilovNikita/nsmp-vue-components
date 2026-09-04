@@ -17,7 +17,7 @@ const themeStyles = ref<{ root?: globalThis.HTMLElement }>()
 provideDefaultButtonTokens(() => props.nsmpTheme)
 
 const providerProps = computed(() => {
-  const { nsmpTheme, theme, ...rest } = props
+  const { compact, nsmpTheme, theme, ...rest } = props
 
   return {
     ...rest,
@@ -30,7 +30,7 @@ const providerProps = computed(() => {
 
 <template>
   <AntConfigProvider v-bind="providerProps">
-    <ThemeStyles ref="themeStyles">
+    <ThemeStyles ref="themeStyles" :compact="compact">
       <AntLayout>
         <AntLayoutContent>
           <slot />
