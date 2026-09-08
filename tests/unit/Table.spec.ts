@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { Table as AntTable } from 'ant-design-vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { Table } from '@/components'
+import { Table, TableViewSelect } from '@/components'
 import { writeLocalStorage } from '@/utils'
 
 const columns = [
@@ -92,6 +92,96 @@ describe('Table', () => {
     expect(wrapper.findComponent(AntTable).props('scroll')).toEqual({ x: 'max-content' })
   })
 
+  it('renders a view selector and applies the selected view columns', async () => {
+    const views = [
+      { title: 'Summary', columns },
+      { title: 'Details', columns: resizeColumns },
+    ]
+    const wrapper = mount(Table, {
+      props: { columns, dataSource, showViewSelect: true, views },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    const viewSelect = wrapper.findComponent(TableViewSelect)
+    expect(viewSelect.exists()).toBe(true)
+    expect(viewSelect.props('placeholder')).toBe('[выберите вид]')
+    expect(viewSelect.props('options')).toEqual([
+      { label: '[выберите вид]', value: '' },
+      { label: 'Summary', value: '0' },
+      { label: 'Details', value: '1' },
+    ])
+
+    viewSelect.vm.$emit('update:value', '1')
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.emitted('update:columns')).toEqual([[resizeColumns]])
+    expect(viewSelect.props('options')).toContainEqual({ label: '[выберите вид]', value: '' })
+    viewSelect.vm.$emit('update:value', '')
+    await wrapper.vm.$nextTick()
+    expect(viewSelect.props('value')).toBe('')
+    expect(wrapper.emitted('update:columns')).toEqual([[resizeColumns], [columns]])
+  })
+
+  it.each(['selector', 'settings'])('resets initial columns through %s after two-way updates', async source => {
+    const initialColumns = [
+      { ...resizeColumns[0], width: 120 },
+      { ...resizeColumns[1], width: 200 },
+    ]
+    const wrapper = mount(Table, {
+      props: {
+        columns: initialColumns,
+        dataSource,
+        showViewSelect: true,
+        viewStorageKey: 'reset-view',
+        views: [{ title: 'Compact', columns: [{ ...initialColumns[1], width: 80 }] }],
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+    const select = wrapper.findComponent(TableViewSelect)
+    select.vm.$emit('update:value', '0')
+    await wrapper.vm.$nextTick()
+    await wrapper.setProps({
+      columns: wrapper.emitted('update:columns')!.at(-1)![0] as typeof initialColumns,
+    })
+    expect(globalThis.localStorage.getItem('reset-view')).not.toBeNull()
+    if (source === 'selector') {
+      select.vm.$emit('update:value', '')
+    } else {
+      wrapper.findComponent({ name: 'LibraryTableSettings' }).vm.$emit('reset')
+    }
+    await wrapper.vm.$nextTick()
+    expect(select.props('value')).toBe('')
+    expect(globalThis.localStorage.getItem('reset-view')).toBeNull()
+    expect(wrapper.emitted('update:columns')!.at(-1)![0]).toEqual(initialColumns)
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('columns')).toEqual(initialColumns)
+  })
+
+  it('keeps omitted view fields available for manual addition with two-way columns', async () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: resizeColumns,
+        dataSource,
+        showViewSelect: true,
+        viewStorageKey: 'compact-view',
+        views: [{ title: 'Compact', columns }],
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+    wrapper.findComponent(TableViewSelect).vm.$emit('update:value', '0')
+    await wrapper.vm.$nextTick()
+    const updated = wrapper.emitted('update:columns')!.at(-1)![0] as typeof resizeColumns
+    await wrapper.setProps({ columns: updated })
+    const settings = wrapper.findComponent({ name: 'LibraryTableSettings' })
+    expect(settings.props('columns')).toEqual([
+      { ...columns[0], hidden: false }, { ...resizeColumns[1], hidden: true },
+    ])
+    expect(wrapper.findComponent(AntTable).props('columns')).toHaveLength(1)
+    settings.vm.$emit('save', updated.map(column => ({ ...column, hidden: false })))
+    await wrapper.vm.$nextTick()
+    expect(wrapper.findComponent(AntTable).props('columns')).toHaveLength(2)
+    expect(resizeColumns[1]).not.toHaveProperty('hidden')
+  })
+
   it('preserves a configured horizontal scroll width', () => {
     const scroll = { x: 1200, y: 400 }
     const wrapper = mount(Table, {
@@ -151,6 +241,33 @@ describe('Table', () => {
     expect(wrapper.findComponent(AntTable).props('rowSelection')).toMatchObject({
       columnWidth: 48,
     })
+  })
+
+  it('leaves data space flexible when a compact view contains one fixed-width column', async () => {
+    const sizedColumns = resizeColumns.map(column => ({ ...column, width: 120 }))
+    const wrapper = mount(Table, {
+      props: {
+        columns: sizedColumns,
+        dataSource,
+        showViewSelect: true,
+        viewStorageKey: 'selection-width',
+        views: [{ title: 'Compact', columns: sizedColumns.slice(0, 1) }],
+      },
+      global: { stubs: { ATable: tableStub } },
+    })
+    const table = wrapper.findComponent(AntTable)
+    expect(table.props('columns')?.map(column => column.width))
+      .toEqual([120, undefined])
+
+    wrapper.findComponent(TableViewSelect).vm.$emit('update:value', '0')
+    await wrapper.vm.$nextTick()
+    expect(table.props('columns')).toHaveLength(1)
+    expect(table.props('columns')?.[0].width).toBeUndefined()
+    expect(table.props('rowSelection')?.columnWidth).toBe(48)
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('columns')[0].width)
+      .toBe(120)
+    expect(JSON.parse(globalThis.localStorage.getItem('selection-width')!).columns[0].width)
+      .toBe(120)
   })
 
   it('emits complete selected objects when rows are checked', () => {

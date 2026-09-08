@@ -33,6 +33,11 @@ const selected = ref<typeof rows>([])
     :pagination="false"
     :min-column-width="90"
     view-storage-key="docs-team-table-view"
+    show-view-select
+    :views="[
+      { title: 'Основной вид', columns: columns },
+      { title: 'Компактный вид', columns: columns.slice(0, 1) },
+    ]"
   />
 </div>
 
@@ -65,6 +70,10 @@ const selected = ref<typeof rows>([])
     :pagination="false"
     :min-column-width="90"
     view-storage-key="docs-team-table-view"
+    :views="[
+      { title: 'Основной вид', columns: columns },
+      { title: 'Компактный вид', columns: columns.slice(0, 1) },
+    ]"
   />
 </template>
 ```
@@ -107,6 +116,21 @@ Prop `viewStorageKey` включает настройку и сохранени�
 
 Разным таблицам или независимым видам нужно передавать разные ключи. Если в коде позже появится новый столбец, которого не было в сохранённом состоянии, компонент сохранит существующий пользовательский порядок и добавит новый столбец после восстановленных.
 
+Так же доступна возможность указания кастомных видов столцов, которые можно будет выбрать.
+
+```vue
+<Table
+  v-model:columns="columns"
+  :data-source="employees"
+  show-view-select
+  :views="[
+    { title: 'Основной вид', columns: columns },
+    { title: 'Компактный вид', columns: columns.slice(0, 1) },
+  ]"
+/>
+```
+
+
 ## Основные props
 
 | Prop | Тип | По умолчанию | Описание |
@@ -118,6 +142,8 @@ Prop `viewStorageKey` включает настройку и сохранени�
 | `resizableColumns` | `boolean` | `true` | Изменение ширины |
 | `minColumnWidth` | `number` | `70` | Минимальная ширина |
 | `viewStorageKey` | `string` | — | Сохранение порядка, видимости и ширины |
+| `show-view-select` | `boolean` | `false` | Выпадающий список кастомных видов |
+| `views` | `TableView[]` | `false` | Предзаполненные настройки отображения колонок |
 | `title` | `string \| null` | `null` | Заголовок |
 
 Доступны слоты `start`, `bodyCell`, `headerCell`, `emptyText`, `expandedRowRender` и `summary`.

@@ -16,6 +16,7 @@ import {
   FormSwitch,
   Modal,
   Table,
+  TableViewSelect,
   Tabs,
 } from './components'
 
@@ -47,6 +48,7 @@ export const NsmpVueComponents = {
       FormSwitch,
       Modal,
       Table,
+      TableViewSelect,
       Tabs,
     }
 

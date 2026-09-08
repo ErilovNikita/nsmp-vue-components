@@ -16,6 +16,7 @@ import {
   FormSelect,
   FormSlider,
   FormSwitch,
+  TableViewSelect,
 } from '@/components'
 
 beforeAll(() => {
@@ -81,6 +82,14 @@ describe('form controls', () => {
     const wrapper = mount(FormSelect, { props: { options } })
 
     expect(wrapper.findComponent(AntSelect).props('options')).toEqual(options)
+  })
+
+  it('renders TableViewSelect without a form item wrapper', () => {
+    const options = [{ label: 'Москва', value: 'moscow' }]
+    const wrapper = mount(TableViewSelect, { props: { options } })
+
+    expect(wrapper.findComponent(AntSelect).props('options')).toEqual(options)
+    expect(wrapper.find('.ant-form-item').exists()).toBe(false)
   })
 
   it('enables option label search in FormSelect', () => {

@@ -8,6 +8,11 @@ export type TableColumn<RecordType = TableRecord> = ColumnType<RecordType> & {
   resizable?: boolean
 }
 
+export interface TableView<RecordType = TableRecord> {
+  title: string
+  columns: TableColumn<RecordType>[]
+}
+
 export interface TableProps<RecordType = TableRecord> {
   bordered?: boolean
   /** Record property that contains nested rows. */
@@ -28,9 +33,11 @@ export interface TableProps<RecordType = TableRecord> {
   selectedObjects?: RecordType[]
   showHeader?: boolean
   showTitle?: boolean
+  showViewSelect?: boolean
   size?: AntTableProps<RecordType>['size']
   tableLayout?: AntTableProps<RecordType>['tableLayout']
   title?: string | null
+  views?: TableView<RecordType>[]
   /** LocalStorage key used to persist column order, visibility, and width. */
   viewStorageKey?: string
 }
