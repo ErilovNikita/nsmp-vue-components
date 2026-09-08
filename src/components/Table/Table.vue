@@ -70,6 +70,13 @@ const settingsGear = useTableSettingsGear(
     : 'th.ant-table-cell:first-child',
   () => props.selectable ? 'center' : 'left',
 )
+const tableScroll = computed(() => {
+  if (props.scroll === undefined) return { x: 'max-content' }
+  if (typeof props.scroll !== 'object' || props.scroll === null || props.scroll.x !== undefined) {
+    return props.scroll
+  }
+  return { ...props.scroll, x: 'max-content' }
+})
 
 const tableBindings = computed(() => {
   return {
@@ -80,7 +87,7 @@ const tableBindings = computed(() => {
     loading: props.loading,
     locale: props.locale,
     rowKey: props.rowKey,
-    scroll: props.scroll,
+    scroll: tableScroll.value,
     showHeader: props.showHeader,
     size: props.size,
     tableLayout: props.tableLayout,

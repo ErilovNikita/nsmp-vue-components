@@ -28,6 +28,7 @@ const tableStub = {
     'loading',
     'pagination',
     'rowSelection',
+    'scroll',
     'tableLayout',
   ],
   emits: ['change'],
@@ -80,6 +81,37 @@ describe('Table', () => {
       columnWidth: 48,
     })
     expect(wrapper.findComponent(AntTable).props('childrenColumnName')).toBe('children')
+  })
+
+  it('keeps wide columns horizontally scrollable by default', () => {
+    const wrapper = mount(Table, {
+      props: { columns, dataSource },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    expect(wrapper.findComponent(AntTable).props('scroll')).toEqual({ x: 'max-content' })
+  })
+
+  it('preserves a configured horizontal scroll width', () => {
+    const scroll = { x: 1200, y: 400 }
+    const wrapper = mount(Table, {
+      props: { columns, dataSource, scroll },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    expect(wrapper.findComponent(AntTable).props('scroll')).toEqual(scroll)
+  })
+
+  it('adds horizontal scrolling when only another scroll option is configured', () => {
+    const wrapper = mount(Table, {
+      props: { columns, dataSource, scroll: { y: 400 } },
+      global: { stubs: { ATable: tableStub } },
+    })
+
+    expect(wrapper.findComponent(AntTable).props('scroll')).toEqual({
+      x: 'max-content',
+      y: 400,
+    })
   })
 
   it('passes nested row configuration to Ant Table', () => {
