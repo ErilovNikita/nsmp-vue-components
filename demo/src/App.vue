@@ -15,7 +15,6 @@ import type { DemoFormModel, DemoObject } from './types'
 
 type FormDemoExpose = { clearValidate: () => void }
 
-const activeTab = ref('form')
 const customForm = ref<FormDemoExpose>()
 const antForm = ref<FormDemoExpose>()
 const model = reactive<DemoFormModel>({ ...initialForm })
@@ -28,13 +27,24 @@ const objects = ref<DemoObject[]>(createObjects(2026))
 const selectedObjects = ref<DemoObject[]>([])
 const compact = ref(false)
 
-const tabs = [
-  { key: 'form', label: 'Форма встроенных компонентов' },
-  { key: 'ant-form', label: 'Форма компонентов Ant Design' },
-  { key: 'objects', label: 'Встроенная таблица' },
-  { key: 'ant-table', label: 'Таблица Ant Design' },
+const generalTabs = [
+  { key: 'forms', label: 'Формы' },
+  { key: 'tables', label: 'Таблицы' },
   { key: 'settings', label: 'Настройки' },
 ]
+const generalActiveTab = ref('forms')
+
+const formTabs = [
+  { key: 'form', label: 'Форма встроенных компонентов' },
+  { key: 'ant-form', label: 'Форма компонентов Ant Design' },
+]
+const formActiveTab = ref('form')
+
+const tableTabs = [
+  { key: 'objects', label: 'Встроенная таблица' },
+  { key: 'ant-table', label: 'Таблица Ant Design' },
+]
+const tableActiveTab = ref('objects')
 
 const reset = () => {
   Object.assign(model, initialForm)
@@ -67,27 +77,51 @@ const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: bool
       @confirm="reset"
     />
 
-    <Tabs v-model:active-key="activeTab" :items="tabs">
-      <template #form>
-        <CustomFormDemo
-          ref="customForm"
-          v-model:saved="saved"
-          :model="model"
-          @request-reset="customResetConfirmationOpen = true"
-        />
+    <Tabs v-model:active-key="generalActiveTab" :items="generalTabs">
+      <template #forms>
+        <Tabs v-model:active-key="formActiveTab" :items="formTabs">
+          <template #form>
+            <div class="section">
+              <CustomFormDemo
+                ref="customForm"
+                v-model:saved="saved"
+                :model="model"
+                @request-reset="customResetConfirmationOpen = true"
+              />
+            </div>
+          </template>
+          <template #ant-form>
+            <div class="section">
+              <AntFormDemo ref="antForm" v-model:saved="saved" :model="model" @request-reset="antResetConfirmationOpen = true" />
+            </div>
+          </template>
+        </Tabs>
       </template>
-      <template #ant-form>
-        <AntFormDemo ref="antForm" v-model:saved="saved" :model="model" @request-reset="antResetConfirmationOpen = true" />
+      <template #tables>
+         <Tabs v-model:active-key="tableActiveTab" :items="tableTabs">
+          <template #objects>
+            <div class="section">
+              <CustomTableDemo v-model:columns="columns" v-model:selected-objects="selectedObjects" :objects="objects" @regenerate="regenerateObjects" />
+              </div>
+          </template>
+          <template #ant-table>
+            <div class="section">
+              <AntTableDemo v-model:selected-objects="selectedObjects" :columns="columns" :objects="objects" @regenerate="regenerateObjects" />
+            </div>
+          </template>
+         </Tabs>
       </template>
-      <template #objects>
-        <CustomTableDemo v-model:columns="columns" v-model:selected-objects="selectedObjects" :objects="objects" @regenerate="regenerateObjects" />
-      </template>
-      <template #ant-table>
-        <AntTableDemo v-model:selected-objects="selectedObjects" :columns="columns" :objects="objects" @regenerate="regenerateObjects" />
-      </template>
-      <template #settings>
-        <SettingsDemo @apply="applySettings" />
+      <template #settings >
+        <div class="section">
+          <SettingsDemo @apply="applySettings" />
+        </div>
       </template>
     </Tabs>
   </ConfigProvider>
 </template>
+
+<style scoped>
+  div.section {
+    padding: 15px;
+  }
+</style>

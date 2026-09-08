@@ -1,0 +1,10 @@
+.library-theme > .ant-layout > .ant-layout-content,
+.library-theme > .ant-layout > .ant-layout-content > .ant-layout > .ant-layout-content {
+    padding: 0 !important;
+    border: none !important;
+}
+
+.library-theme .ant-layout > .ant-layout-content {
+    padding: 2px;
+    border: 2px solid --library-tabs-color-bg-container;
+}

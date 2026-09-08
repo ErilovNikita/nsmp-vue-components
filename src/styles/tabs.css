@@ -3,8 +3,8 @@
 }
 
 .library-tabs.ant-tabs > .ant-tabs-content-holder {
-  padding: 15px !important;
   background-color: var(--library-tabs-color-bg-container) !important;
+  border-radius: 0 0 3px 3px !important;
 }
 
 .library-tabs.ant-tabs > .ant-tabs-nav > .ant-tabs-nav-wrap > .ant-tabs-nav-list > .ant-tabs-tab {
