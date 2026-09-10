@@ -19,8 +19,12 @@ const items = [
 
 <div class="demo">
   <Tabs v-model:active-key="active" :items="items">
-    <template #overview>Общая информация об объекте.</template>
-    <template #history>История изменений.</template>
+    <template #overview>
+      <p style="margin: 10px;">Общая информация об объекте.</p>
+    </template>
+    <template #history>
+      <p style="margin: 10px;">История изменений.</p>
+    </template>
   </Tabs>
 </div>
 
@@ -39,8 +43,12 @@ const items = [
 
 <template>
   <Tabs v-model:active-key="active" :items="items">
-    <template #overview>Общая информация об объекте.</template>
-    <template #history>История изменений.</template>
+    <template #overview>
+      <p style="margin: 10px;">Общая информация об объекте.</p>
+    </template>
+    <template #history>
+      <p style="margin: 10px;">История изменений.</p>
+    </template>
   </Tabs>
 </template>
 ```
