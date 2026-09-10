@@ -7,6 +7,7 @@ import type { TableProps as AntTableProps } from 'ant-design-vue'
 import type { Key } from 'ant-design-vue/es/_util/type'
 import { computed, ref, useAttrs } from 'vue'
 import TableSettings from './TableSettings.vue'
+import Alert from '../Alert/Alert.vue'
 import TableViewSelect from '../TableViewSelect/TableViewSelect.vue'
 import { useResizableColumns } from './composables/useResizableColumns'
 import { useTablePagination } from './composables/useTablePagination'
@@ -174,6 +175,18 @@ const tableBindings = computed(() => {
         :options="viewOptions"
         placeholder="[выберите вид]"
       />
+    </div>
+
+    <div v-if="$slots.selectedObjectsActions && rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys?.length > 0">
+      <Alert open :closable="false">
+        <template #icon></template>
+        <template #description>
+          <div style="margin-left: -10px;" class="btn-toolkit btn-toolkit-selected-action">
+            <p class="selected-label">Отмечен {{ rowSelection.selectedRowKeys.length }} объект: </p>
+            <slot name="selectedObjectsActions" />
+          </div>
+        </template>
+      </Alert>
     </div>
 
     <AntTable v-bind="tableBindings">

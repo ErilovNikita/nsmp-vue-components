@@ -142,6 +142,10 @@ const getFiles = (record: Record<string, unknown>) => record.files as Array<Reco
       <Button type="default" :icon="RefreshIcon" @click="emit('regenerate')">Сгенерировать заново</Button>
       <Button type="default" :icon="LockIcon" @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
     </template>
+
+     <template #selectedObjectsActions>
+      <Button type="text" @click="emit('regenerate')">Сгенерировать заново</Button>
+    </template>
   </Table>
 
   <p style="margin-bottom: 40px;">Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>

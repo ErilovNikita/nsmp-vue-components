@@ -16,7 +16,7 @@ const selected = ref<typeof rows>([])
 
 # Table
 
-Таблица с локальной пагинацией, выбором строк, изменением ширины и сохраняемым представлением колонок.
+Таблица с локальной пагинацией, выбором строк, панелью действий над выбранными объектами, изменением ширины и сохраняемым представлением колонок.
 
 ::: info Основа компонента
 Компонент построен на [Table из Ant Design Vue](https://antdv.com/components/table).
@@ -38,13 +38,17 @@ const selected = ref<typeof rows>([])
       { title: 'Основной вид', columns: columns },
       { title: 'Компактный вид', columns: columns.slice(0, 1) },
     ]"
-  />
+  >
+    <template #selectedObjectsActions>
+      <Button type="text" @click="selected = []">Снять выделение</Button>
+    </template>
+  </Table>
 </div>
 
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Table } from '@minitwiks/nsmp-vue-components'
+import { Button, Table } from '@minitwiks/nsmp-vue-components'
 
 const columns = ref([
   { title: 'Имя', dataIndex: 'name', key: 'name', width: 160 },
@@ -74,9 +78,35 @@ const selected = ref<typeof rows>([])
       { title: 'Основной вид', columns: columns },
       { title: 'Компактный вид', columns: columns.slice(0, 1) },
     ]"
-  />
+  >
+    <template #selectedObjectsActions>
+      <Button type="text" @click="selected = []">Снять выделение</Button>
+    </template>
+  </Table>
 </template>
 ```
+
+## Действия над выбранными объектами
+
+Слот `selectedObjectsActions` добавляет панель действий над выбранными строками. Отметьте строки в примере выше, чтобы увидеть панель со счётчиком выбранных объектов и кнопкой «Снять выделение».
+
+Панель появляется между верхними инструментами таблицы и строками, только если передан слот и выбрана хотя бы одна строка. При снятии выделения со всех строк или при `:selectable="false"` она скрывается. Счётчик добавляется автоматически; панель использует `Alert` без иконки и кнопки закрытия.
+
+Слот не передаёт параметры. Получайте выбранные записи через `v-model:selected-objects` и используйте их в обработчиках действий. Присваивание пустого массива снимает выделение:
+
+```vue
+<Table
+  :columns="columns"
+  :data-source="rows"
+  v-model:selected-objects="selected"
+>
+  <template #selectedObjectsActions>
+    <Button type="text" @click="selected = []">Снять выделение</Button>
+  </template>
+</Table>
+```
+
+Для действий в панели предполагается использование компонента [`Button`](/components/button) с `type="text"`: внутри неё такие кнопки отображаются с обычным начертанием.
 
 ## Изменение ширины столбцов
 
@@ -139,6 +169,7 @@ Prop `viewStorageKey` включает настройку и сохранени�
 | `dataSource` | `Record[]` | `[]` | Строки таблицы |
 | `pagination` | `false \| TablePaginationConfig` | 20 строк | Пагинация |
 | `selectable` | `boolean` | `true` | Выбор строк |
+| `selectedObjects` | `TableRecord[]` | `[]` | Выбранные записи; поддерживает `v-model:selected-objects` |
 | `resizableColumns` | `boolean` | `true` | Изменение ширины |
 | `minColumnWidth` | `number` | `70` | Минимальная ширина |
 | `viewStorageKey` | `string` | — | Сохранение порядка, видимости и ширины |
@@ -146,7 +177,7 @@ Prop `viewStorageKey` включает настройку и сохранени�
 | `views` | `TableView[]` | `false` | Предзаполненные настройки отображения колонок |
 | `title` | `string \| null` | `null` | Заголовок |
 
-Доступны слоты `start`, `bodyCell`, `headerCell`, `emptyText`, `expandedRowRender` и `summary`.
+Доступны слоты `start`, `selectedObjectsActions`, `bodyCell`, `headerCell`, `emptyText`, `expandedRowRender` и `summary`. Слот `start` содержит общие инструменты над таблицей, а `selectedObjectsActions` — действия над выбранными объектами (без параметров слота).
 
 ## События
 
