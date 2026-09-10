@@ -21,18 +21,20 @@ const rowSelection = computed(() => ({
 
 <template>
   <TypographyTitle :level="4">Случайные объекты</TypographyTitle>
-  <Button @click="emit('regenerate')">
-    <template #icon>
-      <img :src="RefreshIcon" alt="Refresh" />
-    </template>
-    Сгенерировать заново
-  </Button>
-  <Button @click="emit('regenerate')" disabled>
-    <template #icon>
-      <img :src="LockIcon" alt="Lock" />
-    </template>
-    Выключенная кнопка
-  </Button>
+  <div style="margin-bottom: 8px;">
+    <Button @click="emit('regenerate')">
+      <template #icon>
+        <img :src="RefreshIcon" alt="Refresh" />
+      </template>
+      Сгенерировать заново
+    </Button>
+    <Button @click="emit('regenerate')" disabled>
+      <template #icon>
+        <img :src="LockIcon" alt="Lock" />
+      </template>
+      Выключенная кнопка
+    </Button>
+  </div>
   <Table :columns="columns" :data-source="objects" :row-selection="rowSelection" row-key="id"/>
   <p>Выбрано объектов: <strong>{{ selectedObjects.length }}</strong></p>
 </template>

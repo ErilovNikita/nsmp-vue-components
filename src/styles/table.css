@@ -76,7 +76,7 @@
   max-width: 48px !important;
 }
 
-.library-table .ant-table-selection-column {
+.ant-table-selection-column {
   box-sizing: border-box !important;
   width: 48px !important;
   min-width: 48px !important;
@@ -85,7 +85,7 @@
   text-align: center !important;
 }
 
-.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column,
+.ant-table-thead > tr > th.ant-table-selection-column,
 .library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child {
   position: relative;
   padding-top: 28px !important;
