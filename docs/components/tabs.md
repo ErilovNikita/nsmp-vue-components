@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const active = ref('overview')
 const items = [
   { key: 'overview', label: 'Обзор' },
   { key: 'history', label: 'История' },
   { key: 'settings', label: 'Настройки', disabled: true },
 ]
+const activeTab = ref(items[0].key)
 </script>
 
 # Tabs
@@ -18,7 +18,7 @@ const items = [
 :::
 
 <div class="demo">
-  <Tabs v-model:active-key="active" :items="items">
+  <Tabs v-model:active-key="activeTab" :items="items">
     <template #overview>
       <p style="margin: 10px;">Общая информация об объекте.</p>
     </template>
@@ -33,16 +33,16 @@ const items = [
 import { ref } from 'vue'
 import { Tabs } from '@minitwiks/nsmp-vue-components'
 
-const active = ref('overview')
 const items = [
   { key: 'overview', label: 'Обзор' },
   { key: 'history', label: 'История' },
   { key: 'settings', label: 'Настройки', disabled: true },
 ]
+const activeTab = ref(items[0].key)
 </script>
 
 <template>
-  <Tabs v-model:active-key="active" :items="items">
+  <Tabs v-model:active-key="activeTab" :items="items">
     <template #overview>
       <p style="margin: 10px;">Общая информация об объекте.</p>
     </template>
