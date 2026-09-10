@@ -10,7 +10,7 @@
   padding: 0 !important;
 }
 
-.library-form-field .ant-form-item-label > label {
+.ant-form-item-label > label {
   color: var(--library-form-color-text-label) !important;
   font-size: 13px !important;
 }
