@@ -22,11 +22,12 @@
  * ConfigProvider uses Ant Layout as the documentation shell. Keep that shell
  * on VitePress colours: the NSMP baseBackground belongs to component demos,
  * not to the documentation page itself.
+ * Match the library layout's !important background with a more specific rule.
  */
-.library-theme > .ant-layout,
-.library-theme > .ant-layout > .ant-layout-content {
+#app .library-theme > .ant-layout,
+#app .library-theme > .ant-layout > .ant-layout-content {
   min-height: 100vh;
-  background: var(--vp-c-bg);
+  background-color: var(--vp-c-bg) !important;
   color: var(--vp-c-text-1);
   font-family: var(--vp-font-family-base);
   font-size: 16px;
