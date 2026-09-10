@@ -6,5 +6,5 @@
 
 .library-theme .ant-layout > .ant-layout-content {
     padding: 2px;
-    border: 2px solid --library-tabs-color-bg-container;
+    border: 2px solid var(--library-tabs-color-bg-container);
 }
