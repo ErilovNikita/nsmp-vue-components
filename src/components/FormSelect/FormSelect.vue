@@ -1,22 +1,13 @@
 <script setup lang="ts">
-import {
-  CheckboxGroup as AntCheckboxGroup,
-  RadioGroup as AntRadioGroup,
-  Select as AntSelect,
-} from 'ant-design-vue'
-import type { CheckboxValueType } from 'ant-design-vue/es/checkbox/interface'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import FormField from '../_internal/FormField.vue'
+import FormSelectControl from './FormSelectControl.vue'
 import { useFormModel } from '../_internal/useFormModel'
 import type { FormSelectProps } from './types'
 
 defineOptions({ name: 'LibraryFormSelect' })
 
-const props = withDefaults(defineProps<FormSelectProps>(), {
-  multiple: false,
-  radioButtonStyle: 'outline',
-  view: 'select',
-})
+const props = defineProps<FormSelectProps>()
 const emit = defineEmits<{
   change: [value: FormSelectProps['value'], option: unknown]
   'update:value': [value: FormSelectProps['value']]
@@ -28,58 +19,6 @@ const model = useFormModel<FormSelectProps['value']>(
   'value',
   value => emit('update:value', value),
 )
-
-const choiceOptions = computed(() => (props.options ?? []).flatMap(option => {
-  if (!option || typeof option !== 'object' || !('value' in option)) return []
-  if (typeof option.value !== 'string' && typeof option.value !== 'number') return []
-
-  return [{
-    disabled: option.disabled,
-    label: option.label,
-    value: option.value,
-  }]
-}))
-const selectBindings = computed(() => ({
-  ...(props.searchable
-    ? {
-        optionFilterProp: 'label',
-        showSearch: true,
-      }
-    : {}),
-  ...props.selectProps,
-  ...(props.multiple ? { mode: 'multiple' as const } : {}),
-  ...(props.options === undefined ? {} : { options: props.options }),
-  ...(props.placeholder === undefined ? {} : { placeholder: props.placeholder }),
-  ...(model.value.value === undefined ? {} : { value: model.value.value }),
-}))
-const radioBindings = computed(() => ({
-  ...props.radioGroupProps,
-  options: choiceOptions.value,
-  value: model.value.value,
-  ...(props.view === 'radio-button'
-    ? {
-        buttonStyle: props.radioButtonStyle,
-        optionType: 'button' as const,
-      }
-    : {}),
-}))
-const checkboxBindings = computed(() => ({
-  ...props.checkboxGroupProps,
-  options: choiceOptions.value,
-  value: Array.isArray(model.value.value)
-    ? model.value.value.filter((value): value is string | number =>
-      typeof value === 'string' || typeof value === 'number')
-    : [],
-}))
-
-const updateChoice = (value: FormSelectProps['value']) => {
-  model.update(value)
-  emit('change', value, undefined)
-}
-const updateMultipleChoice = (value: CheckboxValueType[]) => {
-  updateChoice(value.filter((item): item is string | number =>
-    typeof item === 'string' || typeof item === 'number'))
-}
 
 defineExpose({
   blur: () => select.value?.blur(),
@@ -99,10 +38,10 @@ defineExpose({
     <template v-if="$slots.label" #label><slot name="label" /></template>
     <template v-if="$slots.description" #description><slot name="description" /></template>
 
-    <AntSelect
-      v-if="view === 'select'"
+    <FormSelectControl
       ref="select"
-      v-bind="selectBindings"
+      v-bind="props"
+      :value="model.value.value"
       @change="(value, option) => emit('change', value, option)"
       @update:value="model.update"
     >
@@ -118,32 +57,6 @@ defineExpose({
       <template v-if="$slots.tagRender" #tagRender="slotProps">
         <slot name="tagRender" v-bind="slotProps" />
       </template>
-    </AntSelect>
-
-    <AntCheckboxGroup
-      v-else-if="multiple"
-      v-bind="checkboxBindings"
-      :class="[
-        view === 'radio-button'
-          ? 'library-form-select-radio-button-multiple'
-          : 'library-form-select-radio-multiple',
-        view === 'radio-button'
-          ? `library-form-select-radio-button-${radioButtonStyle}`
-          : undefined,
-      ]"
-      @update:value="updateMultipleChoice"
-    />
-
-    <AntRadioGroup
-      v-else
-      v-bind="radioBindings"
-      :class="view === 'radio-button'
-        ? [
-            'library-form-select-radio-button',
-            `library-form-select-radio-button-${radioButtonStyle}`,
-          ]
-        : undefined"
-      @update:value="updateChoice"
-    />
+    </FormSelectControl>
   </FormField>
 </template>

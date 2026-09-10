@@ -31,7 +31,6 @@
 
 .ant-table > .ant-table-container > .ant-table-content > table > thead.ant-table-thead > tr > th,
 .ant-table > .ant-table-container > .ant-table-header > table > thead.ant-table-thead > tr > th {
-  border-bottom: 1px solid #d9d9d9 !important;
   background-color: transparent !important;
   font-size: 13px;
   font-weight: normal;
@@ -56,11 +55,6 @@
   cursor: pointer !important;
 }
 
-.ant-table > .ant-table-container > .ant-table-content > table > tbody.ant-table-tbody > tr > td,
-.ant-table > .ant-table-container > .ant-table-body > table > tbody.ant-table-tbody > tr > td {
-  border-top: 1px solid #d9d9d9 !important;
-}
-
 .ant-table > .ant-table-container > .ant-table-content > table > tbody.ant-table-tbody > tr:nth-of-type(1) > td,
 .ant-table > .ant-table-container > .ant-table-body > table > tbody.ant-table-tbody > tr:nth-of-type(1) > td {
   border-top: none !important;
@@ -82,7 +76,7 @@
   max-width: 48px !important;
 }
 
-.library-table .ant-table-selection-column {
+.ant-table-selection-column {
   box-sizing: border-box !important;
   width: 48px !important;
   min-width: 48px !important;
@@ -91,7 +85,7 @@
   text-align: center !important;
 }
 
-.library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column,
+.ant-table-thead > tr > th.ant-table-selection-column,
 .library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child {
   position: relative;
   padding-top: 28px !important;
@@ -197,7 +191,6 @@
 
 .library-table-settings-modal .table-settings-order tr {
   border-top: 0;
-  border-bottom: 1px solid #d9d9d9;
 }
 
 .library-table-settings-modal .table-settings-order tr[draggable='true'] {

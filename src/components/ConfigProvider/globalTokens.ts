@@ -62,7 +62,7 @@ export const createGlobalTokens = (theme?: NsmpThemeProperties) => compact({
   colorBorderBg: theme?.rowBorderColorLight,
   colorSplit: theme?.rowBorderColorLight,
 
-  colorBgBase: theme?.baseBackground,
+  // colorBgBase: theme?.baseBackground,
   colorBgContainer: theme?.contentBackground,
   colorBgContainerDisabled: theme?.inputDisabledBackground,
   colorBgLayout: theme?.baseBackground,

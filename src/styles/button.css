@@ -49,7 +49,8 @@
   margin-bottom: 8px;
 }
 .btn-toolkit>button,
-.btn-toolkit>span {
+.btn-toolkit>span,
+.btn-toolkit>.library-table-view-select{
   margin-right: 10px !important;
 }
 
@@ -71,4 +72,14 @@
 
 .btn-toolkit>.ant-btn-text:hover>span {
   text-decoration: underline !important;
+}
+
+.btn-toolkit-selected-action {
+  margin-bottom: 0px;
+}
+.btn-toolkit-selected-action>.ant-btn-text {
+  font-weight: 400;
+}
+.btn-toolkit-selected-action>.selected-label {
+  margin: 0 0 2px 0;
 }

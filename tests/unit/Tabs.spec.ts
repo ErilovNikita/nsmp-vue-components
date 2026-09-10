@@ -28,6 +28,35 @@ const stubs = {
 }
 
 describe('Tabs', () => {
+  it.each(['overview', 0, 42])('selects the first key %s without an external model', async key => {
+    const wrapper = mount(Tabs, {
+      props: { items: [{ key, label: 'First' }, { key: 'other', label: 'Other' }] },
+      global: { stubs },
+    })
+
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBe(String(key))
+    wrapper.vm.set('other')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBe('other')
+    wrapper.vm.home()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBe(String(key))
+  })
+
+  it('initializes when items arrive without resetting an existing selection', async () => {
+    const wrapper = mount(Tabs, {
+      props: { items: [] },
+      global: { stubs },
+    })
+
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBeUndefined()
+    await wrapper.setProps({ items })
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBe('1')
+    await wrapper.find('.change').trigger('click')
+    await wrapper.setProps({ items: [{ key: 3, label: 'New' }, ...items] })
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBe('2')
+  })
+
   it('renders tab content and changes the active tab', async () => {
     const wrapper = mount(Tabs, {
       props: { items },
@@ -66,10 +95,11 @@ describe('Tabs', () => {
 
   it('supports v-model updates from the parent', async () => {
     const wrapper = mount(Tabs, {
-      props: { activeKey: 1, items },
+      props: { activeKey: 1, defaultTab: 2, items },
       global: { stubs },
     })
 
+    expect(wrapper.find('.tabs').attributes('data-active-key')).toBe('1')
     await wrapper.setProps({ activeKey: 2 })
 
     expect(wrapper.find('.tabs').attributes('data-active-key')).toBe('2')

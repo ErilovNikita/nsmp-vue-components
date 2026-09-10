@@ -14,6 +14,7 @@ const emit = defineEmits<{
 }>()
 const columnsModel = computed({ get: () => props.columns, set: value => emit('update:columns', value) })
 const selection = computed({ get: () => props.selectedObjects, set: value => emit('update:selectedObjects', value) })
+const viewColumns = props.columns.map(column => ({ ...column }))
 
 const departmentColumns: TableColumn[] = [
   { title: 'Подразделение', dataIndex: 'name', key: 'name', width: 260 },
@@ -128,6 +129,11 @@ const getFiles = (record: Record<string, unknown>) => record.files as Array<Reco
     v-model:columns="columnsModel" 
     v-model:selected-objects="selection" 
     :data-source="objects" 
+    show-view-select
+    :views="[
+      { title: 'Основной вид', columns: viewColumns },
+      { title: 'Компактный вид', columns: viewColumns.slice(0, 1) },
+    ]"
     :min-column-width="80" 
     :pagination="{ showSizeChanger: true }" 
     row-key="id" 
@@ -135,6 +141,10 @@ const getFiles = (record: Record<string, unknown>) => record.files as Array<Reco
     <template #start>
       <Button type="default" :icon="RefreshIcon" @click="emit('regenerate')">Сгенерировать заново</Button>
       <Button type="default" :icon="LockIcon" @click="emit('regenerate')" disabled>Выключенная кнопка</Button>
+    </template>
+
+     <template #selectedObjectsActions>
+      <Button type="text" @click="emit('regenerate')">Сгенерировать заново</Button>
     </template>
   </Table>
 

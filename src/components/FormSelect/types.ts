@@ -6,18 +6,12 @@ import type { FormFieldAlertProps } from '../_internal/FormField.vue'
 export type FormSelectView = 'select' | 'radio' | 'radio-button'
 export type FormSelectRadioButtonStyle = 'outline' | 'solid'
 
-export interface FormSelectProps {
-  alertProps?: FormFieldAlertProps
-  description?: string | null
-  formItemProps?: FormItemProps
-  label?: FormItemProps['label']
+export interface FormSelectControlProps {
+  checkboxGroupProps?: CheckboxGroupProps
   /** Enables selection of more than one option in either view. */
   multiple?: boolean
-  name?: FormItemProps['name']
   options?: SelectProps['options']
   placeholder?: SelectProps['placeholder']
-  rules?: FormItemProps['rules']
-  checkboxGroupProps?: CheckboxGroupProps
   /** Selected radio-button appearance. @default 'outline' */
   radioButtonStyle?: FormSelectRadioButtonStyle
   radioGroupProps?: RadioGroupProps
@@ -27,4 +21,13 @@ export interface FormSelectProps {
   value?: SelectProps['value']
   /** Control presentation. @default 'select' */
   view?: FormSelectView
+}
+
+export interface FormSelectProps extends FormSelectControlProps {
+  alertProps?: FormFieldAlertProps
+  description?: string | null
+  formItemProps?: FormItemProps
+  label?: FormItemProps['label']
+  name?: FormItemProps['name']
+  rules?: FormItemProps['rules']
 }

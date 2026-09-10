@@ -32,6 +32,29 @@ const stubs = {
 }
 
 describe('TableSettings', () => {
+  it('adds a field omitted from a selected view and saves it as visible', async () => {
+    const wrapper = mount(TableSettings, {
+      props: {
+        columns: [columns[0], { ...columns[1], hidden: true }],
+        open: true,
+      },
+      global: { stubs },
+    })
+    const select = wrapper.findComponent({ name: 'ASelect' })
+    expect(select.props('options')).toEqual([{ label: 'Age', value: 'age' }])
+    select.vm.$emit('update:value', 'age')
+    await wrapper.vm.$nextTick()
+    await wrapper.find('[aria-label="Добавить колонку"]').trigger('click')
+    expect(wrapper.findAll('.table-settings-order tbody tr')).toHaveLength(2)
+    const saveButton = wrapper.findAllComponents({ name: 'AButton' }).find(
+      button => button.text() === 'Сохранить',
+    )
+    await saveButton!.trigger('click')
+    expect(wrapper.emitted('save')?.[0]?.[0]).toEqual([
+      columns[0], { ...columns[1], hidden: false },
+    ])
+  })
+
   it('shows every existing field and its current order', () => {
     const wrapper = mount(TableSettings, {
       props: { columns, open: true },
