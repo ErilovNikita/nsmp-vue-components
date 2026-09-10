@@ -48,21 +48,43 @@ defineExpose({ clearValidate: () => form.value?.clearValidate() })
   <Row>
     <Col :span="10">
       <Alert v-if="saved" closable message="Форма успешно сохранена" type="success" show-icon @close="emit('update:saved', false)" />
+      
       <Form ref="form" :model="model" layout="vertical">
         <TypographyTitle :level="4">Данные пользователя</TypographyTitle>
+        
         <FormItem label="Имя" name="name" :rules="[{ required: true, message: 'Введите имя' }]">
           <Alert message="Полное ФИО" type="info" show-icon />
           <Input v-model:value="model.name" placeholder="Введите имя" />
         </FormItem>
+        
         <FormItem label="Возраст" name="age" :rules="[{ required: true, message: 'Обязательное поле. От 18 до 120 лет!' }]">
           <InputNumber v-model:value="model.age" :min="18" :max="120" />
         </FormItem>
-        <FormItem label="Дата рождения" name="birthDate"><DatePicker v-model:value="model.birthDate" value-format="YYYY-MM-DD" /></FormItem>
-        <FormItem label="Город" name="city"><Select v-model:value="model.city" placeholder="Выберите город" :options="cities" /></FormItem>
+        
+        <FormItem label="Дата рождения" name="birthDate">
+          <DatePicker v-model:value="model.birthDate" value-format="YYYY-MM-DD" />
+        </FormItem>
+        
+        <FormItem label="Город" name="city">
+          <Select v-model:value="model.city" placeholder="Выберите город" :options="cities" />
+        </FormItem>
+        
+
+
         <TypographyTitle :level="4">Дополнительная информация</TypographyTitle>
-        <FormItem label="Рабочая нагрузка" name="workload"><Slider v-model:value="model.workload" :min="0" :max="100" :step="5" /></FormItem>
-        <FormItem label="Получать уведомления" name="notifications"><Switch v-model:checked="model.notifications" /></FormItem>
-        <FormItem name="accepted" :rules="acceptanceRules"><Checkbox v-model:checked="model.accepted">Я принимаю условия обработки данных</Checkbox></FormItem>
+        
+        <FormItem label="Рабочая нагрузка" name="workload">
+          <Slider v-model:value="model.workload" :min="0" :max="100" :step="5" />
+        </FormItem>
+        
+        <FormItem label="Получать уведомления" name="notifications">
+          <Switch v-model:checked="model.notifications" />
+        </FormItem>
+        
+        <FormItem name="accepted" :rules="acceptanceRules">
+          <Checkbox v-model:checked="model.accepted">Я принимаю условия обработки данных</Checkbox>
+        </FormItem>
+        
         <FormItem>
           <Button type="primary" @click="save">Сохранить</Button>
           <Button type="text" class="reset" @click="emit('requestReset')">Отменить</Button>

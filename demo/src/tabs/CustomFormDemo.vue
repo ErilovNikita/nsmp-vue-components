@@ -58,6 +58,7 @@ defineExpose({ clearValidate: () => form.value?.clearValidate() })
   <a-row>
     <a-col :span="10">
       <Alert :open="saved" closable message="Форма успешно сохранена" type="success" @update:open="emit('update:saved', $event)" />
+      
       <Form ref="form" :model="model">
         <Caption label="Данные пользователя">
           <FormInput label="Имя" description="Полное ФИО" name="name" placeholder="Введите имя" :rules="[{ required: true, message: 'Введите имя' }]" />
@@ -75,6 +76,7 @@ defineExpose({ clearValidate: () => form.value?.clearValidate() })
           <Button type="text" @click="emit('requestReset')">Отменить</Button>
         </div>
       </Form>
+      
     </a-col>
     <a-col :span="8" :push="1">
       <AttrGroup title="Параметры формы" :items="attrItems" :values="formValues" open />
