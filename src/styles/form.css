@@ -20,7 +20,7 @@
   font-size: 11px;
 }
 
-.library-form-field > .ant-form-item-row > .ant-form-item-control .ant-alert {
+.ant-form-item-row > .ant-form-item-control .ant-alert {
   margin-bottom: 8px;
 }
 
