@@ -53,19 +53,12 @@ defineExpose({
 }
 
 .library-table-view-select :deep(.ant-select-selector) {
-    border: none !important;
-    border-radius: 1px !important;
-    background: var(--library-button-default-bg) !important;
-    color: var(--library-button-default-color) !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
 
 .library-table-view-select :deep(.ant-select:not(.ant-select-disabled):hover .ant-select-selector),
 .library-table-view-select :deep(.ant-select-focused .ant-select-selector) {
-    border: none !important;
-    background: var(--library-button-default-hover-bg) !important;
-    color: var(--library-button-default-hover-color) !important;
     box-shadow: none !important;
 }
 
