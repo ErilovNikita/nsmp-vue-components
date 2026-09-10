@@ -12,7 +12,6 @@ const AntLayoutContent = AntLayout.Content
 const props = withDefaults(defineProps<TabsProps>(), {
   animated: false,
   centered: false,
-  defaultTab: 1,
   destroyInactiveTabPane: false,
   size: 'middle',
   tabPosition: 'top',
@@ -40,6 +39,10 @@ const antActiveKey = computed(() => activeTab.value === undefined
 
 watch(() => props.activeKey, key => {
   if (key !== undefined) activeTab.value = key
+})
+
+watch(defaultTab, key => {
+  if (activeTab.value === undefined) activeTab.value = key
 })
 
 const resolveKey = (key: TabKey): TabKey =>

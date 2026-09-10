@@ -32,19 +32,16 @@ const generalTabs = [
   { key: 'tables', label: 'Таблицы' },
   { key: 'settings', label: 'Настройки' },
 ]
-const generalActiveTab = ref('forms')
 
 const formTabs = [
   { key: 'form', label: 'Форма встроенных компонентов' },
   { key: 'ant-form', label: 'Форма компонентов Ant Design' },
 ]
-const formActiveTab = ref(formTabs[0].key)
 
 const tableTabs = [
   { key: 'objects', label: 'Встроенная таблица' },
   { key: 'ant-table', label: 'Таблица Ant Design' },
 ]
-const tableActiveTab = ref(tableTabs[0].key)
 
 const reset = () => {
   Object.assign(model, initialForm)
@@ -77,9 +74,9 @@ const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: bool
       @confirm="reset"
     />
 
-    <Tabs v-model:active-key="generalActiveTab" :items="generalTabs">
+    <Tabs :items="generalTabs">
       <template #forms>
-        <Tabs v-model:active-key="formActiveTab" :items="formTabs">
+        <Tabs :items="formTabs">
           <template #form>
             <div class="section">
               <CustomFormDemo
@@ -98,7 +95,7 @@ const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: bool
         </Tabs>
       </template>
       <template #tables>
-         <Tabs v-model:active-key="tableActiveTab" :items="tableTabs">
+         <Tabs :items="tableTabs">
           <template #objects>
             <div class="section">
               <CustomTableDemo v-model:columns="columns" v-model:selected-objects="selectedObjects" :objects="objects" @regenerate="regenerateObjects" />

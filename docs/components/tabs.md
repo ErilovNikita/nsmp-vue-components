@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const items = [
   { key: 'overview', label: 'Обзор' },
   { key: 'history', label: 'История' },
   { key: 'settings', label: 'Настройки', disabled: true },
 ]
-const activeTab = ref(items[0].key)
 </script>
 
 # Tabs
@@ -18,7 +15,7 @@ const activeTab = ref(items[0].key)
 :::
 
 <div class="demo">
-  <Tabs v-model:active-key="activeTab" :items="items">
+  <Tabs :items="items">
     <template #overview>
       <p style="margin: 10px;">Общая информация об объекте.</p>
     </template>
@@ -30,7 +27,6 @@ const activeTab = ref(items[0].key)
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { Tabs } from '@minitwiks/nsmp-vue-components'
 
 const items = [
@@ -38,11 +34,10 @@ const items = [
   { key: 'history', label: 'История' },
   { key: 'settings', label: 'Настройки', disabled: true },
 ]
-const activeTab = ref(items[0].key)
 </script>
 
 <template>
-  <Tabs v-model:active-key="activeTab" :items="items">
+  <Tabs :items="items">
     <template #overview>
       <p style="margin: 10px;">Общая информация об объекте.</p>
     </template>
@@ -53,13 +48,39 @@ const activeTab = ref(items[0].key)
 </template>
 ```
 
+## Активная вкладка
+
+Компонент сам хранит активную вкладку в реактивном состоянии. По умолчанию выбирается `items[0]?.key`, поэтому объявлять `ref` и передавать `v-model:active-key` не требуется. Если `items` изначально пустой, первая вкладка выбирается после появления элементов.
+
+Чтобы начать с другой вкладки, передайте `default-tab`:
+
+```vue
+<Tabs :items="items" default-tab="history" />
+```
+
+Для управления из родительского компонента по-прежнему доступен `v-model:active-key`:
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const activeTab = ref('history')
+</script>
+
+<template>
+  <Tabs v-model:active-key="activeTab" :items="items" />
+</template>
+```
+
+Явный `activeKey` имеет приоритет над `defaultTab`. Метод `home()` возвращает к `defaultTab`, а если он не задан — к первой вкладке.
+
 ## Основные props
 
 | Prop | Тип | По умолчанию |
 | --- | --- | --- |
 | `items` | `TabItem[]` | обязательный |
-| `activeKey` | `string \| number` | — |
-| `defaultTab` | `string \| number` | `1` |
+| `activeKey` | `string \| number` | Внутреннее реактивное состояние |
+| `defaultTab` | `string \| number` | `items[0]?.key` |
 | `type` | Ant Tabs type | `'card'` |
 | `tabPosition` | Ant Tabs position | `'top'` |
 
