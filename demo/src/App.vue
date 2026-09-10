@@ -61,7 +61,7 @@ const regenerateObjects = () => {
 }
 
 const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: boolean) => {
-  if (theme) appliedTheme.value = theme
+  appliedTheme.value = theme
   compact.value = compactMode
 }
 </script>
