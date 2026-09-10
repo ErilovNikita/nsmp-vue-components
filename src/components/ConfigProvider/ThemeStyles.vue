@@ -45,6 +45,7 @@ const themeStyles = computed(() => ({
   '--library-modal-color-bg-elevated': token.value.colorBgElevated,
   '--library-tabs-color-bg-container': token.value.colorBgContainer,
   '--library-tabs-color-text': token.value.colorText,
+  '--library-tabs-bg': token.value.colorBgLayout,
 }))
 </script>
 
