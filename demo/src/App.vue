@@ -102,7 +102,7 @@ const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: bool
           <template #objects>
             <div class="section">
               <CustomTableDemo v-model:columns="columns" v-model:selected-objects="selectedObjects" :objects="objects" @regenerate="regenerateObjects" />
-              </div>
+            </div>
           </template>
           <template #ant-table>
             <div class="section">
