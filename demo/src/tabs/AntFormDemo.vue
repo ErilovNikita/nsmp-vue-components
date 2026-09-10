@@ -45,8 +45,8 @@ defineExpose({ clearValidate: () => form.value?.clearValidate() })
 </script>
 
 <template>
-  <Row :gutter="32">
-    <Col :xs="24" :md="12" :lg="10">
+  <Row>
+    <Col :span="10">
       <Alert v-if="saved" closable message="Форма успешно сохранена" type="success" show-icon @close="emit('update:saved', false)" />
       <Form ref="form" :model="model" layout="vertical">
         <TypographyTitle :level="4">Данные пользователя</TypographyTitle>
