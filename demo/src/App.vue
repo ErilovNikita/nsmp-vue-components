@@ -38,13 +38,13 @@ const formTabs = [
   { key: 'form', label: 'Форма встроенных компонентов' },
   { key: 'ant-form', label: 'Форма компонентов Ant Design' },
 ]
-const formActiveTab = ref('form')
+const formActiveTab = ref(formTabs[0].key)
 
 const tableTabs = [
   { key: 'objects', label: 'Встроенная таблица' },
   { key: 'ant-table', label: 'Таблица Ant Design' },
 ]
-const tableActiveTab = ref('objects')
+const tableActiveTab = ref(tableTabs[0].key)
 
 const reset = () => {
   Object.assign(model, initialForm)
