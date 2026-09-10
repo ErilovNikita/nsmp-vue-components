@@ -1,3 +1,7 @@
+.library-theme .ant-layout {
+    background-color: var(--library-tabs-color-bg-container) !important;
+}
+
 .library-theme > .ant-layout > .ant-layout-content,
 .library-theme > .ant-layout > .ant-layout-content > .ant-layout > .ant-layout-content {
     padding: 0 !important;
@@ -6,5 +10,7 @@
 
 .library-theme .ant-layout > .ant-layout-content {
     padding: 2px;
+    background-color: var(--library-button-default-bg)  !important;
     border: 2px solid var(--library-tabs-color-bg-container);
+    border-radius: 5px;
 }
