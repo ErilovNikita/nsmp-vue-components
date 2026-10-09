@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const addIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2h2v5h5v2H9v5H7V9H2V7h5z" /></svg>'
+const refreshIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 2v4h-4l1.6-1.6A4.5 4.5 0 1 0 12.5 8H14a6 6 0 1 1-1.8-4.3L13.5 2z" /></svg>'
+
 const columns = ref([
   { title: 'Имя', dataIndex: 'name', key: 'name', width: 160 },
   { title: 'Роль', dataIndex: 'role', key: 'role', width: 180 },
@@ -22,6 +25,8 @@ const selected = ref<typeof rows>([])
 Компонент построен на [Table из Ant Design Vue](https://antdv.com/components/table).
 :::
 
+Кнопки «Добавить» и «Обновить» размещены в слоте `start` и показаны без обработчиков действий.
+
 В демо можно перетаскивать границы заголовков для изменения ширины. Нажмите на шестерёнку над чекбоксом выбора строк, чтобы скрыть, вернуть или переставить столбцы. Нажатие «Сохранить» запишет настроенный вид в браузере, а «Сбросить вид» вернёт исходные столбцы.
 
 <div class="demo">
@@ -39,6 +44,10 @@ const selected = ref<typeof rows>([])
       { title: 'Компактный вид', columns: columns.slice(0, 1) },
     ]"
   >
+    <template #start>
+      <Button type="default" :icon="addIcon">Добавить</Button>
+      <Button type="default" :icon="refreshIcon" aria-label="Обновить" />
+    </template>
     <template #selectedObjectsActions>
       <Button type="text" @click="selected = []">Снять выделение</Button>
     </template>
@@ -48,6 +57,9 @@ const selected = ref<typeof rows>([])
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
+
+const addIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2h2v5h5v2H9v5H7V9H2V7h5z" /></svg>'
+const refreshIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 2v4h-4l1.6-1.6A4.5 4.5 0 1 0 12.5 8H14a6 6 0 1 1-1.8-4.3L13.5 2z" /></svg>'
 import { Button, Table } from '@minitwiks/nsmp-vue-components'
 
 const columns = ref([
@@ -79,6 +91,10 @@ const selected = ref<typeof rows>([])
       { title: 'Компактный вид', columns: columns.slice(0, 1) },
     ]"
   >
+    <template #start>
+      <Button type="default" :icon="addIcon">Добавить</Button>
+      <Button type="default" :icon="refreshIcon" aria-label="Обновить" />
+    </template>
     <template #selectedObjectsActions>
       <Button type="text" @click="selected = []">Снять выделение</Button>
     </template>
