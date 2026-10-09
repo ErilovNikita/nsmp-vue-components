@@ -45,6 +45,12 @@
   height: 100%;
   width: 100%;
 }
+.ant-btn-default.library-button-icon-only {
+  padding: 0 6px !important;
+}
+.ant-btn.library-button-icon-only>.btn-icon {
+  margin-right: 0 !important;
+}
 .btn-toolkit {
   margin-bottom: 8px;
 }

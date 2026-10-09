@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { defineComponent, h, markRaw } from 'vue'
+import { defineComponent, h, markRaw, nextTick, ref } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
 import { Button } from '@/components'
 
@@ -10,6 +10,26 @@ const Icon = defineComponent({
 })
 
 describe('Button', () => {
+  it('keeps icon-only styling with a wave element and updates when text appears', async () => {
+    const label = ref('')
+    const wrapper = mount(Button, {
+      props: { icon: markRaw(Icon) },
+      slots: { default: () => label.value },
+    })
+    const button = wrapper.find('button')
+    expect(button.classes()).toContain('library-button-icon-only')
+
+    const wave = document.createElement('div')
+    wave.style.position = 'absolute'
+    button.element.prepend(wave)
+    await button.trigger('click')
+    expect(button.classes()).toContain('library-button-icon-only')
+
+    label.value = 'Обновить'
+    await nextTick()
+    expect(button.classes()).not.toContain('library-button-icon-only')
+  })
+
   it('maps the type to the Ant Design button', () => {
     const wrapper = mount(Button, {
       props: { type: 'default' },
