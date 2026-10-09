@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { ConfigProvider, Tabs } from '../../src'
-import type { TableColumn } from '../../src'
+import type { TabKey, TableColumn } from '../../src'
 import type { NsmpThemeProperties } from '../../src/utils'
 import AntCancelModal from './components/AntCancelModal.vue'
 import CustomCancelModal from './components/CustomCancelModal.vue'
@@ -27,10 +27,13 @@ const objects = ref<DemoObject[]>(createObjects(2026))
 const selectedObjects = ref<DemoObject[]>([])
 const compact = ref(false)
 
+const activeTabGeneral = ref('forms')
 const generalTabs = [
   { key: 'forms', label: 'Формы' },
   { key: 'tables', label: 'Таблицы' },
   { key: 'settings', label: 'Настройки' },
+  { key: 'docs', label: 'Документация' },
+  { key: 'repo', label: 'Репозиторий' },
 ]
 
 const formTabs = [
@@ -61,6 +64,17 @@ const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: bool
   appliedTheme.value = theme
   compact.value = compactMode
 }
+
+const selectTabGeneral = (tab: TabKey) => {
+  if (tab == 'docs') {
+    activeTabGeneral.value = 'forms'
+    window.location.href = 'https://erilovnikita.github.io/nsmp-vue-components'
+  }
+  if (tab == 'repo') {
+    activeTabGeneral.value = 'forms'
+    window.location.href = 'https://github.com/ErilovNikita/nsmp-vue-components'
+  }
+}
 </script>
 
 <template>
@@ -74,7 +88,7 @@ const applySettings = (theme: NsmpThemeProperties | undefined, compactMode: bool
       @confirm="reset"
     />
 
-    <Tabs :items="generalTabs">
+    <Tabs :items="generalTabs" v-model:active-key="activeTabGeneral" @update:active-key="selectTabGeneral">
       <template #forms>
         <Tabs :items="formTabs">
           <template #form>
