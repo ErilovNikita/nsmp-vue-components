@@ -6,7 +6,6 @@ export const useTableSettingsGear = (
   enabled: () => boolean,
   settingsOpen: Ref<boolean>,
   headerSelector: () => string = () => 'th.ant-table-selection-column',
-  align: () => 'center' | 'left' = () => 'center',
 ) => {
   const findGear = (event: globalThis.MouseEvent): globalThis.HTMLElement | null => {
     if (!enabled() || !(event.target instanceof globalThis.Element)) return null
@@ -15,11 +14,10 @@ export const useTableSettingsGear = (
     if (!header) return null
 
     const bounds = header.getBoundingClientRect()
-    const gearCenterX = align() === 'left'
-      ? bounds.left + 16
-      : bounds.left + bounds.width / 2
-    const isGear = event.clientY >= bounds.top
-      && event.clientY <= bounds.top + 26
+    const gearCenterX = bounds.left + bounds.width / 2
+    const isSelectionHeader = header.classList.contains('ant-table-selection-column')
+    const gearCenterY = isSelectionHeader ? bounds.top + 14 : bounds.top + bounds.height / 2
+    const isGear = Math.abs(event.clientY - gearCenterY) <= 12
       && Math.abs(event.clientX - gearCenterX) <= 12
     return isGear ? header : null
   }
