@@ -3,6 +3,7 @@ import { Table as AntTable } from 'ant-design-vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Table, TableViewSelect } from '@/components'
 import { writeLocalStorage } from '@/utils'
+import * as columnMeasurement from '@/components/Table/composables/measureColumnContentWidth'
 
 const columns = [
   { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -83,13 +84,13 @@ describe('Table', () => {
     expect(wrapper.findComponent(AntTable).props('childrenColumnName')).toBe('children')
   })
 
-  it('keeps wide columns horizontally scrollable by default', () => {
+  it('uses a definite scroll width so fixed layout can shrink columns below their content width', () => {
     const wrapper = mount(Table, {
       props: { columns, dataSource },
       global: { stubs: { ATable: tableStub } },
     })
 
-    expect(wrapper.findComponent(AntTable).props('scroll')).toEqual({ x: 'max-content' })
+    expect(wrapper.findComponent(AntTable).props('scroll')).toEqual({ x: '100%' })
   })
 
   it('renders a view selector and applies the selected view columns', async () => {
@@ -199,7 +200,7 @@ describe('Table', () => {
     })
 
     expect(wrapper.findComponent(AntTable).props('scroll')).toEqual({
-      x: 'max-content',
+      x: '100%',
       y: 400,
     })
   })
@@ -346,7 +347,13 @@ describe('Table', () => {
     })
   })
 
-  it('does not resize a column below 70 pixels by default', async () => {
+  it.each([
+    { contentWidth: 0, expectedWidth: 70 },
+    { contentWidth: 85, expectedWidth: 85 },
+    { contentWidth: 120, expectedWidth: 100 },
+  ])('limits shrinking for content width $contentWidth', async ({ contentWidth, expectedWidth }) => {
+    const measurement = vi.spyOn(columnMeasurement, 'measureColumnContentWidth')
+      .mockReturnValue(contentWidth)
     const wrapper = mount(Table, {
       props: { columns: resizeColumns, dataSource, selectable: false },
       global: { stubs: { ATable: tableStub } },
@@ -383,6 +390,17 @@ describe('Table', () => {
     globalThis.window.dispatchEvent(
       new globalThis.MouseEvent('pointermove', { clientX: 0 }),
     )
+    await wrapper.vm.$nextTick()
+    const widthsAtLimit = wrapper.findComponent(AntTable).props('columns')?.map(
+      column => column.width,
+    )
+    globalThis.window.dispatchEvent(
+      new globalThis.MouseEvent('pointermove', { clientX: -200 }),
+    )
+    await wrapper.vm.$nextTick()
+    expect(wrapper.findComponent(AntTable).props('columns')?.map(
+      column => column.width,
+    )).toEqual(widthsAtLimit)
     globalThis.window.dispatchEvent(new globalThis.MouseEvent('pointerup'))
     await wrapper.vm.$nextTick()
 
@@ -390,8 +408,9 @@ describe('Table', () => {
       Array<{ width?: number }>,
     ]>
 
-    expect(updates[0]?.[0]?.[0]?.width).toBe(70)
-    expect(updates[0]?.[0]?.[1]?.width).toBe(130)
+    expect(updates[0]?.[0]?.[0]?.width).toBe(expectedWidth)
+    expect(updates[0]?.[0]?.[1]?.width).toBe(200 - expectedWidth)
+    measurement.mockRestore()
   })
 
   it('does not add a resize handle to the outer edge of the last column', () => {

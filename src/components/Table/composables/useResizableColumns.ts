@@ -1,6 +1,7 @@
 import type { Key } from 'ant-design-vue/es/_util/type'
 import { computed, type ComputedRef, type ShallowRef } from 'vue'
 import type { TableColumn } from '../types'
+import { measureColumnContentWidth } from './measureColumnContentWidth'
 
 interface Options {
   columns: ShallowRef<TableColumn[]>
@@ -30,12 +31,17 @@ export const useResizableColumns = (options: Options) => {
     event.preventDefault()
     event.stopPropagation()
     const startX = event.clientX
+    const minWidth = Math.max(options.minWidth(), measureColumnContentWidth(header))
+    const nextMinWidth = Math.max(options.minWidth(), measureColumnContentWidth(nextHeader))
+    // A column already narrower than its content can grow, but must not shrink further.
+    const minDelta = Math.min(0, minWidth - bounds.width)
+    const maxDelta = Math.max(0, nextBounds.width - nextMinWidth)
 
     const handleMove = (moveEvent: globalThis.PointerEvent) => {
       const requestedDelta = Math.round(moveEvent.clientX - startX)
       const delta = Math.min(
-        Math.max(requestedDelta, options.minWidth() - bounds.width),
-        nextBounds.width - options.minWidth(),
+        Math.max(requestedDelta, minDelta),
+        maxDelta,
       )
       if (delta !== 0) resizedIndex = index
 
