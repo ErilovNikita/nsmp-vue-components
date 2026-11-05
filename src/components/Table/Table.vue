@@ -72,8 +72,6 @@ const settingsGear = useTableSettingsGear(
     ? 'th.ant-table-selection-column'
     : 'th.ant-table-cell:first-child',
 )
-// A definite width is required for fixed table layout. With max-content,
-// intrinsic cell widths can prevent shrinking while the adjacent column grows.
 const tableScroll = computed(() => {
   if (props.scroll === undefined) return { x: '100%' }
   if (typeof props.scroll !== 'object' || props.scroll === null || props.scroll.x !== undefined) {
