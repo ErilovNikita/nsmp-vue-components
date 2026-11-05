@@ -489,7 +489,7 @@ describe('Table', () => {
 
   })
 
-  it('keeps column settings available when row selection is disabled', async () => {
+  it('centers the settings hit area when row selection is disabled', async () => {
     const wrapper = mount(Table, {
       props: {
         columns,
@@ -530,6 +530,18 @@ describe('Table', () => {
     await wrapper.find('.gear-target').trigger('click', {
       clientX: 16,
       clientY: 10,
+    })
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('open')).toBe(false)
+
+    await wrapper.find('.gear-target').trigger('click', {
+      clientX: 80,
+      clientY: 5,
+    })
+    expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('open')).toBe(false)
+
+    await wrapper.find('.gear-target').trigger('click', {
+      clientX: 80,
+      clientY: 25,
     })
 
     expect(wrapper.findComponent({ name: 'LibraryTableSettings' }).props('open')).toBe(true)

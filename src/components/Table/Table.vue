@@ -71,7 +71,6 @@ const settingsGear = useTableSettingsGear(
   () => props.selectable
     ? 'th.ant-table-selection-column'
     : 'th.ant-table-cell:first-child',
-  () => props.selectable ? 'center' : 'left',
 )
 // A definite width is required for fixed table layout. With max-content,
 // intrinsic cell widths can prevent shrinking while the adjacent column grows.

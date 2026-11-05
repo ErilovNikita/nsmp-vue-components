@@ -85,10 +85,13 @@
   text-align: center !important;
 }
 
-.ant-table-thead > tr > th.ant-table-selection-column,
-.library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child {
+.ant-table-thead > tr > th.ant-table-selection-column {
   position: relative;
   padding-top: 28px !important;
+}
+
+.library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child {
+  position: relative;
 }
 
 .library-table-view-settings-enabled .ant-table-thead > tr > th.ant-table-selection-column::after,
@@ -117,8 +120,8 @@
 }
 
 .library-table-view-settings-without-selection .ant-table-thead > tr > th.ant-table-cell:first-child::after {
-  left: 8px;
-  transform: none;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Do not let settings styles from a parent table leak into a nested table. */
